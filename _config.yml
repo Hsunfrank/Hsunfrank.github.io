@@ -15,16 +15,16 @@ title: "V-Lumin"
 title_separator: "-"
 name: "V-Lumin"
 description: "Your Trusted Expert in Fiber Optic Solutions"
-url: "[invalid url, do not cite]
+url: "https://HSUNFANK.github.io" # 修复：替换占位符
 baseurl: ""
-repository: "Hsunfrank/Hsunfrank.github.io"
+repository: "HSUNFANK/HSUNFANK.github.io"
 teaser: # path of fallback teaser image, e.g., "/assets/images/500x300.png"
 logo: # path of logo image, e.g., "/assets/images/88x88.png"
 masthead_title: # overrides the website title displayed in the masthead, use " " for no title
 breadcrumbs: false
 words_per_minute: 200
 copyright: "© 2025 V-Lumin"
-copyright_url: "[invalid url, do not cite]
+copyright_url: "https://HSUNFANK.github.io" # 修复：替换占位符
 timezone: "Asia/Shanghai"
 comments:
   provider: false # Disable comments
@@ -55,14 +55,14 @@ author:
       url: "mailto:berrypalma8@gmail.com"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "[invalid url, do not cite]
+      url: "https://github.com/HSUNFANK"
 
 # Site Footer
 footer:
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "[invalid url, do not cite]
+      url: "https://github.com/HSUNFANK"
 
 # Reading Files
 include:
