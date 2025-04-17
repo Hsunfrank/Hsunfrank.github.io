@@ -1,0 +1,11 @@
+---
+layout: home
+permalink: /
+lang: en
+title: "V-Lumin - Fiber Optic Solutions"
+---
+# Welcome to V-Lumin
+
+Your trusted expert in fiber optic solutions, specializing in connector automation, products, and tools.
+
+![V-Lumin Banner]({{ site.baseurl }}/assets/images/homepage.jpg)

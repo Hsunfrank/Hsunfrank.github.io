@@ -1,0 +1,11 @@
+---
+layout: home
+permalink: /zh/
+lang: zh
+title: "维界中枢 - 光纤解决方案"
+---
+# 欢迎访问维界中枢
+
+您值得信赖的光纤解决方案专家，专注于连接器自动化、产品和工具。
+
+![维界中枢横幅]({{ site.baseurl }}/assets/images/homepage.jpg)
