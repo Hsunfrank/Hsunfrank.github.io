@@ -15,24 +15,24 @@
 minimal_mistakes_skin    : "aqua" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
-locale                   : "en-US"
+locale                   : "zh-CN"  # 改成中文
 rtl                      : # true, false (default) # turns direction of the page into right to left for RTL languages
-title                    : "V-Lumin"
+title                    : "HSUNFANK 光纤连接器"  # 更新标题
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
-name                     : "V-Lumin"
-description              : "Your Trusted Expert in Fiber Optic Connectors and Automation Solutions"
-url                      : # the base hostname & protocol for your site e.g. "https://hsunfrank.github.io"
+name                     : "HSUNFANK"
+description              : "专业提供光纤连接器，质量可靠，服务全球"  # 更新描述
+url                      : "https://HSUNFANK.github.io"  # 设置正确的 URL
 baseurl                  : # the subpath of your site, e.g. "/blog"
-repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+repository               : "HSUNFANK/HSUNFANK.github.io"  # 设置仓库名
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
 breadcrumbs              : # true, false (default)
 words_per_minute         : 200
 enable_copy_code_button  : # true, false (default)
-copyright                : # "© 2025 V-Lumin" name, defaults to site.title
-copyright_url            : # "https://HSUNFANK.github.io" URL, defaults to site.url
+copyright                : "© 2025 HSUNFANK"  # 取消注释并更新
+copyright_url            : "https://HSUNFANK.github.io"  # 取消注释并更新
 comments:
   provider               : # false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "giscus", "custom"
   disqus:
@@ -110,18 +110,17 @@ analytics:
     tracking_id          :
     anonymize_ip         : # true, false (default)
 
-
 # Site Author
 author:
   name             : "Berry Hsun"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "Specializing in fiber optic connector products, committed to providing high-quality products"
   location         : "China"
-  email            :"berrypalma8@gmail.com"
+  email            : "berrypalma8@gmail.com"  # 修复：添加冒号后的空格
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      # url: "mailto:your.name@email.com"
+      url: "mailto:berrypalma8@gmail.com"  # 取消注释并填入
     - label: "Website"
       icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
@@ -133,7 +132,7 @@ author:
       # url: "https://facebook.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      # url: "https://github.com/"
+      url: "https://github.com/HSUNFANK"  # 取消注释并填入
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       # url: "https://instagram.com/"
@@ -149,7 +148,7 @@ footer:
       # url:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      # url:
+      url: "https://github.com/HSUNFANK"  # 取消注释并填入
     - label: "GitLab"
       icon: "fab fa-fw fa-gitlab"
       # url:
@@ -159,7 +158,6 @@ footer:
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       # url:
-
 
 # Reading Files
 include:
@@ -199,14 +197,12 @@ keep_files:
 encoding: "utf-8"
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 
-
 # Conversion
 markdown: kramdown
 highlighter: rouge
 lsi: false
 excerpt_separator: "\n\n"
 incremental: false
-
 
 # Markdown Processing
 kramdown:
@@ -219,17 +215,14 @@ kramdown:
   smart_quotes: lsquo,rsquo,ldquo,rdquo
   enable_coderay: false
 
-
 # Sass/SCSS
 sass:
   sass_dir: _sass
   style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
 
-
 # Outputting
 permalink: /:categories/:title/
 timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-
 
 # Pagination with jekyll-paginate
 paginate: 5 # amount of posts to show
@@ -256,7 +249,6 @@ pagination:
     before: 2
     after: 2
 
-
 # Plugins (previously gems:)
 plugins:
   - jekyll-paginate
@@ -272,7 +264,6 @@ whitelist:
   - jekyll-gist
   - jekyll-feed
   - jekyll-include-cache
-
 
 # Archives
 #  Type
@@ -302,14 +293,12 @@ tag_archive:
 #     category: /categories/:name/
 #     tag: /tags/:name/
 
-
 # HTML Compression
 # - https://jch.penibelst.de/
 compress_html:
   clippings: all
   ignore:
     envs: development
-
 
 # Defaults
 defaults:
