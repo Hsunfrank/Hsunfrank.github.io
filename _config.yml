@@ -1,12 +1,12 @@
 # Site Settings
 title: V-Lumin
 subtitle: Innovate Fiber Optic Solutions
-description: V-Lumin provides advanced fiber optic solutions, including automated connector assembly, fiber optic products, and tools&consumable
+description: V-Lumin provides advanced fiber optic solutions, including automated connector assembly, fiber optic products, and tools.
 url: https://Hsunfrank.github.io  # 替换为你的 GitHub Pages 地址
 baseurl: ""  # 如果网站在子文件夹，改为 "/docs" 或其他
 email: berrypalma8@gmail.com
 author: Berry Palma Shun
-logo: /assets/images/V-Lumin.png  # 上传 logo 后更新路径
+logo: /assets/images/v-lumin-logo.png  # 确保已上传 logo
 
 # Localization
 languages: ["en", "zh"]
@@ -16,7 +16,7 @@ lang_switcher: true
 # Theme Settings
 minimal_mistakes_skin: default
 header:
-  image: /assets/images/hero-image.jpg  # 上传大图后更新路径
+  image: /assets/images/hero-image.jpg  # 确保已上传大图
   overlay: true
 footer:
   links:
@@ -25,7 +25,7 @@ footer:
       url: "mailto:berrypalma8@gmail.com"
 
 # Navigation
-nav:
+navigation:
   main:
     - title: "Home"
       url: /
