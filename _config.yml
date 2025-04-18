@@ -1,175 +1,88 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your entire site, values
-# which you are expected to set up once and rarely need to edit after that.
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# `jekyll serve`. If you change this file, please restart the server process.
+# Site Settings
+title: V-Lumin
+subtitle: Innovate Fiber Optic Solutions
+description: V-Lumin provides advanced fiber optic solutions, including automated connector assembly, fiber optic products, and tools&consumable
+url: https://Hsunfrank.github.io  # 替换为你的 GitHub Pages 地址
+baseurl: ""  # 如果网站在子文件夹，改为 "/docs" 或其他
+email: berrypalma8@gmail.com
+author: Berry Palma Shun
+logo: /assets/images/V-Lumin.png  # 上传 logo 后更新路径
+
+# Localization
+languages: ["en", "zh"]
+default_lang: en
+lang_switcher: true
 
 # Theme Settings
-minimal_mistakes_skin: "aqua" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
-remote_theme: "mmistakes/minimal-mistakes"
+minimal_mistakes_skin: default
+header:
+  image: /assets/images/hero-image.jpg  # 上传大图后更新路径
+  overlay: true
+footer:
+  links:
+    - label: "Email"
+      icon: "fas fa-envelope"
+      url: "mailto:berrypalma8@gmail.com"
 
-# Site Settings
-locale: "en-US"
-title: "V-Lumin"
-title_separator: "-"
-name: "V-Lumin"
-description: "Your Trusted Expert in Fiber Optic Solutions"
-url: "https://HSUNFANK.github.io" # 修复：替换占位符
-baseurl: ""
-repository: "HSUNFANK/HSUNFANK.github.io"
-teaser: # path of fallback teaser image, e.g., "/assets/images/500x300.png"
-logo: # path of logo image, e.g., "/assets/images/88x88.png"
-masthead_title: # overrides the website title displayed in the masthead, use " " for no title
-breadcrumbs: false
-words_per_minute: 200
-copyright: "© 2025 V-Lumin"
-copyright_url: "https://HSUNFANK.github.io" # 修复：替换占位符
-timezone: "Asia/Shanghai"
-comments:
-  provider: false # Disable comments
-atom_feed:
-  hide: true # Hide RSS feed
-search: true
-search_provider: lunr
+# Navigation
+nav:
+  main:
+    - title: "Home"
+      url: /
+    - title: "Automated Fiber Connector Assembly Solutions"
+      url: /products/fiber-connector/
+    - title: "Fiber Optic Products"
+      url: /products/fiber-optic/
+    - title: "Fiber Optic Tools & Consumables"
+      url: /products/tools-consumables/
+    - title: "Updates"
+      url: /updates/
+    - title: "Contact"
+      url: /contact/
 
 # Collections
 collections:
-  products_en:
+  products:
     output: true
     permalink: /products/:path/
-  products_zh:
+  updates:
     output: true
-    permalink: /zh/products/:path/
-
-# Site Author
-author:
-  name: "Berry Palma Shun"
-  avatar: /assets/images/bio-photo.jpg # Upload an image to assets/images/
-  bio: "专注于光纤连接器和自动化解决方案，提供高质量产品。"
-  location: "China"
-  email: "berrypalma8@gmail.com"
-  links:
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:berrypalma8@gmail.com"
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/HSUNFANK"
-
-# Site Footer
-footer:
-  links:
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/HSUNFANK"
-
-# Reading Files
-include:
-  - .htaccess
-  - _pages
-exclude:
-  - "*.sublime-project"
-  - "*.sublime-workspace"
-  - vendor
-  - .asset-cache
-  - .bundle
-  - .jekyll-assets-cache
-  - .sass-cache
-  - assets/js/plugins
-  - assets/js/_main.js
-  - assets/js/vendor
-  - Capfile
-  - CHANGELOG
-  - config
-  - Gemfile
-  - Gruntfile.js
-  - gulpfile.js
-  - LICENSE
-  - log
-  - minimal-mistakes-jekyll.gemspec
-  - node_modules
-  - package.json
-  - package-lock.json
-  - Rakefile
-  - README
-  - tmp
-  - /docs
-  - /test
-keep_files:
-  - .git
-  - .svn
-encoding: "utf-8"
-markdown_ext: "markdown,mkdown,mkdn,mkd,md"
-
-# Conversion
-markdown: kramdown
-highlighter: rouge
-lsi: false
-excerpt_separator: "\n\n"
-incremental: false
-
-# Markdown Processing
-kramdown:
-  input: GFM
-  hard_wrap: false
-  auto_ids: true
-  footnote_nr: 1
-  entity_output: as_char
-  toc_levels: 1..6
-  smart_quotes: lsquo,rsquo,ldquo,rdquo
-  enable_coderay: false
-
-# Sass/SCSS
-sass:
-  sass_dir: _sass
-  style: compressed
-
-# Outputting
-permalink: /:categories/:title/
-
-# Pagination
-paginate: 5 # amount of posts to show
-paginate_path: /page:num/
-
-# Plugins
-plugins:
-  - jekyll-paginate
-  - jekyll-sitemap
-  - jekyll-gist
-  - jekyll-feed
-  - jekyll-include-cache
-
-whitelist:
-  - jekyll-paginate
-  - jekyll-sitemap
-  - jekyll-gist
-  - jekyll-feed
-  - jekyll-include-cache
-
-# Archives
-category_archive:
-  type: liquid
-  path: /categories/
-tag_archive:
-  type: liquid
-  path: /tags/
-
-# HTML Compression
-compress_html:
-  clippings: all
-  ignore:
-    envs: development
+    permalink: /updates/:path/
 
 # Defaults
 defaults:
   - scope:
       path: ""
-      type: posts
+      type: pages
     values:
       layout: single
-      author_profile: true
+      read_time: false
+      comments: false
+  - scope:
+      path: ""
+      type: products
+    values:
+      layout: single
+      read_time: false
+      comments: false
+  - scope:
+      path: ""
+      type: updates
+    values:
+      layout: post
       read_time: true
       comments: false
-      share: true
-      related: false
+
+# Remove GitHub Info
+repository: null
+show_git_info: false
+
+# Other Settings
+timezone: Asia/Shanghai
+include: [".md", ".yml"]
+exclude: ["vendor", "Gemfile", "README.md"]
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-include-cache
