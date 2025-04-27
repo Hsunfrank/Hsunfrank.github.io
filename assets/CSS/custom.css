@@ -1,11 +1,11 @@
-div.feature-row {
+.page__content .feature-row {
   display: flex !important;
   flex-wrap: nowrap !important;
   justify-content: center !important;
   gap: 20px !important;
 }
 
-div.feature-row .feature-row__item {
+.page__content .feature-row .feature-row__item {
   flex: 0 0 auto !important;
   text-align: center !important;
   min-width: 120px !important;
@@ -13,7 +13,7 @@ div.feature-row .feature-row__item {
 
 /* 覆盖所有可能的响应式断点 */
 @media (max-width: 1200px), (max-width: 1024px), (max-width: 800px), (max-width: 600px) {
-  div.feature-row {
+  .page__content .feature-row {
     flex-direction: row !important;
     flex-wrap: nowrap !important;
   }

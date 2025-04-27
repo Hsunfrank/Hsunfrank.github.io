@@ -54,5 +54,5 @@ tag_archive:
   type: liquid
   path: /tags/
   # 自定义 CSS
-head_scripts:
+stylesheets:
   - /assets/css/custom.css
