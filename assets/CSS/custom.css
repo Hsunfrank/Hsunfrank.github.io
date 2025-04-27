@@ -1,11 +1,12 @@
 .feature-row {
-  display: flex !important; /* 强制使用 flex 布局 */
-  flex-wrap: wrap; /* 允许换行 */
-  justify-content: center; /* 居中对齐 */
-  gap: 20px; /* 项目间距 */
+  display: flex !important;
+  flex-wrap: nowrap !important; /* 禁止换行 */
+  justify-content: center !important;
+  gap: 20px !important;
 }
 
 .feature-row__item {
-  flex: 0 0 auto; /* 防止项目拉伸 */
-  text-align: center; /* 居中对齐图片和文本 */
+  flex: 0 0 auto !important;
+  text-align: center;
+  min-width: 120px; /* 确保项目有足够宽度 */
 }

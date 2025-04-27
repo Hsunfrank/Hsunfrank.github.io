@@ -14,16 +14,16 @@ Welcome to V-lumen! We provide advanced fiber optic solutions for connectivity a
 ## Our Partners
 <div class="feature-row">
   <div class="feature-row__item">
-    <img src="/assets/images/partner1.png" alt="Partner 1" width="100">
-    <p>Partner 1</p>
+    <img src="/assets/images/partner1.png" alt="partner 1" width="100">
+    <p>partner 1</p>
   </div>
   <div class="feature-row__item">
-    <img src="/assets/images/partner2.png" alt="Partner 2" width="100">
-    <p>Partner 2</p>
+    <img src="/assets/images/partner2.png" alt="partner 2" width="100">
+    <p>partner 2</p>
   </div>
   <div class="feature-row__item">
-    <img src="/assets/images/partner3.png" alt="Partner 3" width="100">
-    <p>Partner 3</p>
+    <img src="/assets/images/partner3.png" alt="partner 3" width="100">
+    <p>partner 3</p>
   </div>
 </div>
 
