@@ -11,24 +11,12 @@ header:
 
 Welcome to V-lumen! We provide advanced fiber optic solutions for connectivity and automation.
 
-## Our Partners
-<div style="display: flex; flex-wrap: nowrap; justify-content: center; gap: 20px;">
-  <div style="text-align: center; min-width: 120px;">
-    <img src="/assets/images/partner1.PNG" alt="partner 1" width="100">
-    <p>partner 1</p>
-  </div>
-  <div style="text-align: center; min-width: 120px;">
-    <img src="/assets/images/partner2.PNG" alt="partner 2" width="100">
-    <p>partner 2</p>
-  </div>
-  <div style="text-align: center; min-width: 120px;">
-    <img src="/assets/images/partner3.PNG" alt="partner 3" width="100">
-    <p>partner 3</p>
-  </div>
+<div style="background-color: #1A2526; padding: 20px; text-align: center;">
+  <img src="/assets/images/partners_combined.png" alt="partners" style="max-width: 100%; height: auto;">
 </div>
 
 ## Explore More
-<div class="grid__wrapper">
+<div class="grid__wrapper" style="background-color: #f0f0f0; padding: 20px;">
   <div class="grid__item">
     <a href="/services/" class="btn btn--primary">Services</a>
   </div>
