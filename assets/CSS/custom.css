@@ -1,6 +1,6 @@
 .feature-row {
   display: flex !important;
-  flex-wrap: nowrap !important; /* 禁止换行 */
+  flex-wrap: nowrap !important;
   justify-content: center !important;
   gap: 20px !important;
 }
@@ -8,5 +8,13 @@
 .feature-row__item {
   flex: 0 0 auto !important;
   text-align: center;
-  min-width: 120px; /* 确保项目有足够宽度 */
+  min-width: 120px !important;
+}
+
+/* 覆盖响应式堆叠 */
+@media (max-width: 800px) {
+  .feature-row {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+  }
 }
