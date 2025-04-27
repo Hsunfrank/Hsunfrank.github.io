@@ -11,7 +11,7 @@ header:
 
 Welcome to V-lumen! We provide advanced fiber optic solutions for connectivity and automation.
 
-<div style="background-color: #1A2526; padding: 20px; text-align: center;">
+<div style="padding: 20px; text-align: center;">
   <img src="/assets/images/partners_combined.PNG" alt="partners" style="max-width: 100%; height: auto;">
 </div>
 
