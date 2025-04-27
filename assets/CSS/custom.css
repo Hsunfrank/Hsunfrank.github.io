@@ -1,11 +1,11 @@
-.header-slogan {
-  text-align: center; /* 居中对齐 */
-  margin-top: -20px; /* 靠近导航栏，可根据需要调整 */
-  margin-bottom: 20px; /* 与下方内容的间距 */
+.feature-row {
+  display: flex !important; /* 强制使用 flex 布局 */
+  flex-wrap: wrap; /* 允许换行 */
+  justify-content: center; /* 居中对齐 */
+  gap: 20px; /* 项目间距 */
 }
 
-.header-slogan h2 {
-  font-size: 2.5em; /* 放大文字，可根据需要调整 */
-  color: #333; /* 文字颜色 */
-  font-weight: 400; /* 字体粗细 */
+.feature-row__item {
+  flex: 0 0 auto; /* 防止项目拉伸 */
+  text-align: center; /* 居中对齐图片和文本 */
 }
