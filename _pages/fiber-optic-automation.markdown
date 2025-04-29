@@ -3,7 +3,7 @@ layout: single
 title: Fiber Optic Automation Solutions
 permalink: /fiber-optic-automation/
 header:
-  overlay_image: /assets/images/hero_automation.PNG
+  overlay_image: /assets/images/hero_automation.png
   overlay_filter: 0.5
 ---
 

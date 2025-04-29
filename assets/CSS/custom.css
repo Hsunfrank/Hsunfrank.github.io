@@ -8,6 +8,10 @@
   object-fit: cover;
 }
 
+.page__title {
+  font-size: 2.5rem; /* 调整标题字体大小 */
+}
+
 body {
   font-family: 'Arial', sans-serif;
   color: #333;
