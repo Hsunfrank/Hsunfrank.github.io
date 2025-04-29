@@ -7,63 +7,67 @@ header:
   overlay_filter: 0.5
 ---
 
-<div style="text-align: center; margin: 40px 0;">
-  <img src="/assets/images/logo.png" alt="V-lumen Logo" style="max-width: 200px; height: auto;">
-  <h2 style="color: #0056b3; margin: 10px 0;">Beyond Light, Beyond Limits</h2>
-</div>
-
 # Fiber Optic Automation Solutions
 Advanced automation systems for seamless fiber optic integration and performance optimization.
 
-<div class="product-grid">
+<div class="product-list">
   <div class="product-item">
     <img src="/assets/images/products/automation1.jpg" alt="Automation System 1">
     <h4>Automation System 1</h4>
-    <p>High-speed automation for fiber optic assembly.</p>
+    <p>This high-speed automation system streamlines fiber optic assembly, delivering unmatched precision and efficiency. Designed for high-volume production, it minimizes downtime and ensures consistent quality across complex workflows. Its robust architecture supports integration with modern manufacturing platforms.</p>
   </div>
+  <hr>
   <div class="product-item">
     <img src="/assets/images/products/automation2.jpg" alt="Automation System 2">
     <h4>Automation System 2</h4>
-    <p>Precision control for large-scale deployments.</p>
+    <p>Engineered for large-scale deployments, this system offers precise control and scalability. It integrates seamlessly with existing fiber optic infrastructure, optimizing performance in data centers and telecom networks. Advanced diagnostics ensure reliability under demanding conditions.</p>
   </div>
+  <hr>
   <div class="product-item">
     <img src="/assets/images/products/automation3.jpg" alt="Automation System 3">
     <h4>Automation System 3</h4>
-    <p>Compact system for small-scale operations.</p>
+    <p>A compact solution for small-scale operations, this system delivers high precision in confined spaces. Ideal for specialized projects or startups, it combines ease of use with robust performance. Its modular design allows for future upgrades.</p>
   </div>
+  <hr>
   <div class="product-item">
     <img src="/assets/images/products/automation4.jpg" alt="Automation System 4">
     <h4>Automation System 4</h4>
-    <p>AI-driven automation for efficiency.</p>
+    <p>Powered by AI-driven technology, this system enhances efficiency through intelligent automation. It adapts to varying production demands, ensuring consistent output in dynamic environments. Perfect for smart manufacturing in fiber optic industries.</p>
   </div>
+  <hr>
   <div class="product-item">
     <img src="/assets/images/products/automation5.jpg" alt="Automation System 5">
     <h4>Automation System 5</h4>
-    <p>Robust system for harsh environments.</p>
+    <p>Built for harsh environments, this robust system maintains performance under extreme conditions. Its rugged design ensures long-term reliability for critical fiber optic applications. Advanced cooling systems protect components during intensive operations.</p>
   </div>
+  <hr>
   <div class="product-item">
     <img src="/assets/images/products/automation6.jpg" alt="Automation System 6">
     <h4>Automation System 6</h4>
-    <p>Modular design for flexibility.</p>
+    <p>Featuring a modular design, this system offers flexibility for customized automation setups. It supports easy upgrades and integration with diverse fiber optic systems. Ideal for enterprises seeking scalable solutions.</p>
   </div>
+  <hr>
   <div class="product-item">
     <img src="/assets/images/products/automation7.jpg" alt="Automation System 7">
     <h4>Automation System 7</h4>
-    <p>High-throughput automation solution.</p>
+    <p>A high-throughput solution for large-scale fiber optic production, maximizing output efficiency. Its advanced controls ensure precise automation across complex workflows. Designed for seamless integration with enterprise systems.</p>
   </div>
+  <hr>
   <div class="product-item">
     <img src="/assets/images/products/automation8.jpg" alt="Automation System 8">
     <h4>Automation System 8</h4>
-    <p>Energy-efficient automation platform.</p>
+    <p>An energy-efficient platform that reduces operational costs while maintaining high performance. Ideal for sustainable manufacturing, it optimizes power usage without compromising output. Suitable for eco-conscious fiber optic industries.</p>
   </div>
+  <hr>
   <div class="product-item">
     <img src="/assets/images/products/automation9.jpg" alt="Automation System 9">
     <h4>Automation System 9</h4>
-    <p>Scalable system for enterprise use.</p>
+    <p>Scalable for enterprise-level applications, this system supports high-capacity fiber optic production. It offers seamless integration with enterprise management systems, ensuring operational efficiency. Advanced analytics provide real-time insights.</p>
   </div>
+  <hr>
   <div class="product-item">
     <img src="/assets/images/products/automation10.jpg" alt="Automation System 10">
     <h4>Automation System 10</h4>
-    <p>Next-gen automation for connectivity.</p>
+    <p>A next-generation automation system designed for cutting-edge fiber optic connectivity. It delivers unmatched precision and speed, meeting the demands of modern telecom networks. Its futuristic design sets a new standard for automation.</p>
   </div>
 </div>
