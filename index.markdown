@@ -1,9 +1,6 @@
 ---
-layout: splash
-header:
-  overlay_image: /assets/images/large.png
-  overlay_filter: 0.5
-  show_overlay: false
+layout: custom
+hero_image: /assets/images/large.png
 ---
 Welcome to V-lumen! We provide advanced fiber optic solutions for connectivity and automation.
 
