@@ -174,3 +174,6 @@ body img[src=""], body img:not([src]) {
 body .product-item img {
   animation: parallax 10s infinite alternate ease-in-out !important;
 }
+body {
+  background-color: pink !important;
+}
