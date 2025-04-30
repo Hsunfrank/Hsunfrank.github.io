@@ -1,6 +1,6 @@
 ---
 layout: custom
-hero_image: /assets/images/large.jpg
+hero_image: /assets/images/large.png
 ---
 Welcome to V-lumen! We provide advanced fiber optic solutions for connectivity and automation.
 

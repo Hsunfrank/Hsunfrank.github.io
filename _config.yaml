@@ -3,7 +3,7 @@ title: V-Lumen
 description: >- 
   Advanced fiber optic solutions for connectivity and automation.
 locale: en
-logo: /assets/images/logo.png  # Upload your logo to this path
+# logo: /assets/images/logo.png  # 注释掉
 minimal_mistakes_skin: default
 search: true
 
@@ -54,6 +54,7 @@ category_archive:
 tag_archive:
   type: liquid
   path: /tags/
-  # 自定义 CSS
-stylesheets:
-  - /assets/css/custom.css
+
+# 自定义导航
+header:
+  nav: main

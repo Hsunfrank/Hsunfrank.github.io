@@ -23,23 +23,23 @@ body {
 .hero-content {
   text-align: center !important;
   color: #fff !important;
-  background: rgba(0, 0, 0, 0.5) !important; /* 半透明背景 */
+  background: rgba(0, 0, 0, 0.5) !important;
   padding: 20px 40px !important;
   border-radius: 8px !important;
 }
 
 .hero-content h1 {
-  font-size: 3rem !important; /* 调整字体大小 */
+  font-size: 3rem !important;
   font-weight: 700 !important;
-  color: green !important; /* 绿色 V-Lumen */
+  color: green !important;
   margin: 0 0 10px !important;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
 }
 
 .hero-content p {
-  font-size: 1.5rem !important; /* 标语字体 */
+  font-size: 1.5rem !important;
   font-weight: 400 !important;
-  color: #fff !important; /* 白色标语 */
+  color: #fff !important;
   margin: 0 !important;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
 }
@@ -57,12 +57,12 @@ body {
 }
 
 .site-logo, .site-title {
-  display: block !important;
+  display: none !important; /* 隐藏 logo 和标题 */
 }
 
-/* 导航栏样式（模仿 Huber+Suhner 透明效果） */
+/* 导航栏样式 */
 .masthead {
-  background-color: rgba(0, 0, 0, 0.7) !important; /* 透明背景 */
+  background-color: rgba(0, 0, 0, 0.7) !important;
   position: fixed !important;
   top: 0 !important;
   width: 100% !important;
@@ -77,4 +77,34 @@ body {
 .masthead a:hover {
   color: #ddd !important;
   text-decoration: none !important;
+}
+
+/* 确保大图全屏 */
+html, body {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden !important;
+}
+
+.hero {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 90vh !important;
+}
+
+/* 隐藏导航栏中的搜索图标 */
+.masthead .search__toggle {
+  display: none !important;
+}
+
+/* 隐藏移动端菜单图标 */
+.masthead .nav__toggle {
+  display: none !important;
+}
+
+/* 隐藏社交分享或 RSS 图标 */
+.masthead .social-links {
+  display: none !important;
 }

@@ -1,9 +1,9 @@
 main:
-  - title: "Services"
-    url: /services/
   - title: "Products"
     url: /products/
-  - title: "Contact Us"
+  - title: "Services"
+    url: /services/
+  - title: "Our Other Side"
+    url: /our-other-side/
+  - title: "Contact us"
     url: /contact/
-  - title: "About Us"
-    url: /about/
