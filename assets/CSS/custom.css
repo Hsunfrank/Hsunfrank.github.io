@@ -1,179 +1,80 @@
-/* 确保覆盖主题样式 */
-body .page__hero--overlay {
-  height: 800px !important; /* 大英雄图片 */
-  width: 100vw !important;
-  max-width: none !important;
-  margin-left: calc(-50vw + 50%) !important;
-  margin-right: calc(-50vw + 50%) !important;
-  padding: 0 !important;
-  background: #ccc; /* 图片缺失回退 */
-  position: relative;
-}
-
-body .page__hero--overlay img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  display: block !important;
-}
-
-/* 主页英雄图片 */
-body .feature__wrapper .archive__item .archive__item-teaser {
-  height: 800px !important;
-  width: 100vw !important;
-  max-width: none !important;
-  margin-left: calc(-50vw + 50%) !important;
-  margin-right: calc(-50vw + 50%) !important;
-}
-
-body .page__title {
-  font-size: 1.4rem !important; /* 更小页面标题 */
-  font-weight: 400 !important;
-  letter-spacing: 0.05em !important;
-  color: #fff !important;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
-}
-
+/* 全局样式 */
 body {
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif !important;
   color: #333 !important;
   background-color: #f9fafb !important;
-}
-
-/* 隐藏导航栏、logo 和标题 */
-body .nav__list, body .masthead, body .site-nav, body .site-header .nav__list {
-  display: none !important;
-}
-body .site-logo, body .site-title {
-  display: none !important;
-}
-
-/* 自定义头部图片 */
-body .site-header-image {
-  text-align: center !important;
-  margin: 20px 0 !important;
-}
-body .site-header-image img {
-  max-width: 300px !important;
-  height: auto !important;
-}
-
-body h1, body h2, body h3, body h4 {
-  color: #0056b3 !important;
-}
-
-body a {
-  color: #0056b3 !important;
-  text-decoration: none !important;
-}
-
-body a:hover {
-  text-decoration: underline !important;
-}
-
-body .back-button {
-  display: inline-block !important;
-  margin: 20px !important;
-  padding: 12px 24px !important;
-  background-color: #0056b3 !important;
-  color: #fff !important;
-  border-radius: 6px !important;
-  font-size: 1rem !important;
-  font-weight: 500 !important;
-  transition: background-color 0.3s ease, transform 0.2s ease !important;
-}
-
-body .back-button:hover {
-  background-color: #003f8a !important;
-  transform: translateY(-2px) !important;
-}
-
-body .product-list {
-  max-width: 1200px !important; /* 适应双列 */
-  margin: 60px auto !important;
-  padding: 50px 20px !important;
-  display: flex !important;
-  flex-wrap: wrap !important;
-  justify-content: space-between !important;
-  background: linear-gradient(180deg, #ffffff 0%, #f3f4f6 100%) !important;
-  border-radius: 12px !important;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15) !important;
-}
-
-body .product-item {
-  width: 48% !important; /* 一行两个 */
-  border: 3px double #0056b3 !important;
-  border-radius: 12px !important;
-  padding: 30px !important;
-  margin-bottom: 40px !important;
-  background-color: #fff !important;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.12) !important;
-  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
-}
-
-body .product-item:nth-child(odd) {
-  background-color: #f9fafb !important;
-}
-
-body .product-item:hover {
-  transform: translateY(-8px) !important;
-  box-shadow: 0 12px 24px rgba(0,0,0,0.2) !important;
-}
-
-body .product-item img {
-  width: 100% !important;
-  max-width: 450px !important; /* 适应双列 */
-  height: auto !important;
-  border-radius: 10px !important;
-  margin: 0 auto 20px !important;
-  display: block !important;
-  transition: transform 0.4s ease !important;
-  transform: translateZ(0) !important;
-}
-
-body .product-item img:hover {
-  transform: scale(1.03) !important;
-}
-
-body .product-item h4 {
-  margin: 15px 0 !important;
-  font-size: 1.4em !important; /* 更小标题 */
-  font-weight: 700 !important;
-  color: #0056b3 !important;
-  letter-spacing: 0.02em !important;
-}
-
-body .product-item p {
-  color: #444 !important;
-  font-size: 1em !important; /* 更小描述 */
-  line-height: 1.7 !important;
   margin: 0 !important;
 }
 
-body hr {
-  border: 0 !important;
-  border-top: 3px solid #0056b3 !important;
-  margin: 40px 0 !important;
-  background: linear-gradient(to right, transparent, #0056b3, transparent) !important;
+/* 大图样式 */
+.hero {
+  width: 100vw !important;
+  height: 90vh !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
-/* 图片缺失回退 */
-body img[src=""], body img:not([src]) {
-  background: #ddd !important;
-  height: 200px !important;
-  width: 100% !important;
+/* 大图文字样式 */
+.hero-content {
+  text-align: center !important;
+  color: #fff !important;
+  background: rgba(0, 0, 0, 0.5) !important; /* 半透明背景 */
+  padding: 20px 40px !important;
+  border-radius: 8px !important;
+}
+
+.hero-content h1 {
+  font-size: 3rem !important; /* 调整字体大小 */
+  font-weight: 700 !important;
+  color: green !important; /* 绿色 V-Lumen */
+  margin: 0 0 10px !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+.hero-content p {
+  font-size: 1.5rem !important; /* 标语字体 */
+  font-weight: 400 !important;
+  color: #fff !important; /* 白色标语 */
+  margin: 0 !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* 内容区域 */
+.main-content {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 40px 20px !important;
+}
+
+/* 移除导航栏隐藏 */
+.nav__list, .masthead, .site-nav, .site-header .nav__list {
   display: block !important;
 }
 
-/* 视差效果 */
-@keyframes parallax {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(10px); }
+.site-logo, .site-title {
+  display: block !important;
 }
 
-body .product-item img {
-  animation: parallax 10s infinite alternate ease-in-out !important;
+/* 导航栏样式（模仿 Huber+Suhner 透明效果） */
+.masthead {
+  background-color: rgba(0, 0, 0, 0.7) !important; /* 透明背景 */
+  position: fixed !important;
+  top: 0 !important;
+  width: 100% !important;
+  z-index: 1000 !important;
 }
-body {
-  background-color: pink !important;
+
+.masthead a {
+  color: #fff !important;
+  font-weight: 500 !important;
+}
+
+.masthead a:hover {
+  color: #ddd !important;
+  text-decoration: none !important;
 }
