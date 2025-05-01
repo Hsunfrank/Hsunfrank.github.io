@@ -17,7 +17,7 @@ html, body {
   overflow-x: hidden !important;
 }
 
-.page, .wrapper, .site-header, .site-content, .inner {
+.site-header, .site-content, .page, .wrapper, .inner, .initial-content {
   width: 100% !important;
   max-width: none !important;
   margin: 0 !important;
@@ -54,7 +54,7 @@ html, body {
 .hero-content h1 {
   font-size: 3rem !important;
   font-weight: 700 !important;
-  color: #fff !important; /* 大图上的 V-Lumen 保持白色 */
+  color: #fff !important;
   margin: 0 0 10px !important;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
 }
@@ -75,25 +75,25 @@ html, body {
 }
 
 /* 移除导航栏隐藏 */
-.nav__list, .masthead, .site-nav, .site-header .nav__list {
+.site-header .masthead, .site-header .site-nav, .site-header .nav__list {
   display: block !important;
 }
 
 /* 显示导航栏左侧 V-Lumen 并设为绿色 */
 .site-logo {
-  display: none !important; /* 隐藏 logo 图片 */
+  display: none !important;
 }
 
-.site-title {
-  display: block !important; /* 显示标题 */
-  color: green !important; /* 设为绿色 */
+.site-header .site-title {
+  display: block !important;
+  color: green !important;
   font-size: 1.5rem !important;
   font-weight: 700 !important;
   margin-right: 20px !important;
 }
 
 /* 导航栏样式 */
-.masthead {
+.site-header .masthead {
   background-color: rgba(0, 0, 0, 0.7) !important;
   position: fixed !important;
   top: 0 !important;
@@ -105,12 +105,12 @@ html, body {
   box-sizing: border-box !important;
 }
 
-.masthead a {
+.site-header .masthead a {
   color: #fff !important;
   font-weight: 500 !important;
 }
 
-.masthead a:hover {
+.site-header .masthead a:hover {
   color: #ddd !important;
   text-decoration: none !important;
 }
@@ -122,33 +122,33 @@ html, body {
   justify-content: space-between !important;
 }
 
-.site-nav {
+.site-header .site-nav {
   display: flex !important;
   align-items: center !important;
 }
 
-.nav__list {
+.site-header .nav__list {
   display: flex !important;
   list-style: none !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 
-.nav__list li {
+.site-header .nav__list li {
   margin-left: 20px !important;
 }
 
 /* 隐藏导航栏中的搜索图标 */
-.masthead .search__toggle {
+.site-header .masthead .search__toggle {
   display: none !important;
 }
 
 /* 隐藏移动端菜单图标 */
-.masthead .nav__toggle {
+.site-header .masthead .nav__toggle {
   display: none !important;
 }
 
 /* 隐藏社交分享或 RSS 图标 */
-.masthead .social-links {
+.site-header .masthead .social-links {
   display: none !important;
 }
