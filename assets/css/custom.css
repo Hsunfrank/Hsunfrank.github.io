@@ -1,6 +1,6 @@
 /* 全局样式 */
 body {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif !important;
+  font-family: Arial, sans-serif !important;
   color: #333 !important;
   background-color: #f9fafb !important;
   margin: 0 !important;
@@ -25,106 +25,25 @@ html, body {
   box-sizing: border-box !important;
 }
 
-/* 大图样式 */
-.hero {
-  width: 100% !important;
-  height: 90vh !important;
-  min-height: 600px !important;
-  background-size: cover !important;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  position: relative !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  box-sizing: border-box !important;
-}
-
-/* 大图文字样式 */
-.hero-content {
-  text-align: center !important;
-  color: #fff !important;
-  background: rgba(0, 0, 0, 0.5) !important;
-  padding: 20px 40px !important;
-  border-radius: 8px !important;
-}
-
-.hero-content h1 {
-  font-size: 3rem !important;
-  font-weight: 700 !important;
-  color: #fff !important;
-  margin: 0 0 10px !important;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
-}
-
-.hero-content p {
-  font-size: 1.5rem !important;
-  font-weight: 400 !important;
-  color: #fff !important;
-  margin: 0 !important;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
-}
-
-/* 内容区域 */
-.main-content {
-  max-width: 1200px !important;
-  margin: 0 auto !important;
-  padding: 40px 20px !important;
-}
-
-/* 移除导航栏隐藏 */
-.site-header .masthead, .site-header .site-nav, .site-header .nav__list {
-  display: block !important;
-}
-
-/* 显示导航栏左侧 V-Lumen 并设为绿色 */
-.site-logo {
-  display: none !important;
-}
-
-.site-header .site-title {
-  display: block !important;
-  color: green !important;
-  font-size: 1.5rem !important;
-  font-weight: 700 !important;
-  margin-right: 20px !important;
-}
-
-/* 导航栏样式 */
+/* Header Styles */
 .site-header .masthead {
-  background-color: rgba(0, 0, 0, 0.7) !important;
-  position: fixed !important;
-  top: 0 !important;
-  width: 100% !important;
-  z-index: 1000 !important;
   display: flex !important;
+  justify-content: space-between !important;
   align-items: center !important;
   padding: 10px 20px !important;
-  box-sizing: border-box !important;
+  background-color: #fff !important;
+  border-bottom: 1px solid #e0e0e0 !important;
 }
 
-.site-header .masthead a {
-  color: #fff !important;
-  font-weight: 500 !important;
-}
-
-.site-header .masthead a:hover {
-  color: #ddd !important;
-  text-decoration: none !important;
-}
-
-/* 调整导航栏内部布局 */
-.site-header .wrapper {
+.site-header .left {
   display: flex !important;
   align-items: center !important;
-  justify-content: space-between !important;
 }
 
-.site-header .site-nav {
-  display: flex !important;
-  align-items: center !important;
+.site-title {
+  font-size: 18px !important;
+  margin: 0 20px 0 0 !important;
+  color: #005566 !important;
 }
 
 .site-header .nav__list {
@@ -135,7 +54,234 @@ html, body {
 }
 
 .site-header .nav__list li {
-  margin-left: 20px !important;
+  margin-right: 15px !important;
+}
+
+.site-header .nav__list a {
+  color: #000 !important;
+  text-decoration: none !important;
+  font-size: 14px !important;
+}
+
+.site-header .nav__list a:hover {
+  color: #005566 !important;
+}
+
+.header-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 15px !important;
+}
+
+.language-switch {
+  text-decoration: none !important;
+  color: #000 !important;
+  font-size: 14px !important;
+}
+
+.header-right i {
+  color: #005566 !important;
+}
+
+/* Hero Section */
+.hero {
+  position: relative !important;
+  width: 100% !important;
+  height: 600px !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.hero-content {
+  position: absolute !important;
+  left: 5% !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  text-align: left !important;
+  color: #fff !important;
+  max-width: 600px !important;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem !important;
+  margin: 0 0 10px !important;
+  font-weight: 700 !important;
+}
+
+.hero-content p {
+  font-size: 1.5rem !important;
+  margin: 0 !important;
+}
+
+/* Main Content Container */
+.main-content {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 40px 20px !important;
+}
+
+/* Expertise Section */
+.expertise-section {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 20px !important;
+  padding: 40px !important;
+  border-top: 1px solid #ccc !important;
+  border-bottom: 1px solid #ccc !important;
+  background-color: #f9f9f9 !important;
+}
+
+.expertise-section h2 {
+  grid-column: 1 / -1 !important;
+  text-align: center !important;
+  margin-bottom: 30px !important;
+}
+
+.expertise-item {
+  padding: 20px !important;
+  border-right: 1px solid #ccc !important;
+}
+
+.expertise-item:last-child {
+  border-right: none !important;
+}
+
+.expertise-item h3 {
+  font-size: 1.2rem !important;
+  margin-bottom: 10px !important;
+}
+
+.expertise-item h3 a {
+  text-decoration: none !important;
+  color: #2c3e50 !important;
+}
+
+.expertise-item p {
+  font-size: 0.9rem !important;
+  color: #666 !important;
+}
+
+/* Solution Section */
+.solution-section {
+  background-color: #e6f0fa !important;
+  padding: 40px !important;
+  text-align: center !important;
+  border-top: 1px solid #ccc !important;
+  border-bottom: 1px solid #ccc !important;
+}
+
+.solution-section h2 {
+  margin-bottom: 20px !important;
+}
+
+.solution-section .btn {
+  display: inline-block !important;
+  padding: 10px 20px !important;
+  background-color: #005566 !important;
+  color: #fff !important;
+  text-decoration: none !important;
+  border-radius: 5px !important;
+}
+
+/* Blog Section */
+.blog-section {
+  padding: 40px !important;
+}
+
+.blog-section h2 {
+  text-align: center !important;
+  margin-bottom: 30px !important;
+}
+
+.blog-posts {
+  display: flex !important;
+  gap: 20px !important;
+}
+
+.blog-post {
+  flex: 1 !important;
+  padding: 20px !important;
+  background-color: #f9f9f9 !important;
+  border: 1px solid #e0e0e0 !important;
+}
+
+.blog-post img {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.blog-post h3 {
+  font-size: 1.2rem !important;
+  margin: 10px 0 !important;
+}
+
+.blog-post p {
+  font-size: 0.9rem !important;
+  color: #666 !important;
+}
+
+/* Why V-Lumen Section */
+.why-vlumen {
+  padding: 40px !important;
+  background-color: #fff !important;
+  text-align: center !important;
+}
+
+.why-vlumen h2 {
+  margin-bottom: 30px !important;
+}
+
+.reasons {
+  display: flex !important;
+  justify-content: space-around !important;
+  gap: 20px !important;
+}
+
+.reason {
+  max-width: 300px !important;
+  text-align: center !important;
+}
+
+.reason i {
+  color: #005566 !important;
+  margin-bottom: 10px !important;
+}
+
+.reason h3 {
+  font-size: 1.2rem !important;
+  margin-bottom: 10px !important;
+}
+
+.reason p {
+  font-size: 0.9rem !important;
+  color: #666 !important;
+}
+
+/* Map Section */
+.map-section {
+  padding: 40px !important;
+  text-align: center !important;
+  background-color: #f9f9f9 !important;
+}
+
+.map-section h2 {
+  margin-bottom: 20px !important;
+}
+
+.map-section p {
+  margin-bottom: 20px !important;
+  font-size: 1rem !important;
+  color: #666 !important;
+}
+
+.map {
+  margin-top: 20px !important;
+  height: 300px !important;
+  background-color: #ddd !important;
 }
 
 /* 隐藏导航栏中的搜索图标 */
@@ -151,7 +297,4 @@ html, body {
 /* 隐藏社交分享或 RSS 图标 */
 .site-header .masthead .social-links {
   display: none !important;
-}
-body {
-  background-color: red !important;
 }
