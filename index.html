@@ -55,6 +55,12 @@
       background-color: #f9fafb;
     }
 
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
     /* Header Styles */
     .masthead {
       display: flex;
@@ -101,19 +107,51 @@
 
     .nav__list li {
       margin-right: 20px;
+      position: relative;
     }
 
     .nav__list a {
       color: #000;
       text-decoration: none;
-      font-size: 16px;
-      font-weight: 500;
+      font-size: 18px;
+      font-weight: 600;
       transition: color 0.3s ease;
     }
 
     .nav__list a:hover {
       color: #005566;
       text-decoration: underline;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      min-width: 200px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      z-index: 1;
+      border-radius: 5px;
+      top: 100%;
+      left: 0;
+    }
+
+    .dropdown-content a {
+      color: #333;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+      color: #005566;
+      text-decoration: none;
     }
 
     .header-right {
@@ -163,6 +201,16 @@
       transition: opacity 1s ease-in-out;
     }
 
+    .carousel-slide::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.6));
+    }
+
     .carousel-slide.active {
       opacity: 1;
     }
@@ -177,6 +225,7 @@
       max-width: 1600px;
       width: 100%;
       padding-left: 20px;
+      z-index: 1;
     }
 
     .hero-content h1 {
@@ -207,6 +256,7 @@
       transform: translateX(-50%);
       display: flex;
       gap: 10px;
+      z-index: 1;
     }
 
     .dot {
@@ -226,8 +276,8 @@
     .expertise-section {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      padding: 40px 20px;
+      gap: 30px;
+      padding: 60px 20px;
       border-top: 1px solid #ccc;
       border-bottom: 1px solid #ccc;
       background-color: #f9f9f9;
@@ -242,6 +292,7 @@
       font-size: 1.5rem;
       font-weight: 700;
       padding-left: 20px;
+      animation: fadeIn 1s ease-in;
     }
 
     .expertise-item {
@@ -249,7 +300,12 @@
       border: 1px solid #e0e0e0;
       border-radius: 5px;
       background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .expertise-item:hover {
+      transform: scale(1.03);
     }
 
     .expertise-item h3 {
@@ -262,6 +318,10 @@
     .expertise-item h3 a {
       text-decoration: none;
       color: #2c3e50;
+    }
+
+    .expertise-item h3 a:hover {
+      color: #005566;
     }
 
     .expertise-item p {
@@ -279,8 +339,8 @@
 
     /* Solution Section */
     .solution-section {
-      background-color: #f5f5f5;
-      padding: 40px 0;
+      background: linear-gradient(180deg, #E5E5E5, #f9f9f9);
+      padding: 80px 0;
       text-align: center;
       border-top: 1px solid #ccc;
       border-bottom: 1px solid #ccc;
@@ -289,33 +349,41 @@
       box-sizing: border-box;
     }
 
-    .solution-section h2 {
-      margin-bottom: 20px;
-      font-size: 1.5rem;
+    .solution-section .mission-content {
       max-width: 1600px;
       margin-left: auto;
       margin-right: auto;
       text-align: center;
     }
 
-    .solution-section .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #005566;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
-      font-size: 1rem;
-      transition: background-color 0.3s ease;
+    .solution-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      color: #333;
+      font-weight: 700;
+      margin: 0 0 10px;
+      animation: fadeIn 1s ease-in;
     }
 
-    .solution-section .btn:hover {
-      background-color: #007a8c;
+    .solution-section .divider {
+      width: 200px;
+      height: 2px;
+      background-color: #005566;
+      margin: 10px auto;
+    }
+
+    .solution-section p {
+      font-family: 'Helvetica', Arial, sans-serif;
+      font-size: 16px;
+      color: #666;
+      margin: 0;
+      line-height: 1.5;
     }
 
     /* Blog Section */
     .blog-section {
-      padding: 40px 20px;
+      padding: 60px 20px;
+      background-color: #fff;
       max-width: 1600px;
       margin: 0 auto;
     }
@@ -325,6 +393,7 @@
       margin-bottom: 30px;
       font-size: 1.5rem;
       padding-left: 20px;
+      animation: fadeIn 1s ease-in;
     }
 
     .blog-posts {
@@ -338,7 +407,12 @@
       background-color: #fff;
       border: 1px solid #e0e0e0;
       border-radius: 5px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .blog-post:hover {
+      transform: scale(1.03);
     }
 
     .blog-post img {
@@ -354,6 +428,15 @@
       margin: 10px 0;
     }
 
+    .blog-post h3 a {
+      color: #2c3e50;
+      text-decoration: none;
+    }
+
+    .blog-post h3 a:hover {
+      color: #005566;
+    }
+
     .blog-post p {
       font-size: 0.9rem;
       color: #666;
@@ -362,7 +445,7 @@
 
     /* Why V-Lumen Section */
     .why-vlumen {
-      padding: 40px 20px;
+      padding: 60px 20px;
       background-color: #fff;
       text-align: center;
       max-width: 1600px;
@@ -374,19 +457,20 @@
       font-size: 1.5rem;
       text-align: left;
       padding-left: 20px;
+      animation: fadeIn 1s ease-in;
     }
 
     .reasons {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 30px;
       margin-bottom: 20px;
     }
 
     .reasons-row-2 {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
+      gap: 30px;
     }
 
     .reason {
@@ -396,8 +480,13 @@
       border: 1px solid #e0e0e0;
       border-radius: 5px;
       background-color: #fff;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
       margin: 0 auto;
+      transition: transform 0.3s ease;
+    }
+
+    .reason:hover {
+      transform: scale(1.03);
     }
 
     .reason i {
@@ -420,7 +509,7 @@
 
     /* Map Section */
     .map-section {
-      padding: 40px 20px;
+      padding: 60px 20px;
       text-align: center;
       background-color: #f9f9f9;
       max-width: 1600px;
@@ -432,6 +521,7 @@
       font-size: 1.5rem;
       text-align: left;
       padding-left: 20px;
+      animation: fadeIn 1s ease-in;
     }
 
     .map-section p {
@@ -452,41 +542,26 @@
 
     .locations-list {
       margin-top: 30px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
       padding: 0 20px;
     }
 
-    .locations-column {
-      flex: 1;
-      min-width: 300px;
-      margin-right: 20px;
-    }
-
-    .locations-column:last-child {
-      margin-right: 0;
-    }
-
-    .locations-column ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .locations-column ul li {
+    .location-item {
+      background-color: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 5px;
+      padding: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      text-align: center;
       font-size: 0.9rem;
       color: #333;
-      margin-bottom: 10px;
-      position: relative;
-      padding-left: 20px;
+      transition: transform 0.3s ease;
     }
 
-    .locations-column ul li::before {
-      content: '•';
-      color: #005566;
-      position: absolute;
-      left: 0;
-      font-size: 1.2rem;
+    .location-item:hover {
+      transform: scale(1.03);
     }
 
     /* Footer Section */
@@ -556,6 +631,7 @@
       display: flex;
       justify-content: space-between;
       font-size: 0.9rem;
+      align-items: center;
     }
   </style>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -567,7 +643,15 @@
     <div class="left">
       <h1 class="site-title"><a href="/">V-Lumen</a></h1>
       <ul class="nav__list">
-        <li><a href="#">Products</a></li>
+        <li class="dropdown">
+          <a href="#">Products</a>
+          <div class="dropdown-content">
+            <a href="/fiber-optic-automation/">Fiber Optic Automation Solutions</a>
+            <a href="/passive-fiber-optical/">Passive Fiber Optical Product</a>
+            <a href="/precision-tools/">Precision Tools and Accessories for Fiber Optics</a>
+            <a href="/custom-solutions/">Custom Fiber Optic Solutions</a>
+          </div>
+        </li>
         <li><a href="#">Services</a></li>
         <li><a href="#">Our Other Site</a></li>
         <li><a href="#">Contact Us</a></li>
@@ -636,8 +720,11 @@
 
   <!-- Solution -->
   <section class="solution-section">
-    <h2>Find the right fiber optic solution for your project</h2>
-    <a href="#" class="btn">Explore Solutions</a>
+    <div class="mission-content">
+      <h2>Our Mission</h2>
+      <div class="divider"></div>
+      <p>Deliver the Most Eco-Friendly and Cost-Effective Products with Lifetime Free Consulting</p>
+    </div>
   </section>
   <div class="section-divider"></div>
 
@@ -647,12 +734,12 @@
     <div class="blog-posts">
       <div class="blog-post">
         <img src="/assets/images/myanmar-earthquake.jpg" alt="Myanmar Earthquake">
-        <h3>Myanmar Earthquake: Offering Fiber Optic Support</h3>
+        <h3><a href="#">Myanmar Earthquake: Offering Fiber Optic Support</a></h3>
         <p>We are actively reaching out to assess if basic fiber optic products are needed for aid following the recent Myanmar earthquake.</p>
       </div>
       <div class="blog-post">
         <img src="/assets/images/swiss-research.jpg" alt="Swiss Research">
-        <h3>V-Lumen Collaborates with Swiss Research Institute on Fiber Ferrule Innovation</h3>
+        <h3><a href="#">V-Lumen Collaborates with Swiss Research Institute on Fiber Ferrule Innovation</a></h3>
         <p>V-Lumen is working with a Swiss research institute to develop a fiber ferrule solution that could replace traditional ceramic materials.</p>
       </div>
     </div>
@@ -697,28 +784,20 @@
   <!-- Map -->
   <section class="map-section">
     <h2>Our Global On-Site Services</h2>
-    <p>We provide technical support at the following locations (not branch offices):</p>
+    <p>We provide technical support at the following locations (excluding Guangzhou). Our staff are all professional fiber optic technicians.</p>
     <div id="map" class="map"></div>
     <div class="locations-list">
-      <div class="locations-column">
-        <ul>
-          <li>Shanghai, China</li>
-          <li>Guangzhou, China</li>
-          <li>Taipei, Taiwan</li>
-          <li>Sydney, Australia</li>
-          <li>Guaymas, Mexico</li>
-          <li>Ho Chi Minh City, Vietnam</li>
-        </ul>
-      </div>
-      <div class="locations-column">
-        <ul>
-          <li>Detroit, Michigan, USA</li>
-          <li>Gdansk, Poland</li>
-          <li>Sousse, Tunisia</li>
-          <li>Gurugram, India</li>
-          <li>Rome, Italy</li>
-        </ul>
-      </div>
+      <div class="location-item">Detroit, Michigan, USA</div>
+      <div class="location-item">Gdansk, Poland</div>
+      <div class="location-item">Guaymas, Mexico</div>
+      <div class="location-item">Gurugram, India</div>
+      <div class="location-item">Ho Chi Minh City, Vietnam</div>
+      <div class="location-item">Rio de Janeiro, Brazil</div>
+      <div class="location-item">Rome, Italy</div>
+      <div class="location-item">Shanghai, China</div>
+      <div class="location-item">Sousse, Tunisia</div>
+      <div class="location-item">Sydney, Australia</div>
+      <div class="location-item">Taipei, Taiwan</div>
     </div>
   </section>
   <div class="section-divider"></div>
@@ -784,8 +863,7 @@
 
     // Cities to highlight
     var cities = [
-      { name: "Shanghai, China", coords: [31.2304, 121.4737], info: "Technical support for fiber optic services" },
-      { name: "Guangzhou, China", coords: [23.1291, 113.2644], info: "Technical support for fiber optic services" },
+      { name: "Shanghai  "Shanghai, China", coords: [31.2304, 121.4737], info: "Technical support for fiber optic services" },
       { name: "Taipei, Taiwan", coords: [25.0330, 121.5654], info: "Technical support for fiber optic services" },
       { name: "Sydney, Australia", coords: [-33.8688, 151.2093], info: "Technical support for fiber optic services" },
       { name: "Guaymas, Mexico", coords: [27.9220, -110.8997], info: "Technical support for fiber optic services" },
@@ -794,7 +872,8 @@
       { name: "Sousse, Tunisia", coords: [35.8245, 10.6347], info: "Technical support for fiber optic services" },
       { name: "Gurugram, India", coords: [28.4595, 77.0266], info: "Technical support for fiber optic services" },
       { name: "Rome, Italy", coords: [41.9028, 12.4964], info: "Technical support for fiber optic services" },
-      { name: "Ho Chi Minh City, Vietnam", coords: [10.8231, 106.6297], info: "Technical support for fiber optic services" }
+      { name: "Ho Chi Minh City, Vietnam", coords: [10.8231, 106.6297], info: "Technical support for fiber optic services" },
+      { name: "Rio de Janeiro, Brazil", coords: [-22.9068, -43.1729], info: "Technical support for fiber optic services" }
     ];
 
     // Add markers for each city
