@@ -1,0 +1,428 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>V-Lumen</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Helvetica', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      background-color: #f9fafb;
+    }
+
+    /* Header Styles */
+    .masthead {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #fff;
+      border-bottom: 1px solid #e0e0e0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      margin-left: 0;
+    }
+
+    .site-title {
+      font-size: 14px;
+      margin: 0 15px 0 0;
+      color: #005566;
+      font-weight: 600;
+    }
+
+    .nav__list {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav__list li {
+      margin-right: 15px;
+    }
+
+    .nav__list a {
+      color: #000;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 400;
+    }
+
+    .nav__list a:hover {
+      color: #005566;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .language-switch {
+      text-decoration: none;
+      color: #000;
+      font-size: 13px;
+    }
+
+    .header-right i {
+      color: #005566;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 350px;
+      background: url('/assets/images/hero.jpg') no-repeat center/cover;
+    }
+
+    .hero-content {
+      position: absolute;
+      left: 2%;
+      top: 50%;
+      transform: translateY(-50%);
+      text-align: left;
+      color: #fff;
+      max-width: 40%;
+    }
+
+    .hero-content h1 {
+      font-size: 2.5rem;
+      margin: 0 0 10px;
+      font-weight: 700;
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+      margin: 0;
+    }
+
+    /* Expertise Section */
+    .expertise-section {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      padding: 40px 20px;
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      background-color: #f9f9f9;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .expertise-section h2 {
+      grid-column: 1 / -1;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+    }
+
+    .expertise-item {
+      padding: 20px;
+      border-right: 1px solid #ccc;
+    }
+
+    .expertise-item:last-child {
+      border-right: none;
+    }
+
+    .expertise-item h3 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+
+    .expertise-item h3 a {
+      text-decoration: none;
+      color: #2c3e50;
+    }
+
+    .expertise-item p {
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    /* Solution Section */
+    .solution-section {
+      background-color: #e6f0fa;
+      padding: 40px 0;
+      text-align: center;
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      width: 100%;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    .solution-section h2 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+
+    .solution-section .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #005566;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    /* Blog Section */
+    .blog-section {
+      padding: 40px 20px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .blog-section h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+    }
+
+    .blog-posts {
+      display: flex;
+      gap: 20px;
+    }
+
+    .blog-post {
+      flex: 1;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border: 1px solid #e0e0e0;
+    }
+
+    .blog-post img {
+      width: 100%;
+      height: auto;
+    }
+
+    .blog-post h3 {
+      font-size: 1.1rem;
+      margin: 10px 0;
+    }
+
+    .blog-post p {
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    /* Why V-Lumen Section */
+    .why-vlumen {
+      padding: 40px 20px;
+      background-color: #fff;
+      text-align: center;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .why-vlumen h2 {
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+    }
+
+    .reasons {
+      display: flex;
+      justify-content: space-around;
+      gap: 20px;
+    }
+
+    .reason {
+      max-width: 300px;
+      text-align: center;
+    }
+
+    .reason i {
+      color: #005566;
+      margin-bottom: 10px;
+    }
+
+    .reason h3 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+
+    .reason p {
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    /* Map Section */
+    .map-section {
+      padding: 40px 20px;
+      text-align: center;
+      background-color: #f9f9f9;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .map-section h2 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+
+    .map-section p {
+      margin-bottom: 20px;
+      font-size: 1rem;
+      color: #666;
+    }
+
+    .map {
+      margin-top: 20px;
+      height: 300px;
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="masthead">
+    <div class="left">
+      <h1 class="site-title">V-Lumen</h1>
+      <ul class="nav__list">
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Our Other Site</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="header-right">
+      <a href="#" class="language-switch">EN | 中文</a>
+      <a href="#" class="icon-search"><i class="fas fa-search"></i></a>
+      <a href="#" class="icon-contact"><i class="fas fa-envelope"></i></a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>V-Lumen</h1>
+      <p>Beyond lights, Beyond limits</p>
+    </div>
+  </section>
+
+  <!-- Expertise -->
+  <section class="expertise-section">
+    <h2>Our Expertise in Your Market</h2>
+    <div class="expertise-item">
+      <h3><a href="/fiber-optic-automation/">Fiber Optic Automation Solutions</a></h3>
+      <p>Advanced automation systems for seamless fiber optic integration and performance optimization.</p>
+    </div>
+    <div class="expertise-item">
+      <h3><a href="/passive-fiber-optical/">Passive Fiber Optical Product</a></h3>
+      <p>High-quality passive components for reliable and efficient fiber optic networks.</p>
+    </div>
+    <div class="expertise-item">
+      <h3><a href="/precision-tools/">Precision Tools and Accessories for Fiber Optics</a></h3>
+      <p>Specialized tools and accessories to enhance precision in fiber optic installations.</p>
+    </div>
+    <div class="expertise-item">
+      <h3><a href="/custom-solutions/">Custom Fiber Optic Solutions</a></h3>
+      <p>Tailored fiber optic solutions to meet your unique connectivity challenges.</p>
+    </div>
+  </section>
+
+  <!-- Solution -->
+  <section class="solution-section">
+    <h2>Find the right fiber optic solution for your project</h2>
+    <a href="#" class="btn">Explore Solutions</a>
+  </section>
+
+  <!-- Blog -->
+  <section class="blog-section">
+    <h2>Our Latest Blogs</h2>
+    <div class="blog-posts">
+      <div class="blog-post">
+        <img src="/assets/images/update1.jpg" alt="Update 1">
+        <h3>New Product Launch</h3>
+        <p>We are excited to announce the launch of our new fiber optic product line.</p>
+      </div>
+      <div class="blog-post">
+        <img src="/assets/images/update2.jpg" alt="Update 2">
+        <h3>Industry Event Participation</h3>
+        <p>V-Lumen will be participating in the upcoming Fiber Optics Conference.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why V-Lumen -->
+  <section class="why-vlumen">
+    <h2>Why V-Lumen</h2>
+    <div class="reasons">
+      <div class="reason">
+        <i class="fas fa-globe fa-2x"></i>
+        <h3>Global Presence</h3>
+        <p>With partners in Brazil, USA, Mexico, Australia, Poland, Tunisia, and India, we offer on-site services worldwide.</p>
+      </div>
+      <div class="reason">
+        <i class="fas fa-tools fa-2x"></i>
+        <h3>Expert Support</h3>
+        <p>Our team provides tailored solutions for your needs.</p>
+      </div>
+      <div class="reason">
+        <i class="fas fa-headset fa-2x"></i>
+        <h3>Lifetime Consulting</h3>
+        <p>Unlike most Chinese competitors, we offer not only cost-effective products but also lifetime consulting support for your success.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map -->
+  <section class="map-section">
+    <h2>Our Global On-Site Services</h2>
+    <p>With partners in Brazil, USA, Mexico, Australia, Poland, Tunisia, and India, we provide expert on-site services.</p>
+    <div class="map">
+      <p>Map placeholder</p>
+    </div>
+  </section>
+</body>
+</html>
