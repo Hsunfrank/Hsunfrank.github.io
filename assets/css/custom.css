@@ -1,6 +1,6 @@
 /* 全局样式 */
 body {
-  font-family: Arial, sans-serif !important;
+  font-family: 'Helvetica', Arial, sans-serif !important;
   color: #333 !important;
   background-color: #f9fafb !important;
   margin: 0 !important;
@@ -33,17 +33,22 @@ html, body {
   padding: 10px 20px !important;
   background-color: #fff !important;
   border-bottom: 1px solid #e0e0e0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .site-header .left {
   display: flex !important;
   align-items: center !important;
+  margin-left: 0 !important;
 }
 
 .site-title {
-  font-size: 18px !important;
-  margin: 0 20px 0 0 !important;
+  font-size: 16px !important;
+  margin: 0 15px 0 0 !important;
   color: #005566 !important;
+  font-family: 'Helvetica', Arial, sans-serif !important;
+  font-weight: 700 !important;
 }
 
 .site-header .nav__list {
@@ -61,6 +66,7 @@ html, body {
   color: #000 !important;
   text-decoration: none !important;
   font-size: 14px !important;
+  font-family: 'Helvetica', Arial, sans-serif !important;
 }
 
 .site-header .nav__list a:hover {
@@ -77,6 +83,7 @@ html, body {
   text-decoration: none !important;
   color: #000 !important;
   font-size: 14px !important;
+  font-family: 'Helvetica', Arial, sans-serif !important;
 }
 
 .header-right i {
@@ -87,7 +94,7 @@ html, body {
 .hero {
   position: relative !important;
   width: 100% !important;
-  height: 600px !important;
+  height: 400px !important;
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
@@ -98,30 +105,34 @@ html, body {
 
 .hero-content {
   position: absolute !important;
-  left: 5% !important;
+  left: 3% !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
   text-align: left !important;
   color: #fff !important;
-  max-width: 600px !important;
+  max-width: 50% !important;
 }
 
 .hero-content h1 {
-  font-size: 3.5rem !important;
-  margin: 0 0 10px !important;
+  font-size: 3rem !important;
+  font-family: 'Helvetica', Arial, sans-serif !important;
   font-weight: 700 !important;
+  margin: 0 0 10px !important;
 }
 
 .hero-content p {
-  font-size: 1.5rem !important;
+  font-size: 1.2rem !important;
+  font-family: 'Helvetica', Arial, sans-serif !important;
   margin: 0 !important;
 }
 
 /* Main Content Container */
 .main-content {
-  max-width: 1200px !important;
+  max-width: 1400px !important;
   margin: 0 auto !important;
   padding: 40px 20px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 /* Expertise Section */
@@ -168,14 +179,18 @@ html, body {
 /* Solution Section */
 .solution-section {
   background-color: #e6f0fa !important;
-  padding: 40px !important;
+  padding: 40px 0 !important;
   text-align: center !important;
   border-top: 1px solid #ccc !important;
   border-bottom: 1px solid #ccc !important;
+  width: 100% !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
 }
 
 .solution-section h2 {
   margin-bottom: 20px !important;
+  font-family: 'Helvetica', Arial, sans-serif !important;
 }
 
 .solution-section .btn {
@@ -185,6 +200,7 @@ html, body {
   color: #fff !important;
   text-decoration: none !important;
   border-radius: 5px !important;
+  font-family: 'Helvetica', Arial, sans-serif !important;
 }
 
 /* Blog Section */
