@@ -215,6 +215,16 @@
       opacity: 1;
     }
 
+    .carousel-slide.error {
+      background: #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
     .hero-content {
       position: absolute;
       left: 50%;
@@ -423,6 +433,16 @@
       padding-bottom: 10px;
     }
 
+    .blog-post img.error {
+      background: #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1rem;
+      text-align: center;
+    }
+
     .blog-post h3 {
       font-size: 1rem;
       margin: 10px 0;
@@ -540,6 +560,16 @@
       border-radius: 5px;
     }
 
+    .map.error {
+      background: #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
     .locations-list {
       margin-top: 30px;
       display: grid;
@@ -634,8 +664,6 @@
       align-items: center;
     }
   </style>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
   <!-- Header -->
@@ -823,10 +851,38 @@
     </div>
   </footer>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
+    // Check if images are loaded
+    const slides = document.querySelectorAll('.carousel-slide');
+    const blogImages = document.querySelectorAll('.blog-post img');
+    
+    slides.forEach(slide => {
+      const bgImage = slide.style.backgroundImage.slice(5, -2);
+      const img = new Image();
+      img.src = bgImage;
+      img.onload = () => console.log(`${bgImage} loaded successfully`);
+      img.onerror = () => {
+        slide.classList.add('error');
+        slide.style.backgroundImage = 'none';
+        slide.innerHTML = '<div class="hero-content">Image failed to load. Please check the path: ' + bgImage + '</div>';
+      };
+    });
+
+    blogImages.forEach(img => {
+      const src = img.src;
+      const testImg = new Image();
+      testImg.src = src;
+      testImg.onload = () => console.log(`${src} loaded successfully`);
+      testImg.onerror = () => {
+        img.classList.add('error');
+        img.src = '';
+        img.alt = 'Image failed to load. Please check the path: ' + src;
+      };
+    });
+
     // Carousel functionality
     let currentIndex = 0;
-    const slides = document.querySelectorAll('.carousel-slide');
     const dots = document.querySelectorAll('.dot');
 
     function showSlide(index) {
@@ -854,34 +910,40 @@
     setInterval(autoPlay, 5000);
 
     // Initialize Leaflet map
-    var map = L.map('map').setView([20, 0], 2);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 19
-    }).addTo(map);
+    try {
+      var map = L.map('map').setView([20, 0], 2);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19
+      }).addTo(map);
 
-    // Cities to highlight
-    var cities = [
-      { name: "Shanghai  "Shanghai, China", coords: [31.2304, 121.4737], info: "Technical support for fiber optic services" },
-      { name: "Taipei, Taiwan", coords: [25.0330, 121.5654], info: "Technical support for fiber optic services" },
-      { name: "Sydney, Australia", coords: [-33.8688, 151.2093], info: "Technical support for fiber optic services" },
-      { name: "Guaymas, Mexico", coords: [27.9220, -110.8997], info: "Technical support for fiber optic services" },
-      { name: "Detroit, Michigan, USA", coords: [42.3314, -83.0458], info: "Technical support for fiber optic services" },
-      { name: "Gdansk, Poland", coords: [54.3520, 18.6466], info: "Technical support for fiber optic services" },
-      { name: "Sousse, Tunisia", coords: [35.8245, 10.6347], info: "Technical support for fiber optic services" },
-      { name: "Gurugram, India", coords: [28.4595, 77.0266], info: "Technical support for fiber optic services" },
-      { name: "Rome, Italy", coords: [41.9028, 12.4964], info: "Technical support for fiber optic services" },
-      { name: "Ho Chi Minh City, Vietnam", coords: [10.8231, 106.6297], info: "Technical support for fiber optic services" },
-      { name: "Rio de Janeiro, Brazil", coords: [-22.9068, -43.1729], info: "Technical support for fiber optic services" }
-    ];
+      // Cities to highlight
+      var cities = [
+        { name: "Shanghai, China", coords: [31.2304, 121.4737], info: "Technical support for fiber optic services" },
+        { name: "Taipei, Taiwan", coords: [25.0330, 121.5654], info: "Technical support for fiber optic services" },
+        { name: "Sydney, Australia", coords: [-33.8688, 151.2093], info: "Technical support for fiber optic services" },
+        { name: "Guaymas, Mexico", coords: [27.9220, -110.8997], info: "Technical support for fiber optic services" },
+        { name: "Detroit, Michigan, USA", coords: [42.3314, -83.0458], info: "Technical support for fiber optic services" },
+        { name: "Gdansk, Poland", coords: [54.3520, 18.6466], info: "Technical support for fiber optic services" },
+        { name: "Sousse, Tunisia", coords: [35.8245, 10.6347], info: "Technical support for fiber optic services" },
+        { name: "Gurugram, India", coords: [28.4595, 77.0266], info: "Technical support for fiber optic services" },
+        { name: "Rome, Italy", coords: [41.9028, 12.4964], info: "Technical support for fiber optic services" },
+        { name: "Ho Chi Minh City, Vietnam", coords: [10.8231, 106.6297], info: "Technical support for fiber optic services" },
+        { name: "Rio de Janeiro, Brazil", coords: [-22.9068, -43.1729], info: "Technical support for fiber optic services" }
+      ];
 
-    // Add markers for each city
-    cities.forEach(function(city) {
-      L.marker(city.coords).addTo(map)
-        .bindPopup(`<b>${city.name}</b><br>${city.info}`)
-        .openPopup();
-    });
+      // Add markers for each city
+      cities.forEach(function(city) {
+        L.marker(city.coords).addTo(map)
+          .bindPopup(`<b>${city.name}</b><br>${city.info}`)
+          .openPopup();
+      });
+    } catch (e) {
+      document.getElementById('map').classList.add('error');
+      document.getElementById('map').innerHTML = 'Failed to load map. Please check your internet connection or Leaflet resources.';
+      console.error('Map initialization failed:', e);
+    }
   </script>
 </body>
 </html>
