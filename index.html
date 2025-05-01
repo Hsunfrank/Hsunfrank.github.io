@@ -56,7 +56,7 @@
     /* Header Styles */
     .masthead {
       display: flex;
-      justify-content: space-between;
+      justify-content: center; /* 居中 */
       align-items: center;
       padding: 10px 20px;
       background-color: #fff;
@@ -68,14 +68,14 @@
     .left {
       display: flex;
       align-items: center;
-      margin-left: 0;
+      justify-content: center; /* 确保内部内容也居中 */
     }
 
     .site-title {
-      font-size: 14px;
-      margin: 0 15px 0 0;
+      font-size: 18px; /* 增大字体 */
+      margin: 0 20px 0 0;
       color: #005566;
-      font-weight: 600;
+      font-weight: 700; /* 加粗 */
     }
 
     .nav__list {
@@ -86,14 +86,14 @@
     }
 
     .nav__list li {
-      margin-right: 15px;
+      margin-right: 20px;
     }
 
     .nav__list a {
       color: #000;
       text-decoration: none;
-      font-size: 13px;
-      font-weight: 400;
+      font-size: 16px; /* 增大字体 */
+      font-weight: 600; /* 加粗 */
     }
 
     .nav__list a:hover {
@@ -104,6 +104,8 @@
       display: flex;
       align-items: center;
       gap: 15px;
+      position: absolute;
+      right: 20px;
     }
 
     .language-switch {
@@ -126,23 +128,31 @@
 
     .hero-content {
       position: absolute;
-      left: 2%;
+      left: 50%;
       top: 50%;
-      transform: translateY(-50%);
-      text-align: left;
+      transform: translate(-50%, -50%); /* 居中 */
+      text-align: center;
       color: #fff;
-      max-width: 40%;
+      max-width: 80%;
     }
 
     .hero-content h1 {
-      font-size: 2.5rem;
+      font-size: 2rem; /* 减小字体 */
       margin: 0 0 10px;
       font-weight: 700;
     }
 
+    .hero-content .divider {
+      width: 50px;
+      height: 2px;
+      background-color: #fff;
+      margin: 10px auto;
+    }
+
     .hero-content p {
-      font-size: 1.1rem;
+      font-size: 1rem; /* 减小字体 */
       margin: 0;
+      line-height: 1.5;
     }
 
     /* Expertise Section */
@@ -162,7 +172,8 @@
       grid-column: 1 / -1;
       text-align: center;
       margin-bottom: 30px;
-      font-size: 1.8rem;
+      font-size: 1.5rem; /* 减小字体 */
+      font-weight: 700; /* 加粗 */
     }
 
     .expertise-item {
@@ -175,7 +186,7 @@
     }
 
     .expertise-item h3 {
-      font-size: 1.1rem;
+      font-size: 1rem; /* 减小字体 */
       margin-bottom: 10px;
     }
 
@@ -185,13 +196,21 @@
     }
 
     .expertise-item p {
-      font-size: 0.85rem;
+      font-size: 0.9rem; /* 与标题字体差距缩小 */
       color: #666;
+    }
+
+    .section-divider {
+      width: 100%;
+      max-width: 1600px;
+      height: 1px;
+      background-color: #ccc;
+      margin: 0 auto;
     }
 
     /* Solution Section */
     .solution-section {
-      background-color: #e6f0fa;
+      background-color: #f5f5f5; /* 改为淡灰色 */
       padding: 40px 0;
       text-align: center;
       border-top: 1px solid #ccc;
@@ -203,7 +222,7 @@
 
     .solution-section h2 {
       margin-bottom: 20px;
-      font-size: 1.8rem;
+      font-size: 1.5rem; /* 减小字体 */
     }
 
     .solution-section .btn {
@@ -226,7 +245,7 @@
     .blog-section h2 {
       text-align: center;
       margin-bottom: 30px;
-      font-size: 1.8rem;
+      font-size: 1.5rem; /* 减小字体 */
     }
 
     .blog-posts {
@@ -247,12 +266,12 @@
     }
 
     .blog-post h3 {
-      font-size: 1.1rem;
+      font-size: 1rem;
       margin: 10px 0;
     }
 
     .blog-post p {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: #666;
     }
 
@@ -267,7 +286,7 @@
 
     .why-vlumen h2 {
       margin-bottom: 30px;
-      font-size: 1.8rem;
+      font-size: 1.5rem; /* 减小字体 */
     }
 
     .reasons {
@@ -287,12 +306,12 @@
     }
 
     .reason h3 {
-      font-size: 1.1rem;
+      font-size: 1rem;
       margin-bottom: 10px;
     }
 
     .reason p {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: #666;
     }
 
@@ -307,21 +326,23 @@
 
     .map-section h2 {
       margin-bottom: 20px;
-      font-size: 1.8rem;
+      font-size: 1.5rem; /* 减小字体 */
     }
 
     .map-section p {
       margin-bottom: 20px;
-      font-size: 1rem;
+      font-size: 0.9rem;
       color: #666;
     }
 
     .map {
       margin-top: 20px;
-      height: 300px;
-      background-color: #ddd;
+      height: 400px;
+      width: 100%;
     }
   </style>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
   <!-- Header -->
@@ -345,8 +366,9 @@
   <!-- Hero -->
   <section class="hero">
     <div class="hero-content">
-      <h1>V-Lumen</h1>
-      <p>Beyond lights, Beyond limits</p>
+      <h1>Beyond Lights, Beyond Limits</h1>
+      <div class="divider"></div>
+      <p>We pioneer optical innovation to redefine global connectivity, empowering industries and lives with limitless potential.</p>
     </div>
   </section>
 
@@ -370,12 +392,14 @@
       <p>Tailored fiber optic solutions to meet your unique connectivity challenges.</p>
     </div>
   </section>
+  <div class="section-divider"></div>
 
   <!-- Solution -->
   <section class="solution-section">
     <h2>Find the right fiber optic solution for your project</h2>
     <a href="#" class="btn">Explore Solutions</a>
   </section>
+  <div class="section-divider"></div>
 
   <!-- Blog -->
   <section class="blog-section">
@@ -393,6 +417,7 @@
       </div>
     </div>
   </section>
+  <div class="section-divider"></div>
 
   <!-- Why V-Lumen -->
   <section class="why-vlumen">
@@ -415,14 +440,41 @@
       </div>
     </div>
   </section>
+  <div class="section-divider"></div>
 
   <!-- Map -->
   <section class="map-section">
     <h2>Our Global On-Site Services</h2>
-    <p>With partners in Brazil, USA, Mexico, Australia, Poland, Tunisia, and India, we provide expert on-site services.</p>
-    <div class="map">
-      <p>Map placeholder</p>
-    </div>
+    <p>With partners in Brazil, USA, Mexico, Australia, Poland, Tunisia, India, and China, we provide expert on-site services.</p>
+    <div id="map" class="map"></div>
   </section>
+  <div class="section-divider"></div>
+
+  <script>
+    // Initialize Leaflet map
+    var map = L.map('map').setView([20, 0], 2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Countries to highlight: Brazil, USA, Mexico, Australia, Poland, Tunisia, India, China
+    var countries = [
+      { name: "Brazil", coords: [-14.2350, -51.9253] },
+      { name: "USA", coords: [37.0902, -95.7129] },
+      { name: "Mexico", coords: [23.6345, -102.5528] },
+      { name: "Australia", coords: [-25.2744, 133.7751] },
+      { name: "Poland", coords: [51.9194, 19.1451] },
+      { name: "Tunisia", coords: [33.8869, 9.5375] },
+      { name: "India", coords: [20.5937, 78.9629] },
+      { name: "China", coords: [35.8617, 104.1954] }
+    ];
+
+    // Add markers for each country
+    countries.forEach(function(country) {
+      L.marker(country.coords).addTo(map)
+        .bindPopup(country.name)
+        .openPopup();
+    });
+  </script>
 </body>
 </html>
