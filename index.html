@@ -95,13 +95,11 @@
       font-size: 16px;
     }
 
-    /* Animations */
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
 
-    /* Header Styles */
     .masthead {
       display: flex;
       justify-content: flex-start;
@@ -215,7 +213,6 @@
       color: #007a8c;
     }
 
-    /* Hero Section (Carousel) */
     .hero {
       position: relative;
       width: 100%;
@@ -320,7 +317,6 @@
       opacity: 1;
     }
 
-    /* Section Title Styling */
     .section-title {
       position: relative;
       margin-bottom: 40px;
@@ -341,7 +337,6 @@
       background-color: #005566;
     }
 
-    /* Expertise Section */
     .expertise-section {
       padding: 60px 20px;
       border-top: 1px solid #ccc;
@@ -400,7 +395,6 @@
       margin: 0 auto;
     }
 
-    /* Solution Section */
     .solution-section {
       background: linear-gradient(180deg, #E5E5E5, #f9f9f9);
       padding: 80px 0;
@@ -448,7 +442,6 @@
       border-radius: 5px;
     }
 
-    /* Blog Section */
     .blog-section {
       padding: 60px 20px;
       background-color: #fff;
@@ -513,7 +506,6 @@
       line-height: 1.6;
     }
 
-    /* Why V-Lumen Section */
     .why-vlumen {
       padding: 60px 20px;
       background-color: #fff;
@@ -572,7 +564,6 @@
       line-height: 1.6;
     }
 
-    /* Map Section */
     .map-section {
       padding: 60px 20px;
       text-align: center;
@@ -635,7 +626,6 @@
       transform: scale(1.03);
     }
 
-    /* Footer Section */
     .footer {
       background-color: #4A4A4A;
       color: #fff;
@@ -707,7 +697,6 @@
   </style>
 </head>
 <body>
-  <!-- Header -->
   <header class="masthead">
     <div class="left">
       <h1 class="site-title"><a href="/">V-Lumen</a></h1>
@@ -716,7 +705,7 @@
           <a href="#">Products</a>
           <div class="dropdown-content">
             <a href="/products/fiber-optic-automation.html">Fiber Optic Automation Solutions</a>
-            <a href="/passive-fiber-optical/">Passive Fiber Optical Product</a>
+            <a href="/products/passive-fiber-optical.html">Passive Fiber Optical Product</a>
             <a href="/precision-tools/">Precision Tools and Accessories for Fiber Optics</a>
             <a href="/custom-solutions/">Custom Fiber Optic Solutions</a>
           </div>
@@ -733,7 +722,6 @@
     </div>
   </header>
 
-  <!-- Hero (Carousel) -->
   <section class="hero">
     <div class="carousel">
       <div class="carousel-slide" style="background-image: url('/assets/images/hero1.jpg');">
@@ -765,7 +753,6 @@
     </div>
   </section>
 
-  <!-- Expertise -->
   <section class="expertise-section">
     <h2 class="section-title">Our Expertise in Your Market</h2>
     <div class="expertise-content">
@@ -774,7 +761,7 @@
         <p>Advanced automation systems for seamless fiber optic integration and performance optimization.</p>
       </div>
       <div class="expertise-item">
-        <h3><a href="/passive-fiber-optical/">Passive Fiber Optical Product</a></h3>
+        <h3><a href="/products/passive-fiber-optical.html">Passive Fiber Optical Product</a></h3>
         <p>High-quality passive components for reliable and efficient fiber optic networks.</p>
       </div>
       <div class="expertise-item">
@@ -789,7 +776,6 @@
   </section>
   <div class="section-divider"></div>
 
-  <!-- Solution -->
   <section class="solution-section">
     <div class="mission-content">
       <h2>Our Mission</h2>
@@ -799,7 +785,6 @@
   </section>
   <div class="section-divider"></div>
 
-  <!-- Blog -->
   <section class="blog-section">
     <h2 class="section-title">Our Latest Blogs</h2>
     <div class="blog-posts">
@@ -817,7 +802,6 @@
   </section>
   <div class="section-divider"></div>
 
-  <!-- Why V-Lumen -->
   <section class="why-vlumen">
     <h2 class="section-title">Why V-Lumen</h2>
     <div class="why-vlumen-content">
@@ -854,7 +838,6 @@
   </section>
   <div class="section-divider"></div>
 
-  <!-- Map -->
   <section class="map-section">
     <h2 class="section-title">Our Global On-Site Services</h2>
     <div class="map-content">
@@ -877,7 +860,6 @@
   </section>
   <div class="section-divider"></div>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-left">
@@ -912,7 +894,6 @@
           var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
           var firstSheetName = workbook.SheetNames[0];
           var worksheet = workbook.Sheets[firstSheetName];
-          // Convert sheet to JSON, excluding blank rows
           var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
           var filteredData = jsonData.filter(row => row.some(filledCell));
           var headerRowIndex = filteredData.findIndex((row, index) =>
@@ -932,7 +913,6 @@
       return gk_fileData[filename] || "";
     }
 
-    // Check if images are loaded
     const slides = document.querySelectorAll('.carousel-slide');
     const blogImages = document.querySelectorAll('.blog-post img');
     
@@ -960,7 +940,6 @@
       };
     });
 
-    // Carousel functionality
     let currentIndex = 0;
     const dots = document.querySelectorAll('.dot');
 
@@ -978,17 +957,14 @@
       showSlide(index);
     }
 
-    // Auto play
     function autoPlay() {
       currentIndex = (currentIndex + 1) % slides.length;
       showSlide(currentIndex);
     }
 
-    // Start carousel
     showSlide(currentIndex);
     setInterval(autoPlay, 5000);
 
-    // Initialize Leaflet map
     try {
       var map = L.map('map').setView([20, 0], 2);
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
@@ -997,7 +973,6 @@
         maxZoom: 19
       }).addTo(map);
 
-      // Cities to highlight
       var cities = [
         { name: "Shanghai, China", coords: [31.2304, 121.4737], info: "Technical support for fiber optic services" },
         { name: "Taipei, Taiwan", coords: [25.0330, 121.5654], info: "Technical support for fiber optic services" },
@@ -1012,7 +987,6 @@
         { name: "Rio de Janeiro, Brazil", coords: [-22.9068, -43.1729], info: "Technical support for fiber optic services" }
       ];
 
-      // Add markers for each city
       cities.forEach(function(city) {
         L.marker(city.coords).addTo(map)
           .bindPopup(`<b>${city.name}</b><br>${city.info}`)
@@ -1024,5 +998,5 @@
       console.error('Map initialization failed:', e);
     }
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'939e0501897e12d7',t:'MTc0NjI1NzA3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'939e0501897e12d7',t:'MTc0NjI1NzA3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93aeaa2b8b90adb2',t:'MTc0NjQzMTYxMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
