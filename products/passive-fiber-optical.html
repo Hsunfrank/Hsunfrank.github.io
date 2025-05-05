@@ -1,0 +1,799 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Passive Fiber Optical - V-Lumen</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      background-color: #f9fafb;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* Header Styles */
+    .masthead {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #fff;
+      border-bottom: 1px solid #ccc;
+      width: 100%;
+      box-sizing: border-box;
+      max-width: 1600px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+    }
+
+    .site-title {
+      font-family: 'Cinzel', serif;
+      font-size: 28px;
+      color: #008000;
+      font-weight: 700;
+      margin: 0 20px 0 0;
+    }
+
+    .site-title a {
+      color: #008000;
+      text-decoration: none;
+    }
+
+    .site-title a:hover {
+      color: #006400;
+    }
+
+    .nav__list {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav__list li {
+      margin-right: 20px;
+      position: relative;
+    }
+
+    .nav__list a {
+      color: #000;
+      text-decoration: underline;
+      font-size: 18px;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .nav__list a:hover {
+      color: #005566;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      min-width: 200px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      z-index: 1;
+      border-radius: 5px;
+      top: 100%;
+      left: 0;
+    }
+
+    .dropdown-content a {
+      color: #333;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+      color: #005566;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      position: absolute;
+      right: 20px;
+    }
+
+    .language-switch {
+      text-decoration: none;
+      color: #000;
+      font-size: 13px;
+    }
+
+    .header-right i {
+      color: #005566;
+      transition: color 0.3s ease;
+    }
+
+    .header-right i:hover {
+      color: #007a8c;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      padding: 10px 20px;
+      background-color: #f1f1f1;
+      font-size: 14px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .breadcrumb a {
+      color: #005566;
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    /* Hero Section */
+    .hero-subpage {
+      position: relative;
+      width: 150%;
+      height: 400px;
+      overflow: hidden;
+      margin-left: -25%;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-image: url('/assets/images/passive-hero.jpg');
+    }
+
+    .hero-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.6));
+    }
+
+    .hero-content {
+      position: absolute;
+      top: 50%;
+      left: calc((100% - 1600px) / 2 + 20px);
+      transform: translateY(-50%);
+      text-align: left;
+      color: #fff;
+      z-index: 1;
+      max-width: 1560px;
+    }
+
+    .hero-content h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    .hero-content .divider {
+      width: 100%;
+      min-width: 300px;
+      height: 3px;
+      background-color: #fff;
+      margin: 15px 0;
+    }
+
+    .hero-content p {
+      font-size: 1.5rem;
+    }
+
+    /* Products Section */
+    .products-section {
+      padding: 100px 20px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 60px;
+    }
+
+    .product-item {
+      padding: 25px;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .product-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    }
+
+    .product-item img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+
+    .product-item h3 {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .product-item p {
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      min-width: 200px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+      border-radius: 6px;
+      padding: 10px 0;
+    }
+
+    .product-item:hover .dropdown {
+      display: block;
+    }
+
+    .dropdown a {
+      color: #444;
+      padding: 10px 20px;
+      text-decoration: none;
+      display: block;
+      font-size: 14px;
+      transition: color 0.3s ease;
+    }
+
+    .dropdown a:hover {
+      color: #005566;
+      background-color: #f0f0f0;
+    }
+
+    .additional-products {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .additional-products a {
+      color: #005566;
+      text-decoration: underline;
+      font-size: 1.1rem;
+      margin: 0 15px;
+      transition: color 0.3s ease;
+    }
+
+    .additional-products a:hover {
+      color: #007a8c;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background-image: url('/assets/images/v-lumen-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: #4a4a4a;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 85%;
+      max-height: 90%;
+      overflow-y: auto;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+      color: #fff;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .modal-images {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      width: 60%;
+    }
+
+    .modal-images img {
+      max-width: 45%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    .modal-description {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 20px 25px;
+      border-radius: 10px;
+      margin: 20px 0;
+      max-width: 90%;
+      text-align: left;
+      color: #e0e0e0;
+    }
+
+    .modal-signature {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      margin-top: 20px;
+      text-align: right;
+      width: 100%;
+      padding-right: 20px;
+      background-color: rgba(0, 85, 102, 0.8);
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: #fff;
+    }
+
+    .modal-signature span {
+      border-bottom: 3px solid #00aaff;
+      padding-bottom: 5px;
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      font-size: 35px;
+      cursor: pointer;
+      color: #fff;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .close:hover {
+      color: #00aaff;
+      transform: rotate(90deg);
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #2c3e50;
+      color: #fff;
+      padding: 30px;
+      text-align: left;
+      width: 100%;
+    }
+
+    .footer-content {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .footer-left h3 {
+      font-size: 1.3rem;
+      margin: 0;
+    }
+
+    .footer-left a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    .footer-left a:hover {
+      text-decoration: underline;
+      color: #00aaff;
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .footer-right a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    .footer-right a:hover {
+      text-decoration: underline;
+      color: #00aaff;
+    }
+
+    .footer-divider {
+      width: 100%;
+      height: 2px;
+      background-color: #00aaff;
+      margin: 15px 0;
+    }
+
+    .footer-bottom {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      font-size: 1rem;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="masthead">
+    <div class="left">
+      <h1 class="site-title"><a href="https://hsunfrank.github.io">V-Lumen</a></h1>
+      <ul class="nav__list">
+        <li class="dropdown">
+          <a href="#">Products</a>
+          <div class="dropdown-content">
+            <a href="https://hsunfrank.github.io/products/fiber-optic-automation.html">Fiber Optic Automation Solutions</a>
+            <a href="https://hsunfrank.github.io/products/passive-fiber-optical.html">Passive Fiber Optical Product</a>
+            <a href="/precision-tools/">Precision Tools</a>
+            <a href="/custom-solutions/">Custom Fiber Optic Solutions</a>
+          </div>
+        </li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Our Other Site</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="header-right">
+      <a href="https://hsunfrank.github.io/products/passive-fiber-optical-zh.html" class="language-switch">EN | 中文</a>
+      <a href="#" class="icon-search"><i class="fas fa-search"></i></a>
+      <a href="#" class="icon-contact"><i class="fas fa-envelope"></i></a>
+    </div>
+  </header>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a href="https://hsunfrank.github.io">Home</a> > <a href="#">Products</a> > Passive Fiber Optical
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero-subpage">
+    <div class="hero-image">
+      <div class="hero-content">
+        <h1>Passive Fiber Optical Product</h1>
+        <div class="divider"></div>
+        <p>High-quality passive components for reliable and efficient fiber optic networks.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section class="products-section">
+    <div class="products-grid">
+      <div class="product-item">
+        <img src="/assets/images/cable-series.jpg" alt="Fiber Optic Cable Series">
+        <h3>Fiber Optic Cable Series</h3>
+        <p>Comprehensive range of fiber optic cables for various applications.</p>
+        <div class="dropdown">
+          <a href="#" onclick="openModal('part1-1')">Indoor Fiber Optic Cable</a>
+          <a href="#" onclick="openModal('part1-2')">Outdoor Fiber Optic Cable</a>
+          <a href="#" onclick="openModal('part1-3')">FTTA CPR Fiber Optic Cable</a>
+          <a href="#" onclick="openModal('part1-4')">FTTH Drop Cable</a>
+          <a href="#" onclick="openModal('part1-5')">FTTX Tactical Fiber Optic Cable</a>
+          <a href="#" onclick="openModal('part1-6')">Armored Fiber Optic Cable</a>
+          <a href="#" onclick="openModal('part1-7')">Fiber and Power Hybrid Cable</a>
+        </div>
+      </div>
+      <div class="product-item">
+        <img src="/assets/images/patch-cord.jpg" alt="Fiber Optic Patch Cord & Pigtail">
+        <h3>Fiber Optic Patch Cord & Pigtail</h3>
+        <p>High-performance patch cords and pigtails for connectivity solutions.</p>
+        <div class="dropdown">
+          <a href="#" onclick="openModal('part2-1')">Indoor Fiber Patch Cord & Pigtail</a>
+          <a href="#" onclick="openModal('part2-2')">Armored Fiber Patch Cord</a>
+          <a href="#" onclick="openModal('part2-3')">FTTA Base Station Fiber Assembly</a>
+          <a href="#" onclick="openModal('part2-4')">FTTX Tactical Fiber Assembly</a>
+        </div>
+      </div>
+      <div class="product-item">
+        <img src="/assets/images/mpo-cabling.jpg" alt="MPO/MTP High-Density Cabling Series">
+        <h3>MPO/MTP High-Density Cabling Series</h3>
+        <p>Advanced cabling solutions for high-density data center networks.</p>
+        <div class="dropdown">
+          <a href="#" onclick="openModal('part3-1')">MPO/MTP Trunk Pre-terminated Patch Cord</a>
+          <a href="#" onclick="openModal('part3-2')">MPO/MTP Fanout Patch Cord</a>
+          <a href="#" onclick="openModal('part3-3')">MPO/MTP Harness Patch Cord</a>
+          <a href="#" onclick="openModal('part3-4')">MPO/MTP Patch Panel Series</a>
+        </div>
+      </div>
+      <div class="product-item">
+        <img src="/assets/images/connector-adapter.jpg" alt="Fiber Optic Connector & Adapter & Attenuator">
+        <h3>Fiber Optic Connector & Adapter & Attenuator</h3>
+        <p>Precision connectors, adapters, and attenuators for optical networks.</p>
+        <div class="dropdown">
+          <a href="#" onclick="openModal('part4-1')">Fiber Optic Connector</a>
+          <a href="#" onclick="openModal('part4-2')">Fiber Optic Adapter</a>
+          <a href="#" onclick="openModal('part4-3')">Fiber Optic Attenuator</a>
+          <a href="#" onclick="openModal('part4-4')">Fiber Terminator & Loopback & Reflector</a>
+        </div>
+      </div>
+    </div>
+    <div class="additional-products">
+      <a href="/precision-tools/">Precision Tools</a>
+      <a href="/custom-solutions/">Custom Fiber Optic Solutions</a>
+      <a href="/products/fiber-optic-automation.html">Fiber Optic Automation Solutions</a>
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <div id="productModal" class="modal">
+    <div class="modal-content" id="modalContent">
+      <span class="close" onclick="closeModal()">×</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-left">
+        <h3>V-Lumen</h3>
+        <a href="#">Disclaimer</a>
+        <a href="#">Data protection statement</a>
+        <a href="#">Imprint</a>
+      </div>
+      <div class="footer-right">
+        <a href="#">English</a>
+        <a href="#top">Back to top</a>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <div>© 2025 V-Lumen</div>
+      <div></div>
+    </div>
+  </footer>
+
+  <script>
+    // Modal functionality
+    function openModal(part) {
+      const modal = document.getElementById('productModal');
+      const modalContent = document.getElementById('modalContent');
+      let content = '';
+
+      const parts = {
+        'part1-1': {
+          images: ['/assets/images/indoor-cable1.jpg', '/assets/images/indoor-cable2.jpg', '/assets/images/indoor-cable3.jpg', '/assets/images/indoor-cable4.jpg', '/assets/images/indoor-cable5.jpg'],
+          generalInfo: 'Suitable for indoor environments such as data centers, enterprise networks, and LANs.<br>Materials: PVC/LSZH jacket, tight buffer fiber, aramid yarn for tensile strength.<br>Simplex and Duplex structures, diameter range 0.6-0.9mm to 2.0-3.0mm.',
+          keyFeatures: 'High flexibility design for complex wiring scenarios.<br>Flame retardant: Meets LSZH (Low Smoke Zero Halogen) standards to reduce fire risk.<br>Supports single-mode (SM) and multi-mode (OM1-OM5) fiber types for high-speed data transmission.'
+        },
+        'part1-2': {
+          images: ['/assets/images/outdoor-cable1.jpg', '/assets/images/outdoor-cable2.jpg', '/assets/images/outdoor-cable3.jpg', '/assets/images/outdoor-cable4.jpg', '/assets/images/outdoor-cable5.jpg'],
+          generalInfo: 'Designed for outdoor scenarios like direct burial, duct, and aerial applications.<br>Structure: Loose tube filling + central strength member (FRP/steel wire) + PE outer jacket.<br>Typical models: GYXTW (central tube), GYFTY (stranded), GYTS (armored stranded).',
+          keyFeatures: 'Waterproof and moisture-resistant: Includes water-blocking tape and cable filling compound.<br>Crush and impact resistant: Steel tape armor protects fibers from mechanical damage.<br>Wide temperature range: Stable operation from -40°C to +70°C.'
+        },
+        'part1-3': {
+          images: ['/assets/images/ftta-cable1.jpg', '/assets/images/ftta-cable2.jpg', '/assets/images/ftta-cable3.jpg', '/assets/images/ftta-cable4.jpg', '/assets/images/ftta-cable5.jpg'],
+          generalInfo: 'Designed for wireless base station remote radio units (RRU), supporting 4G/5G network deployment.<br>Type: Spiral armored structure, simplex or duplex configuration.',
+          keyFeatures: 'High bending performance: Supports frequent movement and bending scenarios.<br>Fast deployment: Lightweight design, compatible with J599-A8 waterproof connectors.<br>UV resistant: Outer jacket with UV stabilizers for extended outdoor life.'
+        },
+        'part1-4': {
+          images: ['/assets/images/fth-drop1.jpg', '/assets/images/fth-drop2.jpg', '/assets/images/fth-drop3.jpg', '/assets/images/fth-drop4.jpg', '/assets/images/fth-drop5.jpg'],
+          generalInfo: 'Used for the last mile of Fiber to the Home (FTTH) access, available in indoor/outdoor self-supporting versions.<br>Structure: Simplex/multi-core tight buffer fiber + PE jacket, optional pre-terminated (MINI-SC/OPT-SC).',
+          keyFeatures: 'Easy installation: Supports pushable connectors, reducing splicing needs.<br>Cost-optimized: Lightweight design lowers material and installation costs.<br>Broadband compatible: Supports GPON/XGS-PON and other mainstream FTTH technologies.'
+        },
+        'part1-5': {
+          images: ['/assets/images/tactical-cable1.jpg', '/assets/images/tactical-cable2.jpg', '/assets/images/tactical-cable3.jpg', '/assets/images/tactical-cable4.jpg', '/assets/images/tactical-cable5.jpg'],
+          generalInfo: 'Military-grade flexible cable for emergency communications and harsh field environments.<br>Structure: Dual jackets + aramid yarn + metal braided mesh.',
+          keyFeatures: 'High tensile strength: >3000N short-term tensile capacity.<br>Fast deployment: Includes portable reel and metal handle for rapid field setup.<br>IP68 protection: Dustproof and waterproof, suitable for extreme climates.'
+        },
+        'part1-6': {
+          images: ['/assets/images/armored-cable1.jpg', '/assets/images/armored-cable2.jpg', '/assets/images/armored-cable3.jpg', '/assets/images/armored-cable4.jpg', '/assets/images/armored-cable5.jpg'],
+          generalInfo: 'Used in high mechanical stress environments (e.g., industrial plants, subway tunnels).<br>Type: Simplex (GJSFJV), Duplex, Multicore.',
+          keyFeatures: 'Spiral metal tube design: Provides dynamic bending protection against microbending loss.<br>Multi-layer protection: Inner jacket + metal armor + outer jacket.<br>Compatibility: Supports SC/LC/E2000 connectors.'
+        },
+        'part1-7': {
+          images: ['/assets/images/hybrid-cable1.jpg', '/assets/images/hybrid-cable2.jpg', '/assets/images/hybrid-cable3.jpg', '/assets/images/hybrid-cable4.jpg', '/assets/images/hybrid-cable5.jpg'],
+          generalInfo: 'Integrates fiber units and power lines for surveillance cameras, RRU power supply, etc.<br>Type: GDJXV (drop type), GDTS (armored stranded), GDJU (tactical).',
+          keyFeatures: 'Integrated transmission: Supports data (fiber) and power (copper) simultaneously.<br>Separated design: Fiber unit and power line isolated to avoid signal interference.<br>Safety certified: Meets CE, RoHS international standards.'
+        },
+        'part2-1': {
+          images: ['/assets/images/indoor-patch1.jpg', '/assets/images/indoor-patch2.jpg', '/assets/images/indoor-patch3.jpg', '/assets/images/indoor-patch4.jpg', '/assets/images/indoor-patch5.jpg'],
+          generalInfo: 'Includes simplex/duplex patch cords, multicore bundle patch cords.<br>Connector types: SC/LC/FC/ST/E2000, supports single-mode/multi-mode fibers.',
+          keyFeatures: 'Low insertion loss (IL<0.2dB), high return loss (RL>50dB).<br>Customizable lengths (1m-100m) for flexible data center wiring.<br>Pigtail types: Single-core pigtail, breakout pigtail.'
+        },
+        'part2-2': {
+          images: ['/assets/images/armored-patch1.jpg', '/assets/images/armored-patch2.jpg', '/assets/images/armored-patch3.jpg', '/assets/images/armored-patch4.jpg', '/assets/images/armored-patch5.jpg'],
+          generalInfo: 'Designed for high-density server rooms and industrial environments, crush-resistant and anti-tangle.<br>Structure: Spiral metal tube + aramid yarn + LSZH outer jacket.',
+          keyFeatures: 'Dynamic bending life >50,000 cycles, ideal for frequent plugging.<br>Fast positioning: Supports LC/MPO high-density interfaces, space-saving.'
+        },
+        'part2-3': {
+          images: ['/assets/images/ftta-assembly1.jpg', '/assets/images/ftta-assembly2.jpg', '/assets/images/ftta-assembly3.jpg', '/assets/images/ftta-assembly4.jpg', '/assets/images/ftta-assembly5.jpg'],
+          generalInfo: 'Pre-terminated fiber assemblies compatible with 3G/4G/5G base station equipment.<br>Includes MST boxes, IP68 waterproof modules, outdoor splice enclosures.',
+          keyFeatures: 'Plug-and-play design: Reduces on-site splicing time, improves deployment efficiency.<br>Environmental adaptability: Operating temperature -40°C to +85°C.'
+        },
+        'part2-4': {
+          images: ['/assets/images/tactical-assembly1.jpg', '/assets/images/tactical-assembly2.jpg', '/assets/images/tactical-assembly3.jpg', '/assets/images/tactical-assembly4.jpg', '/assets/images/tactical-assembly5.jpg'],
+          generalInfo: 'Portable fiber kits (e.g., OTDR test kits, portable reels) for emergency repairs.<br>Type: Aluminum OTDR box, shockproof OTDR box, fiber drum.',
+          keyFeatures: 'Modular design: Supports quick replacement of faulty segments, reducing maintenance costs.<br>Military-grade protection: Passes MIL-STD-810G impact testing.'
+        },
+        'part3-1': {
+          images: ['/assets/images/mpo-trunk1.jpg', '/assets/images/mpo-trunk2.jpg', '/assets/images/mpo-trunk3.jpg', '/assets/images/mpo-trunk4.jpg', '/assets/images/mpo-trunk5.jpg'],
+          generalInfo: 'Used for 40G/100G/400G high-speed data center backbone networks.<br>Core count: MPO-8/MPO-12/MPO-24, supports SM/OM3/OM4/OM5 fibers.',
+          keyFeatures: 'High density: Single port supports multi-core parallel transmission, saving rack space.<br>Pre-terminated design: Factory-tested end-face ensures end-to-end performance.'
+        },
+        'part3-2': {
+          images: ['/assets/images/mpo-fanout1.jpg', '/assets/images/mpo-fanout2.jpg', '/assets/images/mpo-fanout3.jpg', '/assets/images/mpo-fanout4.jpg', '/assets/images/mpo-fanout5.jpg'],
+          generalInfo: 'Breaks MPO trunk into multiple LC/SC branches, compatible with legacy equipment.<br>Typical use: Data center rack connections (TOR/SW).',
+          keyFeatures: 'Flexible branching: Supports 1×12, 1×24 configurations.<br>Label management: Independent numbering per branch for easy maintenance tracking.'
+        },
+        'part3-3': {
+          images: ['/assets/images/mpo-harness1.jpg', '/assets/images/mpo-harness2.jpg', '/assets/images/mpo-harness3.jpg', '/assets/images/mpo-harness4.jpg', '/assets/images/mpo-harness5.jpg'],
+          generalInfo: 'Multi-core fiber bundle patch cord for modular cabinet deployment.<br>Color coding: Supports rainbow colors (Aqua/Blue/Orange) to distinguish channels.',
+          keyFeatures: 'Space optimization: Flat design reduces airflow resistance, improves cooling.<br>Hot-swappable: Supports online expansion and maintenance.'
+        },
+        'part3-4': {
+          images: ['/assets/images/mpo-panel1.jpg', '/assets/images/mpo-panel2.jpg', '/assets/images/mpo-panel3.jpg', '/assets/images/mpo-panel4.jpg', '/assets/images/mpo-panel5.jpg'],
+          generalInfo: '1U/2U high-density patch panels, supports MPO-LC/SC modular plug-ins.<br>Products: XP series (120/144/288 cores).',
+          keyFeatures: 'Modular architecture: Supports field upgrades for future bandwidth needs.<br>Smart management: Compatible with third-party fiber monitoring systems (e.g., iOLM).'
+        },
+        'part4-1': {
+          images: ['/assets/images/connector1.jpg', '/assets/images/connector2.jpg', '/assets/images/connector3.jpg', '/assets/images/connector4.jpg', '/assets/images/connector5.jpg'],
+          generalInfo: 'Supports SC/LC/FC/ST/E2000/MPO interfaces for indoor/outdoor scenarios.<br>Type: Simplex, Duplex, Multicore (MPO).',
+          keyFeatures: 'Precision zirconia ceramic ferrule for long-term stability.<br>Dust cap design: Protects end-face from contamination.'
+        },
+        'part4-2': {
+          images: ['/assets/images/adapter1.jpg', '/assets/images/adapter2.jpg', '/assets/images/adapter3.jpg', '/assets/images/adapter4.jpg', '/assets/images/adapter5.jpg'],
+          generalInfo: 'Includes LC/SC/FC/ST couplers, supports panel mounting (e.g., MP-6 series).<br>Applications: Data centers, enterprise networks, CATV.',
+          keyFeatures: 'Low insertion loss (IL<0.15dB), high interchangeability.<br>Hot-swappable: Compatible with different brand equipment.'
+        },
+        'part4-3': {
+          images: ['/assets/images/attenuator1.jpg', '/assets/images/attenuator2.jpg', '/assets/images/attenuator3.jpg', '/assets/images/attenuator4.jpg', '/assets/images/attenuator5.jpg'],
+          generalInfo: 'Fixed (5dB-30dB) and variable (VOA/MEMS) attenuators to balance optical power budget.<br>Type: LC/SC/FC interfaces, supports single-mode/multi-mode.',
+          keyFeatures: 'Wavelength compatibility: Covers 1310nm/1550nm/1650nm CWDM bands.<br>High precision: MEMS technology for 0.1dB step control.'
+        },
+        'part4-4': {
+          images: ['/assets/images/terminator1.jpg', '/assets/images/terminator2.jpg', '/assets/images/terminator3.jpg', '/assets/images/terminator4.jpg', '/assets/images/terminator5.jpg'],
+          generalInfo: 'Terminal load (Terminator), loopback tester (Loopback), reflector (Reflector) for network testing and troubleshooting.',
+          keyFeatures: 'SC/APC-1550nm reflector: Used for OTDR event marking.<br>Loopback insertion loss <0.5dB, supports over 200 insertions.'
+        }
+      };
+
+      const partData = parts[part];
+      if (partData) {
+        content += '<div class="modal-images">';
+        for (let i = 0; i < Math.min(5, partData.images.length); i++) {
+          content += `<img src="${partData.images[i]}" alt="${part} photo ${i + 1}" onclick="enlargePhoto(this.src)">`;
+        }
+        content += '</div>';
+        content += '<div class="modal-description">';
+        content += '<h3>General Information</h3><p>' + partData.generalInfo + '</p>';
+        content += '<h3>Key Features</h3><p>' + partData.keyFeatures + '</p>';
+        content += '</div>';
+        content += '<div class="modal-signature"><span>V-Lumen</span></div>';
+      }
+
+      modalContent.innerHTML = content;
+      modal.style.display = 'block';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('productModal');
+      modal.style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById('productModal');
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    }
+
+    function enlargePhoto(src) {
+      const enlarged = window.open('', '_blank');
+      enlarged.document.write(`
+        <html>
+        <body style="margin:0;background:#000;display:flex;justify-content:center;align-items:center;height:100vh;">
+          <img src="${src}" style="max-width:90%;max-height:90vh;">
+        </body>
+        </html>
+      `);
+    }
+
+    window.addEventListener('load', function() {
+      const img = new Image();
+      img.src = '/assets/images/v-lumen-bg.jpg';
+      img.onload = function() {
+        console.log('Background image loaded successfully');
+      };
+      img.onerror = function() {
+        console.error('Failed to load background image. Check the path: /assets/images/v-lumen-bg.jpg. Ensure the file is uploaded to https://hsunfrank.github.io/assets/images/. Full URL attempted: ' + img.src);
+      };
+    });
+  </script>
+</body>
+</html>
