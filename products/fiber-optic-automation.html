@@ -37,7 +37,124 @@
         }
         return gk_fileData[filename] || "";
         }
-        </script><!DOCTYPE html>
+        </script><script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+
+        // Modal functionality
+        function openModal(product) {
+          const modal = document.getElementById('productModal');
+          const modalContent = document.getElementById('modalContent');
+          let content = '';
+
+          // Define product details (customize as needed)
+          const products = {
+            'indoor-cable-stripping': {
+              images: ['/assets/images/product1.jpg', '/assets/images/product1-detail.jpg'],
+              description: 'This automated equipment streamlines indoor fiber optic cable stripping, Kevlar removal, and fiber stripping with precision and efficiency.'
+            },
+            'ribbon-fiber-stripping': {
+              images: ['/assets/images/product2.jpg', '/assets/images/product2-detail.jpg'],
+              description: 'Integrated system for stripping and cleaning ribbon fibers, enhancing production quality.'
+            },
+            'mt-mpo-dispensing': {
+              images: ['/assets/images/product3.jpg', '/assets/images/product3-detail.jpg'],
+              description: 'Automated dispensing machine for MT/MPO connectors, ensuring accuracy in every application.'
+            },
+            'mt-mpo-ribbonizing': {
+              images: ['/assets/images/product4.jpg', '/assets/images/product4-detail.jpg'],
+              description: 'Fully automated ribbonizing machine for MT/MPO connectors, boosting production speed.'
+            },
+            'cable-cutting-tying': {
+              images: ['/assets/images/product5.jpg', '/assets/images/product5-detail.jpg'],
+              description: 'Automated cutting and tying machine for fiber optic cables, optimizing workflow.'
+            },
+            'mt-mpo-fiber-insertion': {
+              images: ['/assets/images/product6.jpg', '/assets/images/product6-detail.jpg'],
+              description: 'Automatic fiber insertion machine for MT/MPO connectors, reducing manual effort.'
+            },
+            'mt-polishing': {
+              images: ['/assets/images/product7.jpg', '/assets/images/product7-detail.jpg'],
+              description: 'Automated polishing machine for MT connectors, delivering high-quality finishes.'
+            },
+            'fo-connector-assembly': {
+              images: ['/assets/images/product8.jpg', '/assets/images/product8-detail.jpg'],
+              description: 'Fully automated assembly line for standard fiber optic connectors.'
+            },
+            'single-fiber-assembly': {
+              images: ['/assets/images/product9.jpg', '/assets/images/product9-detail.jpg'],
+              description: 'Automated assembly line for single fiber connectors, improving efficiency.'
+            },
+            'fa-lens-polisher': {
+              images: ['/assets/images/product10.jpg', '/assets/images/product10-detail.jpg'],
+              description: 'Automated polishing machine for FA lenses, ensuring precision and consistency.'
+            }
+          };
+
+          const productData = products[product];
+          if (productData) {
+            content += '<div class="modal-images">';
+            for (let i = 0; i < Math.min(2, productData.images.length); i++) {
+              content += `<img src="${productData.images[i]}" alt="${product} detail ${i + 1}">`;
+            }
+            content += '</div>';
+            content += `<p class="modal-description">${productData.description}</p>`;
+            content += '<div class="modal-signature"><span>V-Lumen</span></div>';
+          }
+
+          modalContent.innerHTML = content;
+          modal.style.display = 'block';
+        }
+
+        function closeModal() {
+          const modal = document.getElementById('productModal');
+          modal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+          const modal = document.getElementById('productModal');
+          if (event.target == modal) {
+            modal.style.display = 'none';
+          }
+        }
+</script><!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -363,6 +480,7 @@
       text-decoration: none;
       border-radius: 5px;
       transition: background 0.3s ease;
+      cursor: pointer;
     }
 
     .btn:hover {
@@ -375,6 +493,94 @@
       display: flex;
       justify-content: center;
       gap: 20px;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background-image: url('/assets/images/v-lumen-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 70%; /* Increased width */
+      max-height: 80%; /* Increased height */
+      overflow-y: auto;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      color: #fff;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .modal-images {
+      display: flex;
+      justify-content: center;
+      gap: 20px; /* Space between images */
+      margin-bottom: 20px;
+      flex-wrap: wrap; /* Allow wrapping if needed */
+    }
+
+    .modal-images img {
+      max-width: 45%; /* Each image takes up to 45% of the container width */
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      object-fit: cover;
+    }
+
+    .modal-description {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      max-width: 80%;
+      text-align: left;
+    }
+
+    .modal-signature {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      margin-top: 20px;
+      text-align: right;
+      width: 100%;
+      padding-right: 20px;
+    }
+
+    .modal-signature span {
+      border-bottom: 2px solid #005566;
+      padding-bottom: 5px;
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      font-size: 30px;
+      cursor: pointer;
+      color: #fff;
+      transition: color 0.3s ease;
+    }
+
+    .close:hover {
+      color: #005566;
     }
 
     /* Footer */
@@ -459,7 +665,7 @@
           <div class="dropdown-content">
             <a href="/fiber-optic-automation/">Fiber Optic Automation Solutions</a>
             <a href="/passive-fiber-optical/">Passive Fiber Optical Product</a>
-            <a href="/precision-tools/">Precision Tools and Accessories for Fiber Optics</a>
+            <a href="/precision-tools/">Passive Fiber Optical Product</a>
             <a href="/custom-solutions/">Custom Fiber Optic Solutions</a>
           </div>
         </li>
@@ -520,61 +726,61 @@
         <img src="/assets/images/product1.jpg" alt="Indoor Fiber Optic Cable Stripping Equipment">
         <h3>Indoor Fiber Optic Cable Stripping, Kevlar Removal, and Fiber Stripping Automated Integrated Equipment</h3>
         <p>Automated solution for efficient cable preparation in fiber optic manufacturing.</p>
-        <a href="/products/automation/indoor-cable-stripping/" class="btn">Explore Details</a>
+        <a href="#" class="btn" onclick="openModal('indoor-cable-stripping')">Explore Details</a>
       </div>
       <div class="product-item">
         <img src="/assets/images/product2.jpg" alt="Ribbon Fiber Stripping / Cleaning Equipment">
         <h3>Ribbon Fiber Stripping / Cleaning Integrated Equipment</h3>
         <p>Integrated system for stripping and cleaning ribbon fibers with precision.</p>
-        <a href="/products/automation/ribbon-fiber-stripping/" class="btn">Explore Details</a>
+        <a href="#" class="btn" onclick="openModal('ribbon-fiber-stripping')">Explore Details</a>
       </div>
       <div class="product-item">
         <img src="/assets/images/product3.jpg" alt="MT/MPO Fully Automatic Dispensing Machine">
         <h3>MT/MPO Fully Automatic Dispensing Machine</h3>
         <p>Automated dispensing for MT/MPO connectors, ensuring accuracy and consistency.</p>
-        <a href="/products/automation/mt-mpo-dispensing/" class="btn">Explore Details</a>
+        <a href="#" class="btn" onclick="openModal('mt-mpo-dispensing')">Explore Details</a>
       </div>
       <div class="product-item">
         <img src="/assets/images/product4.jpg" alt="MT/MPO Fully Automatic Ribbonizing Machine">
         <h3>MT/MPO Fully Automatic Ribbonizing Machine</h3>
         <p>Fully automated ribbonizing for MT/MPO connectors, enhancing production speed.</p>
-        <a href="/products/automation/mt-mpo-ribbonizing/" class="btn">Explore Details</a>
+        <a href="#" class="btn" onclick="openModal('mt-mpo-ribbonizing')">Explore Details</a>
       </div>
       <div class="product-item">
         <img src="/assets/images/product5.jpg" alt="Fiber Optic Cable Fully Automatic Cutting and Tying Machine">
         <h3>Fiber Optic Cable Fully Automatic Cutting and Tying Machine</h3>
         <p>Automated cutting and tying of fiber optic cables for efficient production.</p>
-        <a href="/products/automation/cable-cutting-tying/" class="btn">Explore Details</a>
+        <a href="#" class="btn" onclick="openModal('cable-cutting-tying')">Explore Details</a>
       </div>
       <div class="product-item">
         <img src="/assets/images/product6.jpg" alt="MT/MPO Automatic Fiber Insertion Machine">
         <h3>MT/MPO Automatic Fiber Insertion Machine</h3>
         <p>Automatic fiber insertion for MT/MPO connectors, reducing manual labor.</p>
-        <a href="/products/automation/mt-mpo-fiber-insertion/" class="btn">Explore Details</a>
+        <a href="#" class="btn" onclick="openModal('mt-mpo-fiber-insertion')">Explore Details</a>
       </div>
       <div class="product-item">
         <img src="/assets/images/product7.jpg" alt="MT Automatic Polishing Machine">
         <h3>MT Automatic Polishing Machine</h3>
         <p>Automated polishing for MT connectors, ensuring high-quality finishes.</p>
-        <a href="/products/automation/mt-polishing/" class="btn">Explore Details</a>
+        <a href="#" class="btn" onclick="openModal('mt-polishing')">Explore Details</a>
       </div>
       <div class="product-item">
         <img src="/assets/images/product8.jpg" alt="Standard FO Connector Assembly Fully Automated Line">
         <h3>Standard FO Connector Assembly Fully Automated Line</h3>
         <p>Fully automated assembly line for standard fiber optic connectors.</p>
-        <a href="/products/automation/fo-connector-assembly/" class="btn">Explore Details</a>
+        <a href="#" class="btn" onclick="openModal('fo-connector-assembly')">Explore Details</a>
       </div>
       <div class="product-item">
         <img src="/assets/images/product9.jpg" alt="FO Single Fiber Connector Fully Automated Assembly Line">
         <h3>FO Single Fiber Connector Fully Automated Assembly Line</h3>
         <p>Automated assembly line for single fiber connectors, optimizing production.</p>
-        <a href="/products/automation/single-fiber-assembly/" class="btn">Explore Details</a>
+        <a href="#" class="btn" onclick="openModal('single-fiber-assembly')">Explore Details</a>
       </div>
       <div class="product-item">
         <img src="/assets/images/product10.jpg" alt="FA Lens Automated Polisher">
         <h3>FA Lens Automated Polisher</h3>
         <p>Automated polishing machine for FA lenses, ensuring precision and consistency.</p>
-        <a href="/products/automation/fa-lens-polisher/" class="btn">Explore Details</a>
+        <a href="#" class="btn" onclick="openModal('fa-lens-polisher')">Explore Details</a>
       </div>
     </div>
     <div class="more-button">
@@ -583,6 +789,13 @@
       <a href="/custom-solutions/" class="btn">Custom Fiber Optic Solutions</a>
     </div>
   </section>
+
+  <!-- Modal -->
+  <div id="productModal" class="modal">
+    <div class="modal-content" id="modalContent">
+      <span class="close" onclick="closeModal()">×</span>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer class="footer">
@@ -604,5 +817,5 @@
       <div></div>
     </div>
   </footer>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93ac308818c753d2',t:'MTc0NjQwNTY1OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
