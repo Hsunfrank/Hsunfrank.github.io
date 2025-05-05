@@ -37,45 +37,6 @@
         }
         return gk_fileData[filename] || "";
         }
-        </script><script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
         </script><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -153,10 +114,6 @@
 
     .nav__list a:hover {
       color: #005566;
-    }
-
-    .dropdown:hover .dropdown-content {
-      display: block;
     }
 
     .dropdown-content {
@@ -327,33 +284,26 @@
       text-align: left;
     }
 
-    .dropdown {
-      display: none;
-      position: absolute;
-      background-color: #fff;
-      min-width: 200px;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-      z-index: 1;
-      border-radius: 6px;
-      padding: 10px 0;
+    .sub-items {
+      list-style: none;
+      padding: 0;
+      margin: 0;
     }
 
-    .product-item:hover .dropdown {
-      display: block;
+    .sub-items li {
+      margin: 5px 0;
     }
 
-    .dropdown a {
-      color: #444;
-      padding: 10px 20px;
+    .sub-items a {
+      color: #005566;
       text-decoration: none;
-      display: block;
-      font-size: 14px;
+      font-size: 1rem;
       transition: color 0.3s ease;
     }
 
-    .dropdown a:hover {
-      color: #005566;
-      background-color: #f0f0f0;
+    .sub-items a:hover {
+      color: #007a8c;
+      text-decoration: underline;
     }
 
     .additional-products {
@@ -603,48 +553,48 @@
         <img src="/assets/images/cable-series.jpg" alt="Fiber Optic Cable Series">
         <h3>Fiber Optic Cable Series</h3>
         <p>Comprehensive range of fiber optic cables for various applications.</p>
-        <div class="dropdown">
-          <a href="#" onclick="openModal('part1-1')">Indoor Fiber Optic Cable</a>
-          <a href="#" onclick="openModal('part1-2')">Outdoor Fiber Optic Cable</a>
-          <a href="#" onclick="openModal('part1-3')">FTTA CPR Fiber Optic Cable</a>
-          <a href="#" onclick="openModal('part1-4')">FTTH Drop Cable</a>
-          <a href="#" onclick="openModal('part1-5')">FTTX Tactical Fiber Optic Cable</a>
-          <a href="#" onclick="openModal('part1-6')">Armored Fiber Optic Cable</a>
-          <a href="#" onclick="openModal('part1-7')">Fiber and Power Hybrid Cable</a>
-        </div>
+        <ul class="sub-items">
+          <li><a href="#" onclick="openModal('part1-1')">Indoor Fiber Optic Cable</a></li>
+          <li><a href="#" onclick="openModal('part1-2')">Outdoor Fiber Optic Cable</a></li>
+          <li><a href="#" onclick="openModal('part1-3')">FTTA CPR Fiber Optic Cable</a></li>
+          <li><a href="#" onclick="openModal('part1-4')">FTTH Drop Cable</a></li>
+          <li><a href="#" onclick="openModal('part1-5')">FTTX Tactical Fiber Optic Cable</a></li>
+          <li><a href="#" onclick="openModal('part1-6')">Armored Fiber Optic Cable</a></li>
+          <li><a href="#" onclick="openModal('part1-7')">Fiber and Power Hybrid Cable</a></li>
+        </ul>
       </div>
       <div class="product-item">
         <img src="/assets/images/patch-cord.jpg" alt="Fiber Optic Patch Cord & Pigtail">
         <h3>Fiber Optic Patch Cord & Pigtail</h3>
         <p>High-performance patch cords and pigtails for connectivity solutions.</p>
-        <div class="dropdown">
-          <a href="#" onclick="openModal('part2-1')">Indoor Fiber Patch Cord & Pigtail</a>
-          <a href="#" onclick="openModal('part2-2')">Armored Fiber Patch Cord</a>
-          <a href="#" onclick="openModal('part2-3')">FTTA Base Station Fiber Assembly</a>
-          <a href="#" onclick="openModal('part2-4')">FTTX Tactical Fiber Assembly</a>
-        </div>
+        <ul class="sub-items">
+          <li><a href="#" onclick="openModal('part2-1')">Indoor Fiber Patch Cord & Pigtail</a></li>
+          <li><a href="#" onclick="openModal('part2-2')">Armored Fiber Patch Cord</a></li>
+          <li><a href="#" onclick="openModal('part2-3')">FTTA Base Station Fiber Assembly</a></li>
+          <li><a href="#" onclick="openModal('part2-4')">FTTX Tactical Fiber Assembly</a></li>
+        </ul>
       </div>
       <div class="product-item">
         <img src="/assets/images/mpo-cabling.jpg" alt="MPO/MTP High-Density Cabling Series">
         <h3>MPO/MTP High-Density Cabling Series</h3>
         <p>Advanced cabling solutions for high-density data center networks.</p>
-        <div class="dropdown">
-          <a href="#" onclick="openModal('part3-1')">MPO/MTP Trunk Pre-terminated Patch Cord</a>
-          <a href="#" onclick="openModal('part3-2')">MPO/MTP Fanout Patch Cord</a>
-          <a href="#" onclick="openModal('part3-3')">MPO/MTP Harness Patch Cord</a>
-          <a href="#" onclick="openModal('part3-4')">MPO/MTP Patch Panel Series</a>
-        </div>
+        <ul class="sub-items">
+          <li><a href="#" onclick="openModal('part3-1')">MPO/MTP Trunk Pre-terminated Patch Cord</a></li>
+          <li><a href="#" onclick="openModal('part3-2')">MPO/MTP Fanout Patch Cord</a></li>
+          <li><a href="#" onclick="openModal('part3-3')">MPO/MTP Harness Patch Cord</a></li>
+          <li><a href="#" onclick="openModal('part3-4')">MPO/MTP Patch Panel Series</a></li>
+        </ul>
       </div>
       <div class="product-item">
         <img src="/assets/images/connector-adapter.jpg" alt="Fiber Optic Connector & Adapter & Attenuator">
         <h3>Fiber Optic Connector & Adapter & Attenuator</h3>
         <p>Precision connectors, adapters, and attenuators for optical networks.</p>
-        <div class="dropdown">
-          <a href="#" onclick="openModal('part4-1')">Fiber Optic Connector</a>
-          <a href="#" onclick="openModal('part4-2')">Fiber Optic Adapter</a>
-          <a href="#" onclick="openModal('part4-3')">Fiber Optic Attenuator</a>
-          <a href="#" onclick="openModal('part4-4')">Fiber Terminator & Loopback & Reflector</a>
-        </div>
+        <ul class="sub-items">
+          <li><a href="#" onclick="openModal('part4-1')">Fiber Optic Connector</a></li>
+          <li><a href="#" onclick="openModal('part4-2')">Fiber Optic Adapter</a></li>
+          <li><a href="#" onclick="openModal('part4-3')">Fiber Optic Attenuator</a></li>
+          <li><a href="#" onclick="openModal('part4-4')">Fiber Terminator & Loopback & Reflector</a></li>
+        </ul>
       </div>
     </div>
     <div class="additional-products">
@@ -788,4 +738,36 @@
       if (partData) {
         content += '<div class="modal-images">';
         for (let i = 0; i < Math.min(5, partData.images.length); i++) {
-          content += `<img src="${partData.images[i]}" alt="${part
+          content += `<img src="${partData.images[i]}" alt="Product Image ${i + 1}">`;
+        }
+        content += '</div>';
+        content += '<div class="modal-description">';
+        content += '<h3>General Information</h3>';
+        content += `<p>${partData.generalInfo}</p>`;
+        content += '<div class="divider"></div>';
+        content += '<h3>Key Features</h3>';
+        content += `<p>${partData.keyFeatures}</p>`;
+        content += '</div>';
+        content += '<div class="modal-signature">';
+        content += '<span>V-Lumen</span>';
+        content += '</div>';
+      }
+
+      modalContent.innerHTML = '<span class="close" onclick="closeModal()">×</span>' + content;
+      modal.style.display = 'block';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('productModal');
+      modal.style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById('productModal');
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    };
+  </script>
+</body>
+</html>
