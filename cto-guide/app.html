@@ -5,205 +5,186 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0f172a">
     <link rel="manifest" href="./manifest.json">
-    <title>长飞 CTO 面试超级应用 (全维度保姆级解释版)</title>
+    <title>长飞 CTO 终级战略图谱 (硬核扩充版)</title>
     <style>
         :root {
             --bg-color: #0f172a; --card-bg: #1e293b; --sys-blue: #3b82f6; --sys-yellow: #facc15;
             --text-main: #f8fafc; --text-muted: #94a3b8; --border: #334155; --danger: #ef4444; --success: #10b981; --sys-purple: #a855f7;
         }
-
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
         header { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); padding: 15px 20px; text-align: center; border-bottom: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.3); z-index: 10;}
-        header h1 { margin: 0; font-size: 1.2rem; color: var(--sys-yellow); }
+        header h1 { margin: 0; font-size: 1.15rem; color: var(--sys-yellow); letter-spacing: 1px; }
 
-        .content-area { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 100px; scroll-behavior: smooth;}
+        .content-area { flex: 1; overflow-y: auto; padding: 15px; padding-bottom: 90px; scroll-behavior: smooth;}
         .page { display: none; animation: fadeIn 0.3s ease; }
         .page.active { display: block; }
-        
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card { background: var(--card-bg); border-radius: 12px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--border); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        h2 { color: var(--sys-blue); font-size: 1.2rem; margin-top: 0; border-bottom: 1px dashed var(--border); padding-bottom: 10px;}
-        h3 { color: #818cf8; font-size: 1.05rem; margin-top: 20px;}
-        p, li { font-size: 0.95rem; line-height: 1.6; color: #cbd5e1; margin-bottom: 10px;}
-        .highlight { color: var(--sys-yellow); font-weight: bold; }
+        .card { background: var(--card-bg); border-radius: 12px; padding: 22px; margin-bottom: 25px; border: 1px solid var(--border); box-shadow: 0 4px 15px rgba(0,0,0,0.25); }
+        h2 { color: var(--sys-blue); font-size: 1.3rem; margin-top: 0; border-bottom: 1px dashed var(--border); padding-bottom: 12px; display: flex; align-items: center; gap: 8px;}
+        h3 { color: #818cf8; font-size: 1.1rem; margin-top: 25px; border-left: 3px solid #818cf8; padding-left: 10px; line-height: 1.2;}
+        p, li { font-size: 0.95rem; line-height: 1.7; color: #cbd5e1; margin-bottom: 12px;}
+        .highlight { color: var(--sys-yellow); font-weight: bold; background: rgba(250, 204, 21, 0.1); padding: 2px 4px; border-radius: 3px;}
         
-        /* 特殊的人话翻译框 */
-        .dummy-box { background: rgba(168, 85, 247, 0.1); border-left: 4px solid var(--sys-purple); padding: 12px; margin: 15px 0; border-radius: 4px; }
-        .dummy-box-title { color: #d8b4fe; font-weight: bold; font-size: 0.9rem; margin-bottom: 5px; }
+        .dummy-box { background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.3); border-left: 4px solid var(--sys-purple); padding: 15px; margin: 20px 0; border-radius: 6px; }
+        .dummy-box-title { color: #d8b4fe; font-weight: bold; font-size: 0.95rem; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;}
 
-        .red-alert { background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--danger); padding: 12px; margin: 10px 0; border-radius: 4px; }
-        .green-tip { background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--success); padding: 12px; margin: 10px 0; border-radius: 4px; }
+        .red-alert { background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--danger); padding: 15px; margin: 15px 0; border-radius: 6px; }
+        .green-tip { background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--success); padding: 15px; margin: 15px 0; border-radius: 6px; }
 
-        /* 底部导航栏横向滚动 */
-        .tab-bar-container { position: fixed; bottom: 0; width: 100%; background: #0f172a; border-top: 1px solid var(--border); padding-bottom: env(safe-area-inset-bottom); z-index: 100;}
-        .tab-bar { display: flex; overflow-x: auto; scrollbar-width: none; }
-        .tab-bar::-webkit-scrollbar { display: none; }
-        .tab-item { flex: 0 0 20%; min-width: 75px; text-align: center; padding: 12px 5px; color: var(--text-muted); font-size: 0.70rem; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.2s;}
+        /* 滑动横向大结构标签 */
+        .tech-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px;}
+        .tech-tags span { background: #334155; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; color: #94a3b8; border: 1px solid #475569;}
+
+        /* 底部导航栏 */
+        .tab-bar-container { position: fixed; bottom: 0; width: 100%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); border-top: 1px solid var(--border); padding-bottom: env(safe-area-inset-bottom); z-index: 100;}
+        .tab-bar { display: flex; }
+        .tab-item { flex: 1; text-align: center; padding: 12px 5px; color: var(--text-muted); font-size: 0.75rem; font-weight: bold; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.2s;}
         .tab-item.active { color: var(--sys-yellow); }
-        .tab-icon { font-size: 1.3rem; margin-bottom: 4px; }
-
+        .tab-icon { font-size: 1.4rem; margin-bottom: 5px; }
     </style>
 </head>
 <body>
-    <header><h1>💎 CTO 随身宝典 (白话翻译版)</h1></header>
+    <header><h1>🚀 首席技术官：全息实战兵棋图</h1></header>
 
     <div class="content-area">
         
-        <!-- PAGE 1: 微观原理解析（最难懂的部件拆解） -->
+        <!-- PAGE 1: 🌍 全球战局与地缘地缘 -->
         <div id="page1" class="page active">
             <div class="card">
-                <h2>🔬 暴力拆解 800G 光模块</h2>
-                <div class="dummy-box">
-                    <div class="dummy-box-title">🗣️ 人话翻译：什么是 800G 里的 8个模块？</div>
-                    <p><b>绝对不是 8 个铁盒子！</b> 它始终就只有“<b>一个铁盒子模块</b>”。所谓的 8 个通道，是指这一个骨灰盒大小的模块里面，装了 <b>8 个微小的发光激光器口</b>。每个口发出 100G 的光，合起来就是 800G。如果是 4x200G，就是里面只有 4 个发光口，但每个口发光功率翻倍更强。</p>
-                </div>
+                <h2>🌍 全球四大战区与供应链洗牌</h2>
+                <p>作为新出海事业部的总帅，您要在面试中直接抛出这幅极其庞大的“四方割据”图，证明您懂利润从哪里来，壁垒在哪里。</p>
                 
-                <h3>流水线四关（光模块里面到底有啥？）：</h3>
-                <ol>
-                    <li><b>DSP（大脑修图师）：</b>因为电信号跑得很快容易变形，DSP 就是里面一块超热的计算芯片，专门用来自动纠错“修图”，让信号还原。</li>
-                    <li><b>发光区（SiPh/EML）：</b>拿电打火，闪耀成光。</li>
-                    <li><b>WDM波分（漏斗区）：</b><span class="highlight">这是您老东家 Cube Optics 的专场！</span>因为几条色光要在极为狭窄的空间里汇聚成一束射出，Cube 就像卖高精度玻璃漏斗的。</li>
-                    <li><b>PM-FA阵列（命门接口）：</b>把光偏振卡死，靶心绝对不能歪，这是长飞正在做的极其昂贵的对准接头！</li>
-                </ol>
+                <h3>🇺🇸 北美市场：绝对创新引擎与地缘绞肉机</h3>
+                <div class="tech-tags"><span>谷歌</span><span>AWS</span><span>Meta</span><span>China+1</span></div>
+                <p><b>特征：</b>全球 800G/1.6T 乃至 CPO 绝大多数订单买单人。北美追求极致算力带宽与极致密度。<br>
+                <b>战略痛点：</b>因为地缘政治摩擦，北美各大云巨头正在执行极其强硬的 <span class="highlight">“China + 1” 供应链政策</span>。他们极其规避把最高阶的连接器（比如硅光 FA 阵列、高端 MPO）产能 100% 放在中国大陆。<br>
+                <b>长飞破局点：</b>我们必须利用重资产和资金实力，在海外买壳或建厂，彻底打通北美谷歌/英伟达的受限采购白名单。</p>
+
+                <h3>🇹🇭 东南亚缓冲带：组装车间与核心失灵</h3>
+                <div class="tech-tags"><span>越南工厂</span><span>规避关税</span><span>核心脱节</span></div>
+                <p><b>特征：</b>大量中国老牌企业（包括给北美代打的光模块厂）都在迁往大马、泰国建厂。<br>
+                <b>真实尴尬：</b>东南亚目前只有“劳动密集型的外壳组装测试”能力。真正的核心部件：如 <b>超高精度 MT 塑料插芯的注塑模具、亚微米级 FA 玻璃槽组装、干涉检测仪</b>，这帮人根本做不了，依然要全额依靠国内送货。<br>
+                <b>长飞破局点：</b>长飞未来的 BU 要实现全球通吃，一定要利用这个缓冲带：国内出高端零组件，东南亚负责组拼打上海外非国内制造标签，跨越关税门槛长驱直入北美数据中心。</p>
+
+                <h3>🇪🇺 欧洲市场：精密底盘与长期主义</h3>
+                <div class="tech-tags"><span>Vodafone</span><span>25年寿命</span><span>干涉仪垄断</span></div>
+                <p><b>特征：</b>欧洲的互联网偏弱，但是老牌电信商（Orange, Vodafone）主导。他们不求最高带宽，但要求极其严苛的长效稳定（如 25 年全天候干湿循环不断不裂）。<br>
+                <b>长飞破局点：</b>欧洲（尤其是瑞士、德国）依然占据着光互连的祖师爷级高端设备，比如世界最顶级的陶瓷高精度研磨机、白光干涉检测仪。<span class="highlight">您身上瑞士企业（H+S）经历的极严苛欧洲工程底蕴，是长飞向这块高净值市场输出的最佳背书。</span></p>
+
+                <h3>🇨🇳 中国本土版图：极度内卷与国产替代</h3>
+                <div class="tech-tags"><span>红海厮杀</span><span>US Conec</span><span>高端缺位</span></div>
+                <p><b>特征：</b>常规单根的 SC/LC 接头被无数小厂卷到一块钱都不挣。但是！在高端的 <b>多芯高密度 MTP/MPO 核心插头及模具专利</b> 上，全中国都在被美日的巨头（US Conec、Senko 扇港、NTT）死死卡脖子。<br>
+                <b>长飞破局点：</b>以长飞庞大的国内电信运营商底座发力，成立“中国光连接智算标准组”。直接用国内如海的算力出货量（如阿里腾讯算力中心）统一国内规格，<b>用中国海量装机规模去“反噬”和架空北美的企业私有专利</b>。</p>
             </div>
-
+            
             <div class="card">
-                <h2>🔎 LPO, CPO, NPO 到底什么区别？</h2>
+                <h2>🌐 智算体系：为什么光退铜进还有底牌？</h2>
                 <div class="dummy-box">
-                    <div class="dummy-box-title">🗣️ 人话翻译：别管英文，只看“物理距离”！</div>
-                    <p><b>物理背景：</b>信号在主板“电线”里跑，越长越容易衰减。为了让电信号少跑点电线尽早变成跑“光”，大家开始把光模块拼命往绝版心脏芯片（GPU）边上移。</p>
-                    <ul>
-                        <li><b>LPO（插在面板上）：</b>外观长得和老模块一样（插在机箱屁股外）。<b>区别是：拔掉了 DSP 芯片！</b>为了降温省电，它变成了没脑子的瞎子（所以叫线性），纠错任务强行扔给主板去算。</li>
-                        <li><b>NPO（趴在主板中间）：</b>模块不再插外面板了，而是被拔掉外壳，贴在主板中间，距离心脏芯片大概 5-10 厘米。离心脏近了，电损耗变小。</li>
-                        <li><b>CPO（死死焊在晶片上）：</b>终极形态。光引擎被光刻机直接和超级算力心脏芯片 <b>“封在一块玻璃片”</b> 上，距离变成微米级！此时长飞必须提供极致微组装和晶圆级对准（FA阵列）。</li>
-                    </ul>
-                </div>
-
-                <div class="dummy-box">
-                    <div class="dummy-box-title">🗣️ 人话翻译：中际旭创 vs 新易盛 vs Cube Optics</div>
-                    <p><b>中际旭创/新易盛</b> 是“整机组装厂”，他们买所有的芯片零件拼装成“带壳子的光模块”去卖（旭创做传统的，新易盛是激进的无 DSP 的 LPO 派）。而 <b>Cube Optics 和未来的长飞新部门</b> 是“上游发动机特种零件厂”，长飞不做低毛利的铁盒子壳，我们只卖核心分光组件！</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <h2>🔌 VSFF 与 MCF 是什么鬼？</h2>
-                <div class="dummy-box">
-                    <div class="dummy-box-title">🗣️ 人话翻译：极度拥挤的插头</div>
-                    <p><b>VSFF (Very Small Form Factor)：</b>就是字面意思“极小尺寸的插头（如 MMC）”。因为数据中心的面板就这么大，以前的连接插头太粗了，随着机器变多，面板插不下了！所以必须把接头做小 3 倍横向挤进去。<br>
-                    <b>MCF（多芯光纤）：</b>以前一根细光纤里只有 1 条发光的小马路。现在在一根里面强行雕刻出 4-7 条微型马路。对接时的“亚微米级干涉研磨”难度极其变态！这才是长飞未来 CTO 需要指导攻坚的技术壁垒！</p>
+                    <div class="dummy-box-title">🗣️ 人话翻译：Scale-out 与 Scale-up</div>
+                    <p><b>Scale-out (机柜到机柜的横向扩展)：</b>一个大别野里不同房间拉网线就是这个。因为距离远，全是发光信号（光纤和模块）。长飞必须主打里面的高价值内核（WDM或光发阵列）。</p>
+                    <p><b>Scale-up (机柜内部服务器排排坐的纵向)：</b>一个铁箱子里几块 GPU 紧靠在一起！距离极短，大家觉得走纯普通电缆就行（比如英伟达NVLink铜缆），不用光纤，还省了光电转换的电费。这就是所谓的<span class="highlight">“光退铜进”</span>。<br>但这能持久吗？算力越往后走信号越高，铜线就算再短也会发热门牙熔断。这正是长飞绝地反击的绝技：<b>Optical Flexible Backplanes（光柔性背底板）</b>，把海量极细光纤像人体毛细血管一样印制在一层可弯曲的软膜上，完美取代死板的粗铜线，这就是未来的究极形态！</p>
                 </div>
             </div>
         </div>
 
-        <!-- PAGE 2: 冰火两重与6G大白话 -->
+        <!-- PAGE 2: 🔬 核心微观科技 -->
         <div id="page2" class="page">
             <div class="card">
-                <h2>📡 6G 到底是什么？为什么会撞墙？</h2>
+                <h2>🔧 极致极微的硬件兵器库</h2>
                 
-                <div class="dummy-box">
-                    <div class="dummy-box-title">🗣️ 人话翻译：太赫兹是什么频率？什么是小黑盒？</div>
-                    <p><b>5G：</b>5G 用的是毫米波，每秒震荡几百亿次。它还能勉强翻过楼房，打进窗户里。<br>
-                    <b>6G：</b>6G 用的叫“太赫兹（THz）”，每秒震荡上千亿次。物理铁律：<span class="highlight">频率越高，网速越变态（一秒下几十部电影），但是波长越小！</span> 6G 的波长极小，像一粒沙子，撞到钢筋水泥瞬间破碎，<b>绝对穿透不了墙壁和门！</b></p>
-                    <p>更可怕的是物理绝境：6G 的太赫兹波，恰好和空气中<b>“水分子”和“氧分子”的尺寸频率共振！</b> 刚发射到空中，就会被下雨、空气直接把能量吸来产热蒸发掉，光速死亡！</p>
-                </div>
+                <h3>1. VSFF 超小型高速连接器（缓解空间窒息）</h3>
+                <div class="tech-tags"><span>MMC/MDC/SN</span><span>前面板危机</span></div>
+                <p>AI 集群交换机的面板极其有限。以前插粗大的 MPO 或 LC 插头，现在根本塞不下了（面板全被插孔占满，甚至影响交换机向外吹风散热）。VSFF 把接头尺寸疯狂缩小 3 倍，在一样的位置塞入三倍的光纤。这就对抛光、同心度偏差提出了要命的良率要求。</p>
 
-                <h3>为了解决6G全军覆没的灾难，大国如何应对？</h3>
+                <h3>2. MCF 空间多芯光纤（变态的一线多道）</h3>
+                <p>过去一根极细（125微米包层）光纤里面只有一条通道（纤芯）。为了带宽，现在强行在这同样一根里挖出 4 条甚至 7 条纤芯。这就意味着：两根 MCF 光纤对接时，必须进行严苛至极的“多点对位调心”，哪怕有 1 度的旋转，七条光路瞬间全错位！这需要极高的 <b>亚微米精度 3D 干涉控制与 6 轴自转机械手补偿</b>。</p>
+
+                <h3>3. CPO 无界封装与 Active Alignment 硅光耦合</h3>
+                <div class="red-alert"><b>长飞的下一个五年帝国在这里！</b></div>
+                <p>当 CPO 把传统光模块敲碎，把硅光芯片（极其微小发光体）直接跟算力大脑焊死在主板上后，怎么把硅光里面的光无损导入到外面的玻璃光纤里？</p>
                 <ul>
-                    <li>🇺🇸 <b>美国（太空版）：</b>放弃地面！马斯克的星链在太空中因为没有“水汽和空气阻挡”，信号直接从太空无损劈到你的头顶！长飞可以卖 <b>极寒抗太空辐射的连接锁扣</b>。</li>
-                    <li>🇨🇳 <b>中国（小黑盒洗牌）：</b>既然信号进不了屋子，中国基建的解法是：在全中国的每一个办公室、每一个客厅的墙壁上挂满千千万万个路由器大小的“微基站发射盒（小黑盒）”。</li>
-                    <li class="green-tip">长飞的核武器：每个客房都要装小黑盒，长飞必须提供<b>“肉眼看不见极细长隐形光纤”</b>来布线，还要发明<b>“送外卖小哥都能一秒钟即插即用”的免熔接傻瓜端头</b>，垄断中国 6G 最后十米的洗牌市场！</li>
+                    <li><span class="highlight">模场不匹配剧痛：</span>硅光芯片是方形的，几百纳米大小；单模光纤是圆形的，直径 9 微米。由于大小和形状严重失配，强行对准会导致大头进小管，光泄漏殆尽。</li>
+                    <li><span class="highlight">自动耦合（Active Alignment）：</span>不能靠人眼拼！必须引入百万级的超高精度视觉六轴机器人，机器手臂拿着光纤头，在极小范围内高速划微圆，在微秒内找到光能最大、最亮的终极死点。并在此时瞬间打 <b>紫外线（UV）胶水强力固化死锁位置</b>。</li>
+                    <li><span class="highlight">高温回流焊地狱：</span>固化后的阵列因为是在主板上，还要在 SMT 产线上和电子元件一起过高温烤箱（回流焊）！高温一过，胶水变软膨胀偏离个哪怕 0.2 微米就全废。开发 <span class="highlight">超抗热膨胀系数（低 CTE）的专有密封胶和材料配比</span> 就是您的至高壁垒。</li>
                 </ul>
             </div>
 
             <div class="card">
-                <h2>🔥 液冷灾难：什么是发烫的氟化液？</h2>
+                <h2>🔎 彻底看清 800G 发动机的内部</h2>
                 <div class="dummy-box">
-                    <div class="dummy-box-title">🗣️ 人话翻译：主板下油锅炸</div>
-                    <p>英伟达未来的超级算力主板发热太大，连风扇吹和水管冷排（冷板）都压不住了！终极做法叫<b>“浸没式液冷”</b>，也就是把几百万的 GPU 主板和所有长飞卖的光插头，<b>直接扔进一个灌满滚烫“氟化液洗甲水”的大浴缸里煮！</b></p>
-                    <p>普通的胶水只要在里面泡半年，立刻溶解脱壁，光通道瞬间失明、机器死机报废。长飞必须研发出能下油锅几个月都不变形溶解的 <b>免疫氟化液航天级封装</b>。</p>
+                    <div class="dummy-box-title">🗣️ 大白话：旭创与新易盛 vs 我的老东家</div>
+                    <p><b>旭创/新易盛：</b>他们是整个汽车组装厂（买元件拼装铁盒子）。新易盛是激进派，发明了 LPO 技术（就是强行拔掉发热极大的 DSP 计算芯片，虽然不发热了信号会变差失真，只能强行推给主板处理）。</p>
+                    <p><b>Cube Optics (您的老东家)：</b>不卖组装盒子。只卖最中间的终极元件 <b>“WDM 波分复用玻璃组件”</b>。就像漏斗一样，4个 200G 的色光在这块玻璃的极限极窄折射中，绝对精准地平推融合成一根输出束，只要有丝毫误差，“偏振就会扭曲”。长飞要切入的高压战区正是在这里：给模块大厂供应致命的极其精密的内部光发阵列！</p>
                 </div>
             </div>
         </div>
 
-        <!-- PAGE 3: 全球战略大盘 -->
+        <!-- PAGE 3: 🔥 极冰与 6G 物理灾难 -->
         <div id="page3" class="page">
             <div class="card">
-                <h2>🌍 CTO 视野：全球市场四大战区</h2>
-                <p>面试时不要讲怎么磨光纤，要给长飞高管梳理全球棋局：</p>
+                <h2>🔥 液冷地狱：浸没式冷却带来的毁灭防腐战</h2>
+                <p>AI 算力的恐怖发热导致风扇和普通水冷（冷板式）彻底失效。从英伟达 2026 年的 <b>Rubin架构</b> 起，机架将变成“下油锅模式”：<span class="highlight">浸没式液冷（Immersion Cooling）</span>。</p>
+
+                <div class="dummy-box">
+                    <div class="dummy-box-title">🗣️ 人话翻译：光器件为什么要学做航天胶水？</div>
+                    <p>英伟达他们会把整块发热的主板以及所有插在那里的光纤头，完全泡在沸点比如 50℃ 的氟化液特种冷却池里，靠液体沸腾汽化来带走热量。<br>
+                    <b>极寒化学危机：</b>在高温、沸腾且具有强侵入性的化学（Fluorinated 氟化）溶剂里，普通光纤对接的特种环氧树脂（胶水）、塑热外壳会在半年内被溶解、溶胀、解体。只要胶水松了一丝，光轴瞬间错开偏离导致整个节点报废挂机！</p>
+                </div>
+                <div class="green-tip">向总经理宣战：谁能为北美研发出具有绝对化学惰性、能在油锅沸腾几年都保持 0.1 微米对准不变的超硬抗免疫光封装FA插头，谁就能吃下未来的 CPO 万亿美金狂潮。</div>
+            </div>
+
+            <div class="card">
+                <h2>📡 6G 时空的变局：为什么越高越惨烈？</h2>
+                <div class="dummy-box">
+                    <div class="dummy-box-title">🗣️ 大白话：太赫兹与分子吸星大法</div>
+                    <p>6G 频段叫“太赫兹（THz）”，速度快若惊雷。但它的物理病根不可救药：它的波长极其细微碎小，连水泥缝隙都钻不过去，撞着就死，绝无可能穿透室内墙壁。<br>更绝望的是自然天堑：<b>太赫兹频段恰好跟空气里的“水分子（H2O）”和“氧气分子（O2）”发生极强的吸收共鸣。</b>这就跟微波炉热鸡蛋一样，信号射出去的庞大能量不是用来传递数据的，全被空气和毛毛细雨“吸干热量”耗光了！有效传导距离急剧缩水烂掉。</p>
+                </div>
+
+                <h3>大国博弈与长飞的红利：</h3>
                 <ul>
-                    <li><span class="highlight">🇺🇸 北美（硅谷金主）：</span>谷歌、微软、亚马逊。他们买单最早也最多，但被美政府地缘政治限制，他们在强推“China+1”（逼迫供应商把工厂搬出中国）。</li>
-                    <li><span class="highlight">🇹🇭 东南亚（代工车间）：</span>越南马来西亚目前承接了被迫搬出的订单。但其实他们只是组装，做不出来高端光插芯。长飞要在这建厂，把大陆的核心件运过去拼装来绕开关税。</li>
-                    <li><span class="highlight">🇪🇺 欧洲（精密大本营）：</span>网络被老牌电信掌控，不求最快但求 25 年不烂。这里垄断着最高精度的干涉仪和磨床。您瑞士公司背景是极佳敲门砖。</li>
-                    <li><span class="highlight">🇨🇳 中国（全产业链）：</span>常规粗鄙连接器内卷到死。但所有的高端头子（如 MPO）全被美日霸权掐死。长飞要做的是“高端国产替代战役”。</li>
+                    <li><span class="highlight">🇺🇸 漂亮国的空天出局：</span>既然贴地面走不通，遇到空气还衰减，所以美国狂推 SpaceX 星链。因为在太空中没有空气没有水！光无阻力。这逼着长飞必须研发 <span class="highlight">极端耐辐射抗原子寒太空光法兰对接</span>。</li>
+                    <li><span class="highlight">🇨🇳 祖国的千家万户小黑盒：</span>因为连不进门，中国规划（Hexa-X体系影响）不得不在室内墙壁、红绿灯上极其密集地挂满“成百上千万个类似家用的微小基站发射黑盒”。信号送到门后再分发。</li>
+                    <li>长飞最大的洗牌生意来了：要通过极细、隐蔽、能弯曲穿门缝的<span class="highlight">隐形光纤网络</span>去布线这几千万个小基站，还要发明一种就算送外卖的大叔都能顺手一秒按插锁定、不需要热熔冷接的<b>防呆免熔极小插头</b>。</li>
                 </ul>
             </div>
-
-            <div class="card">
-                <h2>🏭 什么是工业 4.0 与 MES 追溯？</h2>
-                <div class="dummy-box">
-                    <div class="dummy-box-title">🗣️ 人话翻译：拒绝血汗厂，要全员溯源</div>
-                    <p>以前光纤对准是几十个厂妹用眼睛盯着去装配。未来长飞要做的是：微米级的东西人眼看不见，用 <b>六轴机械手臂和视觉机器</b>去拼插。而且要装 <b>MES 生产执行系统系统</b>，意思是北美谷歌拿到一条线如果断了，他在电脑一扫码，不仅知道是长飞做的，连是长飞 3 号厂房 6 号机器、昨天下午三点钟抛光的都知道。这就是护城河壁垒。</p>
-                </div>
-            </div>
         </div>
 
-        <!-- PAGE 4: 战术应答 -->
+        <!-- PAGE 4: 👑 将帅之问（核爆 1 题） -->
         <div id="page4" class="page">
             <div class="card">
-                <h2>🛡️ 面试必答绝杀（长飞战略三步走）</h2>
-                
-                <h3>1. 长飞这个BU从0到1怎么破局？</h3>
-                <p>“<b>一期（0-1年赚快利）：</b>不能空谈几年后的 CPO，先快速靠长飞光纤的老底子，砸出 VSFF（MMC等小口径）连接器的自动化流水线。把良率干过老厂，短平快拿下国内与出海市场。<br>
-                <b>二期（1-3年卡硅光）：</b>成立 CPO 微封装突击队。用六轴找光机械手，死磕 FA 硅光玻璃阵列，突破氟化液抗腐蚀，跨国截断下一个代际。<br>
-                <b>三期（3-5年建全球版图）：</b>靠我在跨国项目转移的经验，把中国的核心生产和东南亚车间打通，建立合规避税产线，绕开贸易战直捣北美云巨头心腹！”</p>
-
-                <h3>2. 怎么破 US Conec 专利？</h3>
-                <p>“别盲目在北美规则下找漏洞，专利战极其消耗。技术上用侧压免拉环新设计；战略上，我们要拉拢阿里、腾讯 <b>建立中国智算光互连 MSA（标准组织）</b>。自己做裁判，用中国的海量天威定规矩，反噬压死北美标准。”</p>
-
-                <h3>3. 入职前三个月核心技术团队去哪招？</h3>
-                <p>“做高精密高并发的光互联，去普通光纤厂挖人没用！我要去 **台积电挖做芯片 Die Bonding (封装对准)的高手，去大疆挖视觉雷达追踪的大神，去华为车厂挖流体力学散热专家！** 这个部门必须是极其昂贵的‘跨界特战队’！”</p>
-            </div>
-        </div>
-
-        <!-- PAGE 5: 终极反问 -->
-        <div id="page5" class="page">
-            <div class="card">
-                <h2>👑 将帅反击：这三道题必问高管！</h2>
+                <h2>👑 终级面试反击战（全场聚焦一击）</h2>
                 <div class="dummy-box">
-                    <div class="dummy-box-title">💡 使用时机：面试结尾，他们问你“你有啥想了解的吗？”抛出这几题！</div>
+                    <div class="dummy-box-title">💡 战术提示</div>
+                    <p>我们在这个页面**只保留了最核心的、最尖锐、且最具总裁视野的唯一个反问题**。当总经理和高管最后问您：“对我们这个长飞的新架构 BU，您有什么想提问或了解的吗？”</p>
+                    <p>立刻深吸一口气，抛出这个直击灵魂、测探长飞容忍底线的问题，向他们展示：您不是来这里唯唯诺诺打工办厂的，您是来拿着兵权大举冲锋洗牌的最高战将！</p>
                 </div>
 
-                <div class="red-alert">
-                    <b>🔥 反问一（测试考核体制的大手笔）</b><br>
-                    “总经理您好！长飞主业是做光纤的，这是重资产行业，大家考核都是求稳、用十年大周期来做 KPI。但硅光和高端零组件是按‘季度’死迭代的！在这么极端的赛道，我在搭建这个新 BU 时，集团层面对我的财务和容错考核，是用传统求稳国企的方法，还是允许我像个创业科技公司一样去‘敏捷试错，开特区绿灯’？”
+                <div class="red-alert" style="box-shadow: 0px 0px 20px rgba(239, 68, 68, 0.4);">
+                    <h3 style="color:#ef4444; margin-top:0; border-bottom: 1px solid rgba(239, 68, 68, 0.3); padding-bottom:5px;">🔥 终极将军之问（直逼核心财务与容错权）</h3>
+                    <p style="font-size: 1.05rem; font-weight: bold; color: white;">
+                        “总经理您好探讨一个底层的问题。咱们长飞主业（光纤光缆）是极其重资产的，这种生意往往基于十年的长周期规划，核心考核求稳不求异。”<br><br>
+                        “但是！咱们要搞的高端微互连与硅光技术，它的技术洗牌和设备迭代是以‘季度乃至月度’为生死的。在硅谷这是一门快刀斩乱麻的极限竞速战争。”<br><br>
+                        “那么请问，集团层面对未来我这个‘新高端连接器BU’的【核心财务容忍度】以及【试错 KPI 考核】的底线逻辑——是倾向于拿咱们传统老厂的求稳红框来套牢要求我，还是集团早就做好了准备，完全允许我像带领初创科技公司那样放开手脚，敏捷容错试错，甚至开大绿灯特批重金去在海外扫货并购技术团队？！”
+                    </p>
                 </div>
-
-                <div class="green-tip">
-                    <b>🔥 反问二（探盘资金做海外收购）</b><br>
-                    “如果北美强行进行 CPO 和晶片堆叠的专利封锁。自己纯研发肯定来不及。我想确认董事会的决心：对于买海外极其成熟的技术、或者直接并购极客初创硅光小厂，我们在资本预算审批的权力边界有多大？”
-                </div>
-
-                <div class="highlight" style="margin-top: 15px; background:rgba(255,255,255,0.05); padding:10px; border-radius:5px;">
-                    <b>🔥 反问三（试探人事洗牌权）</b><br>
-                    “我要融合长飞老兵将、硅谷回来的外脑甚至大疆的高手，不同文化冲突极大。集团是否允许我去跨越死板的制造层级，赋予我在团队特派采购和特殊高薪分配上的**独立生杀大权**？”
-                </div>
+                
+                <p style="color:#cbd5e1; font-size: 0.9rem; margin-top:20px;">
+                    <b>潜台词解析：</b>这表面上是个提问，实际上是你在“反向面试长飞”。这告诉高管：不要拿以前做光缆管理生产队的那套繁文缛节来管理我。我要的是不受束缚的特区权限、敢于花钱的预算包容、和做先锋实验的试错允许期！长飞的高层一听就明白，这是真正从最惨烈的外企战场拼杀出来，懂战略周期的干家。
+                </p>
             </div>
         </div>
 
     </div>
 
-    <!-- 底部横向滑动的 Tab 栏 -->
+    <!-- 底部横向滑动的 Tab 栏 (已精简至4个选项卡重点聚焦) -->
     <div class="tab-bar-container">
         <div class="tab-bar">
-            <div class="tab-item active" onclick="switchPage('page1', this)"><div class="tab-icon">🔬</div>原理解析</div>
-            <div class="tab-item" onclick="switchPage('page2', this)"><div class="tab-icon">🔥</div>冰火6G</div>
-            <div class="tab-item" onclick="switchPage('page3', this)"><div class="tab-icon">🌍</div>全球战图</div>
-            <div class="tab-item" onclick="switchPage('page4', this)"><div class="tab-icon">🛡️</div>战略应答</div>
-            <div class="tab-item" onclick="switchPage('page5', this)"><div class="tab-icon">👑</div>向高管发问</div>
+            <div class="tab-item active" onclick="switchPage('page1', this)"><div class="tab-icon">🌍</div>大国版图</div>
+            <div class="tab-item" onclick="switchPage('page2', this)"><div class="tab-icon">🔬</div>核心兵器</div>
+            <div class="tab-item" onclick="switchPage('page3', this)"><div class="tab-icon">🔥</div>极冰极火</div>
+            <div class="tab-item" onclick="switchPage('page4', this)"><div class="tab-icon">👑</div>统帅反问</div>
         </div>
     </div>
 
