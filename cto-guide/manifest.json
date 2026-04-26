@@ -1,0 +1,9 @@
+{
+    "name": "长飞 CTO 终极面试宝典",
+    "short_name": "CTO宝典",
+    "start_url": "./app.html",
+    "display": "standalone",
+    "background_color": "#0f172a",
+    "theme_color": "#0f172a",
+    "description": "长飞光纤连接器 CTO 面试全要素聚合 App"
+}

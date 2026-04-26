@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6G 光之革命：为何“空芯光纤 (HCF)”是降维打击？</title>
+    <style>
+        :root { --bg: #000; --card: #111; --text: #e5e5e5; }
+        body { font-family: Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); padding: 30px; display: flex; flex-direction: column; align-items: center;}
+        h1 { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        
+        .fiber-container { display: flex; gap: 50px; margin-top: 40px; width: 100%; max-width: 1000px;}
+        .fiber-box { flex: 1; border: 1px solid #333; padding: 20px; border-radius: 10px; background: var(--card); }
+        
+        /* 截面模拟 */
+        .cross-section { width: 120px; height: 120px; border-radius: 50%; margin: 0 auto 20px; border: 8px solid #555; position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.8);}
+        
+        .solid-core { background: rgba(56, 189, 248, 0.4); display: flex; height:100%; align-items:center; justify-content:center; border-radius:50%;}
+        .hollow-core { background: transparent; display: flex; height:100%; align-items:center; justify-content:center; border-radius:50%; border: 2px dotted #fff;}
+        .honeycomb { width: 40px; height: 40px; background: transparent; border-radius: 50%; border: 1px dashed rgba(255,255,255,0.5); }
+        
+        /* 传输动画 */
+        .light-track { width: 100%; height: 30px; background: #222; border-radius: 15px; margin-top: 20px; position: relative; overflow: hidden; border: 1px solid #444;}
+        
+        .photon { width: 25px; height: 25px; border-radius: 50%; position: absolute; top: 2.5px; }
+        
+        .photon.slow { background: #38bdf8; box-shadow: 0 0 15px #38bdf8; animation: move-slow 4s linear infinite; }
+        .photon.fast { background: #facc15; box-shadow: 0 0 15px #facc15; animation: move-fast 2.8s linear infinite; }
+        
+        @keyframes move-slow { 0% { left: -30px; } 100% { left: 100%; } }
+        @keyframes move-fast { 0% { left: -30px; } 100% { left: 100%; } }
+        
+        .tag-gray { background: #333; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; color: #aaa; margin: 2px; display: inline-block;}
+    </style>
+</head>
+<body>
+    <header style="text-align:center; max-width: 800px;">
+        <h1>6G 及高频金融网的杀手锏：空芯光纤 (HCF)</h1>
+        <p>光在宇宙真空中传播最快（每秒30万公里），但一旦钻进大家熟知的玻璃光纤里，速度会直接下降 30%！这 30% 的延迟，对于未来 6G 空天互联和华尔街量化高频交易来说，是致命的慢动作。所以，全行业都在研发一种<b>中间是空心的</b>特殊光纤。</p>
+    </header>
+
+    <div class="fiber-container">
+        <!-- 传统实心光纤 -->
+        <div class="fiber-box">
+            <h3 style="text-align:center; color:#38bdf8">传统实心石英光纤 (慢且重)</h3>
+            <div class="cross-section">
+                <div class="solid-core"><span style="font-size:0.7rem; color:#fff">实心玻璃</span></div>
+            </div>
+            
+            <p><b>原理：</b> 光在有杂质的实心玻璃中折射穿梭，速度被大幅度拖慢。一旦激光能量过高，还会烧毁玻璃（非线性效应）。</p>
+            <div class="light-track">
+                <div class="photon slow"></div>
+            </div>
+            <div style="font-size:0.8rem; margin-top:10px; color:#888;">速度慢 30% (模拟)</div>
+            
+            <div style="margin-top:20px; border-top:1px dashed #444; padding-top:10px;">
+                <span class="tag-gray">应用：普通宽带, 4G/5G, 数据中心常规互连</span>
+            </div>
+        </div>
+
+        <!-- 空芯光纤 -->
+        <div class="fiber-box" style="border-color:#facc15; box-shadow:0 0 15px rgba(250,204,21,0.1)">
+            <h3 style="text-align:center; color:#facc15">新型反共振空芯光纤 HCF (极速)</h3>
+            <div class="cross-section" style="border-color:#facc15;">
+                <div class="hollow-core">
+                    <div class="honeycomb"></div>
+                </div>
+                <div style="position:absolute; bottom:-15px; left:50%; transform:translateX(-50%); font-size:0.75rem; background:#000; padding:0 5px; color:#facc15;">中间是空气管</div>
+            </div>
+            
+            <p><b>原理：</b> 光在中间完全中空的空气管道中飞行！速度几乎等同于宇宙真空中的光速。降低延迟达 30% 以上，且可承受极高功率的激光源。</p>
+            <div class="light-track">
+                <div class="photon fast"></div>
+            </div>
+            <div style="font-size:0.8rem; margin-top:10px; color:#facc15;">极速无缝穿梭！</div>
+            
+            <div style="margin-top:20px; border-top:1px dashed #facc15; padding-top:10px;">
+                <span class="tag-gray">买单客户：微软(收购Lumen HCF)，华尔街，6G卫星网络</span>
+            </div>
+        </div>
+    </div>
+    
+    <div style="max-width: 800px; background: rgba(250, 204, 21, 0.1); border-left: 4px solid #facc15; padding: 20px; margin-top: 30px; border-radius:0 8px 8px 0;">
+        <h4 style="margin:0 0 10px 0; color:#facc15;">⚡ 长飞 CTO 面试绝杀点：极其变态的组装难点！</h4>
+        <p style="font-size:0.95rem; margin:0; line-height:1.6;">空芯光纤像一根吸管，如果水汽或灰尘跑进去，光纤就废了。<br>作为长飞未来的 CTO，面对这批未来的“吸管光纤”，我必须研发出极真空密封的<b>特种端面连接器</b>。我们要确保在对接两根空芯光纤时，其端面不仅不能漏气，透镜还不能挡住空气管。这是传统插拔厂绝对不可能做出的跨代技术护城河！</p>
+    </div>
+</body>
+</html>

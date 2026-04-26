@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OFC2026 前端大纪实：CPO 与晶圆代工厂(Foundry)的跨界革命</title>
+    <style>
+        :root { --bg: #111827; --card: #1f2937; --text: #f3f4f6; --neon-blue: #3b82f6; --neon-purple: #8b5cf6; --neon-green: #10b981; }
+        body { font-family: -apple-system, sans-serif; background: var(--bg); color: var(--text); padding: 20px; line-height: 1.6; display: flex; flex-direction: column; align-items: center; }
+        h1 { color: var(--neon-purple); text-align: center; }
+        .container { display: flex; gap: 30px; margin-top: 30px; width: 100%; max-width: 1200px; }
+        .col { flex: 1; background: var(--card); padding: 25px; border-radius: 12px; border: 1px solid #374151; position: relative; }
+        
+        .title { font-size: 1.4rem; font-weight: bold; border-bottom: 2px solid #4b5563; padding-bottom: 10px; margin-bottom: 20px; text-align: center; }
+        .factory-img { width: 100%; height: 200px; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; position: relative; overflow: hidden;}
+        
+        .trad-factory { background: linear-gradient(45deg, #1e3a8a, #1d4ed8); }
+        .foundry { background: linear-gradient(45deg, #4c1d95, #6d28d9); box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);}
+        
+        .players { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+        .tag { background: #374151; padding: 5px 10px; border-radius: 6px; font-size: 0.85rem; border: 1px solid #4b5563; }
+        .tag.us { border-color: #ef4444; color: #fca5a5; }
+        .tag.tw { border-color: #3b82f6; color: #93c5fd; }
+        .tag.cn { border-color: #f59e0b; color: #fcd34d; }
+        
+        .arrow { position: absolute; right: -25px; top: 150px; font-size: 2rem; color: #fff; z-index: 10; }
+        
+        .desc-box { background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+    <header style="max-width: 900px; text-align:center;">
+        <h1>光器件行业的被迫“升维”：冲进晶圆厂</h1>
+        <p>为什么 OFC 会议上专家惊呼“麻烦大了”？因为随着 CPO 时代的到来，光模块不再是一个可以拿在手里组装的小铁盒子，它变成了和 CPU 一起长在玻璃底板上的芯片。这就剥夺了传统光通信厂的控制权，逼迫他们必须去给半导体大王（台积电们）打下手！</p>
+    </header>
+
+    <div class="container">
+        <!-- 传统时代 -->
+        <div class="col" style="border-top: 4px solid var(--neon-blue);">
+            <div class="title" style="color:var(--neon-blue)">左侧：传统光模块组装厂 (过去 & 现在)</div>
+            <div class="factory-img trad-factory">流水线车间：人工/机器拼接零件</div>
+            <div class="desc-box">
+                <p><b>门槛：</b> 买芯片、买连接器、买光纤，放在流水线上盖个铁壳子，测一测出货。</p>
+                <p><b>痛点：</b> 面向的是“板级公差”（微米级），技术门槛正在降低，疯狂内卷价格。</p>
+            </div>
+            
+            <h4 style="margin:20px 0 5px 0">主要玩家生态圈</h4>
+            <div class="players">
+                <span class="tag cn">中际旭创 (组装王者)</span>
+                <span class="tag cn">光迅科技</span>
+                <span class="tag us">US Conec (卖塑料插芯)</span>
+                <span class="tag cn">长飞老连接器厂 (卖常规线跳)</span>
+            </div>
+            <div class="arrow">➡️</div>
+        </div>
+
+        <!-- CPO 晶圆厂时代 -->
+        <div class="col" style="border-top: 4px solid var(--neon-purple);">
+            <div class="title" style="color:var(--neon-purple)">右侧：CPO 硅光晶圆代工厂 (Foundry) (未来)</div>
+            <div class="factory-img foundry">台积电极净室：硅片级激光压印封装设备</div>
+            <div class="desc-box">
+                <p><b>门槛：</b> 没有任何金属壳！光引擎直接在硅/玻璃晶圆上蚀刻。对光的容错率达到了“亚微米级”甚至纳米级。</p>
+                <p><b>长飞 CTO 的破局点：</b> 台积电只会刻芯片，他们极其缺乏如何把外部极细的光纤（PM-FA）插拔到芯片级基板上的光学封装经验！这就是长飞最值钱的新业务！</p>
+            </div>
+
+            <h4 style="margin:20px 0 5px 0">主要玩家生态圈</h4>
+            <div class="players">
+                <span class="tag tw">台积电 TSMC (代工大王)</span>
+                <span class="tag tw">日月光 ASE (先进封装)</span>
+                <span class="tag us">英特尔 Intel (玻璃基板霸主)</span>
+                <span class="tag cn" style="border: 2px solid var(--neon-green); font-weight:bold;">长飞新BU (提供芯片级光学I/O对准)</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>整车厂 vs 器件厂：光模块与 Cube Optics 生态拆解</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --car-bg: rgba(30, 41, 59, 0.9);
+            --neon-blue: #38bdf8;
+            --neon-pink: #ec4899;
+            --neon-green: #22c55e;
+            --neon-yellow: #eab308;
+            --text-light: #f1f5f9;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-light);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px 20px;
+            max-width: 900px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            background: linear-gradient(to right, #38bdf8, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+            gap: 40px;
+            position: relative;
+        }
+
+        /* 左右两侧列 */
+        .column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+        }
+
+        .column-title {
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed rgba(255,255,255,0.2);
+            margin-bottom: 20px;
+        }
+
+        .company-tag {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        /* 零配件卡片 */
+        .part {
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            z-index: 10;
+        }
+
+        .part.cubo {
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.2);
+        }
+
+        .part.yofc {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
+        }
+
+        .part:hover {
+            transform: translateY(-5px);
+        }
+
+        .part h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+        }
+
+        .part p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* 中心的光模块盒 */
+        .module-box {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 3px solid #475569;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.8), 0 20px 50px rgba(0,0,0,0.5);
+            min-height: 500px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            overflow: hidden;
+        }
+
+        .module-box::before {
+            content: '800G 光模块 (大小形同 U 盘)';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg);
+            padding: 0 20px;
+            font-weight: bold;
+            color: var(--neon-yellow);
+        }
+        
+        .usb-connector {
+            position: absolute;
+            top: -3px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 15px;
+            background: #94a3b8;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        .module-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 10px;
+            flex: 1;
+        }
+
+        /* 内部通用底座 */
+        .internal-slot {
+            background: rgba(0,0,0,0.4);
+            border: 2px dashed #475569;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            color: #64748b;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.5s ease;
+        }
+
+        .internal-slot.filled-dsp {
+            background: rgba(56, 189, 248, 0.1);
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+        }
+
+        .internal-slot.filled-siph {
+            background: rgba(234, 179, 8, 0.1);
+            border: 2px solid var(--neon-yellow);
+            color: var(--neon-yellow);
+        }
+
+        /* 飞入动效的占据位 */
+        .internal-slot.filled-cubo {
+            background: rgba(236, 72, 153, 0.15);
+            border: 2px solid var(--neon-pink);
+            color: #fff;
+            box-shadow: inset 0 0 20px rgba(236,72,153,0.3);
+            animation: pulse-pink 2s infinite;
+        }
+
+        .internal-slot.filled-yofc {
+            background: rgba(34, 197, 94, 0.15);
+            border: 2px solid var(--neon-green);
+            color: #fff;
+            box-shadow: inset 0 0 20px rgba(34,197,94,0.3);
+            animation: pulse-green 2s infinite;
+        }
+
+        /* 组装动画箭头 */
+        .arrow-flow {
+            position: absolute;
+            top: 50%;
+            left: 28%;
+            font-size: 2rem;
+            color: #fff;
+            animation: fadeInOut 1.5s infinite;
+            z-index: 100;
+        }
+
+        /* 操作按钮 */
+        .btn {
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            border: none;
+            padding: 15px 30px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(56, 189, 248, 0.4);
+            margin: 20px auto;
+            display: block;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .info-panel {
+            background: rgba(30, 41, 59, 0.8);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border-left: 4px solid var(--neon-blue);
+            line-height: 1.6;
+        }
+
+        @keyframes pulse-pink { 0%, 100% { box-shadow: 0 0 10px rgba(236,72,153,0.3); } 50% { box-shadow: 0 0 25px rgba(236,72,153,0.7); } }
+        @keyframes pulse-green { 0%, 100% { box-shadow: 0 0 10px rgba(34,197,94,0.3); } 50% { box-shadow: 0 0 25px rgba(34,197,94,0.7); } }
+        @keyframes fadeInOut { 0%, 100% { opacity: 0; transform: translateX(-10px); } 50% { opacity: 1; transform: translateX(10px); } }
+
+        @media (max-width: 900px) {
+            .container { flex-direction: column; }
+            .arrow-flow { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>“整车厂” vs “器件厂”：光模块生态解析</h1>
+        <div class="subtitle">这是一张关于供应链角色的“沙盘”。<br>很多人搞混了 <b>研发光模块的主机厂</b>（例如中际旭创）与 <b>卖核心器官的器件厂</b>（例如 Cube Optics）的区别。按下方按钮体验整个产业链流程。</div>
+    </header>
+
+    <button class="btn" onclick="simulateAssembly()" id="actionBtn">一键模拟供应链组装 (将器官塞入整车)</button>
+
+    <div class="container">
+        
+        <!-- 左侧：器件部件厂 -->
+        <div class="column" id="col-left">
+            <div class="column-title" style="color:var(--neon-pink)">一级部件厂 (造器官)</div>
+            <div class="company-tag">代表企业：Cube Optics (灏讯)、长飞新BU</div>
+            
+            <div class="part cubo" id="part-cubo">
+                <h3 style="color:var(--neon-pink)">1. 微型波分引擎 (WDM Block)</h3>
+                <p>📍 <b>Cube Optics 的招牌绝活</b></p>
+                <p>只有指甲盖的 1/4 大小。将高端的高分子注塑微透镜和滤光片组装成一个独立的小组件，负责把8种颜色光漏斗型叠在一起。</p>
+            </div>
+
+            <div class="part yofc" id="part-yofc">
+                <h3 style="color:var(--neon-green)">2. 亚微米 PM-FA 光纤阵列</h3>
+                <p>📍 <b>长飞光组件 BU 的长项</b></p>
+                <p>一排比头发丝还细的保偏光纤，经过机器视觉绝对对准粘合。负责最后从芯片到外部的完美光传导。</p>
+            </div>
+            
+            <div class="info-panel">
+                <b>💡 CTO面试精髓：</b> “我们不造整个 U盘 模块，我们用极致的材料学和微注塑/组装工艺，造 U盘 模块肚子里最隐秘、最卡脖子的光学核心器件！就像博世向宝马卖发动机化油器。”
+            </div>
+        </div>
+
+        <div class="arrow-flow" id="arrow">➡️➡️➡️</div>
+
+        <!-- 右侧：模块整机厂 -->
+        <div class="column" id="col-right">
+            <div class="column-title" style="color:var(--neon-yellow)">模块组装厂 (造整车)</div>
+            <div class="company-tag">代表企业：中际旭创、光迅、长芯博创</div>
+            
+            <div class="module-box">
+                <div class="usb-connector"></div>
+                
+                <div class="module-inner">
+                    <div class="internal-slot filled-dsp">
+                        <b>主控大脑 (DSP / ASIC)</b>
+                        <span style="font-size:0.8rem">从硅谷巨头这里买来的黑色芯片。处理纯电信号。</span>
+                    </div>
+
+                    <div class="internal-slot filled-siph">
+                        <b>硅光调制器 (SiPh)</b>
+                        <span style="font-size:0.8rem">把电变光，形成 8 个单独的发光通道。</span>
+                    </div>
+
+                    <!-- 预留的器件空位 -->
+                    <div class="internal-slot" id="slot-wdm">
+                        [ 预留插槽 ] <br>需要合并光束的 WDM 引擎...<br>
+                        <span style="font-size:0.75rem; color:#f87171">整车厂自己造不好，急需外部高精度供应商买入！</span>
+                    </div>
+
+                    <div class="internal-slot" id="slot-fa">
+                        [ 预留插槽 ] <br>需要负责对外连卡的 PM-FA...<br>
+                        <span style="font-size:0.75rem; color:#f87171">整车厂对不准，需要长飞这种玻璃大厂专供！</span>
+                    </div>
+
+                    <div class="internal-slot" style="background:#334155; color:#94a3b8; border-color:#334155">
+                        <b>金属外壳与散热风道</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let step = 0;
+
+        function simulateAssembly() {
+            const btn = document.getElementById('actionBtn');
+            const slotWdm = document.getElementById('slot-wdm');
+            const slotFa = document.getElementById('slot-fa');
+            const partCubo = document.getElementById('part-cubo');
+            const partYofc = document.getElementById('part-yofc');
+
+            if (step === 0) {
+                // 第一步：Cube Optics 的组件装入
+                partCubo.style.opacity = '0.3';
+                partCubo.style.transform = 'scale(0.9)';
+                slotWdm.className = 'internal-slot filled-cubo';
+                slotWdm.innerHTML = '<b>✓ 成功植入：微型 WDM 引擎 (Cube Optics)</b><br><span style="font-size:0.8rem">注塑高精度漏斗，省去模块厂大量人工拼接！</span>';
+                btn.innerText = '下一步：组装长飞的精密管线...';
+                step = 1;
+            } else if (step === 1) {
+                // 第二步：长飞的组件装入
+                partYofc.style.opacity = '0.3';
+                partYofc.style.transform = 'scale(0.9)';
+                slotFa.className = 'internal-slot filled-yofc';
+                slotFa.innerHTML = '<b>✓ 成功植入：PM-FA 阵列 (长飞)</b><br><span style="font-size:0.8rem">彻底锁死偏振角度，0 误差将光导出模块外！</span>';
+                
+                document.getElementById('arrow').innerHTML = "🌟🌟🌟";
+                btn.innerText = '组装完成！800G模块可出货。点击重置';
+                btn.style.background = 'linear-gradient(90deg, #22c55e, #10b981)';
+                step = 2;
+            } else {
+                // 重置
+                partCubo.style.opacity = '1';
+                partCubo.style.transform = 'scale(1)';
+                partYofc.style.opacity = '1';
+                partYofc.style.transform = 'scale(1)';
+                
+                slotWdm.className = 'internal-slot';
+                slotWdm.innerHTML = '[ 预留插槽 ] <br>需要合并光束的 WDM 引擎...<br><span style="font-size:0.75rem; color:#f87171">整车厂自己造不好，急需外部高精度供应商买入！</span>';
+                
+                slotFa.className = 'internal-slot';
+                slotFa.innerHTML = '[ 预留插槽 ] <br>需要负责对外连卡的 PM-FA...<br><span style="font-size:0.75rem; color:#f87171">整车厂对不准，需要长飞这种巨头专供！</span>';
+
+                document.getElementById('arrow').innerHTML = "➡️➡️➡️";
+                btn.innerText = '一键模拟供应链组装 (将器官塞入整车)';
+                btn.style.background = 'linear-gradient(90deg, #38bdf8, #818cf8)';
+                step = 0;
+            }
+        }
+    </script>
+</body>
+</html>

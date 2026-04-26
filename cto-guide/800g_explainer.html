@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>800G 光模块链路交互图解</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent: #38bdf8;
+            --neon-red: #ef4444;
+            --neon-orange: #f97316;
+            --neon-yellow: #eab308;
+            --neon-green: #22c55e;
+            --neon-cyan: #06b6d4;
+            --neon-blue: #3b82f6;
+            --neon-purple: #a855f7;
+            --neon-pink: #ec4899;
+            --white-beam: #f8fafc;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: #f1f5f9;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px 20px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-center;
+            padding: 50px 20px;
+            width: 90%;
+            max-width: 1400px;
+            position: relative;
+        }
+
+        /* 统一卡片样式 */
+        .stage {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 400px;
+        }
+
+        .stage:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(56, 189, 248, 0.2);
+            border-color: rgba(56, 189, 248, 0.5);
+        }
+
+        .stage-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+            width: 100%;
+        }
+
+        /* 第一阶段：DSP芯片 */
+        .dsp-box {
+            width: 180px;
+        }
+        .chip-icon {
+            width: 100px;
+            height: 100px;
+            background: #1e293b;
+            border: 2px solid #475569;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.5rem;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            position: relative;
+        }
+        .chip-icon::after {
+            content: '';
+            position: absolute;
+            top: -10px; left: -10px; right: -10px; bottom: -10px;
+            border: 1px dashed #38bdf8;
+            border-radius: 15px;
+            animation: rotate 10s linear infinite;
+        }
+
+        /* 第二阶段：硅光模块 */
+        .siph-box {
+            width: 250px;
+            margin-left: 50px;
+        }
+        .laser-array {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+        }
+        .laser-item {
+            height: 25px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            font-size: 0.8rem;
+            position: relative;
+            border-left: 4px solid var(--laser-color);
+        }
+
+        /* 电子连线 */
+        .electric-lines {
+            position: absolute;
+            left: 200px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 70px;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 1;
+        }
+        .e-line {
+            height: 2px;
+            background: linear-gradient(90deg, #94a3b8, transparent);
+            position: relative;
+        }
+        .e-packet {
+            width: 10px; height: 10px;
+            background: #cbd5e1;
+            border-radius: 50%;
+            position: absolute;
+            top: -4px;
+            animation: moveRight 1s infinite linear;
+        }
+
+        /* 光束连接线 */
+        .optical-lines {
+            position: absolute;
+            left: 500px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 120px;
+            height: 260px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 1;
+        }
+        .o-line {
+            height: 4px;
+            position: relative;
+            box-shadow: 0 0 10px var(--laser-color);
+            background: var(--laser-color);
+        }
+        .o-packet {
+            width: 20px; height: 4px;
+            background: #fff;
+            position: absolute;
+            top: 0;
+            box-shadow: 0 0 15px #fff;
+            animation: moveRight 1.2s infinite linear;
+        }
+
+        /* 第三阶段：WDM Mux (Z-Block/AWG) */
+        .wdm-box {
+            width: 220px;
+            margin-left: 170px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .funnel {
+            width: 120px;
+            height: 280px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            clip-path: polygon(0 0, 100% 40%, 100% 60%, 0 100%);
+            border: 1px solid rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .funnel::before {
+            content: '8并1 漏斗';
+            position: absolute;
+            font-size: 0.9rem;
+            color: #fff;
+            font-weight: bold;
+            opacity: 0.8;
+            transform: rotate(90deg);
+        }
+
+        /* 单束混合光 */
+        .mixed-line {
+            position: absolute;
+            left: 840px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 120px;
+            height: 12px;
+            background: #fff;
+            box-shadow: 0 0 20px #fff, 0 0 40px #fff;
+            z-index: 1;
+        }
+        .m-packet {
+            width: 40px; height: 12px;
+            background: rgba(255,255,255,0.8);
+            position: absolute;
+            animation: moveRight 0.8s infinite linear;
+        }
+
+        /* 第四阶段：FA与外部世界 */
+        .fa-box {
+            width: 240px;
+            margin-left: 140px;
+            border: 2px solid var(--neon-red);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+        }
+        .slot {
+            width: 80px;
+            height: 80px;
+            border: 4px solid #fff;
+            border-radius: 50%;
+            margin-top: 40px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slot-inner {
+            width: 60px;
+            height: 10px;
+            background: rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .frisbee {
+            width: 40px; height: 8px;
+            background: #fff;
+            position: absolute;
+            left: -40px;
+            animation: passSlot 1.5s infinite linear;
+        }
+
+        .explainer-panel {
+            margin-top: 50px;
+            background: var(--card-bg);
+            border-left: 4px solid var(--accent);
+            padding: 30px;
+            max-width: 1200px;
+            width: 90%;
+            border-radius: 8px;
+            display: none;
+            line-height: 1.8;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .explainer-panel.active {
+            display: block;
+        }
+
+        .explainer-panel h3 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        @keyframes moveRight {
+            0% { left: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(0.95); }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes passSlot {
+            0% { left: -50px; }
+            100% { left: 70px; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .pulse-text {
+            animation: pulse 2s infinite;
+            color: var(--neon-cyan);
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .mobile-warning {
+            display: none;
+            color: #fbbf24;
+            text-align: center;
+            padding: 10px;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+                padding-top: 20px;
+            }
+            .stage {
+                margin: 20px 0 !important;
+                min-height: auto;
+                width: 100%;
+                max-width: 400px;
+            }
+            .electric-lines, .optical-lines, .mixed-line {
+                display: none;
+            }
+            .funnel {
+                transform: rotate(90deg);
+                margin: 60px 0;
+            }
+            .slot {
+                margin: 20px auto;
+            }
+            .mobile-warning {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>800G 光模块链路 & PM-FA 核心护城河图解</h1>
+        <p class="subtitle">👉 电脑端体验最佳。点击下方各大模块，查看对应的“CTO面试高维话术与原理解读”。</p>
+        <div class="mobile-warning">⚠️ 屏幕较窄，连接光束已被隐藏，请上下滑动查看模块逻辑。建议在电脑大屏查看以观看光流动画。</div>
+    </header>
+
+    <div class="container" id="pipeline-container">
+        
+        <!-- 阶段一 -->
+        <div class="stage dsp-box" onclick="showInfo('dsp')">
+            <div class="stage-title">1. 大脑区<br><span style="font-size:0.9rem;color:#94a3b8">ASIC / DSP芯片</span></div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                <div class="chip-icon">DSP</div>
+                <div style="margin-top:20px; text-align:center; color:#cbd5e1; font-size:0.9rem;">
+                    负责狂吐 800G 的</br>纯电信号数据
+                </div>
+            </div>
+            <div class="pulse-text">点击了解详情</div>
+        </div>
+
+        <!-- 连线 1 -->
+        <div class="electric-lines">
+            <div class="e-line"><div class="e-packet" style="animation-delay: 0s;"></div></div>
+            <div class="e-line"><div class="e-packet" style="animation-delay: 0.2s;"></div></div>
+            <div class="e-line"><div class="e-packet" style="animation-delay: 0.4s;"></div></div>
+            <div class="e-line"><div class="e-packet" style="animation-delay: 0.1s;"></div></div>
+            <div class="e-line"><div class="e-packet" style="animation-delay: 0.3s;"></div></div>
+            <div class="e-line"><div class="e-packet" style="animation-delay: 0.5s;"></div></div>
+            <div class="e-line"><div class="e-packet" style="animation-delay: 0.2s;"></div></div>
+            <div class="e-line"><div class="e-packet" style="animation-delay: 0.4s;"></div></div>
+        </div>
+
+        <!-- 阶段二 -->
+        <div class="stage siph-box" onclick="showInfo('siph')">
+            <div class="stage-title">2. 发光区<br><span style="font-size:0.9rem;color:#94a3b8">硅光调制器 (SiPh)</span></div>
+            <div class="laser-array">
+                <div class="laser-item" style="--laser-color: #ef4444;">1号通道 (红光) - 100G</div>
+                <div class="laser-item" style="--laser-color: #f97316;">2号通道 (橙光) - 100G</div>
+                <div class="laser-item" style="--laser-color: #eab308;">3号通道 (黄光) - 100G</div>
+                <div class="laser-item" style="--laser-color: #22c55e;">4号通道 (绿光) - 100G</div>
+                <div class="laser-item" style="--laser-color: #06b6d4;">5号通道 (青光) - 100G</div>
+                <div class="laser-item" style="--laser-color: #3b82f6;">6号通道 (蓝光) - 100G</div>
+                <div class="laser-item" style="--laser-color: #a855f7;">7号通道 (紫光) - 100G</div>
+                <div class="laser-item" style="--laser-color: #ec4899;">8号通道 (粉光) - 100G</div>
+            </div>
+            <div style="margin-top:20px; text-align:center; color:#cbd5e1; font-size:0.85rem;">
+                电信号在这里变成了<br>8 束各自独立的激光
+            </div>
+            <div class="pulse-text">点击了解详情</div>
+        </div>
+
+        <!-- 连线 2 -->
+        <div class="optical-lines">
+            <div class="o-line" style="--laser-color: #ef4444;"><div class="o-packet" style="animation-delay: 0s;"></div></div>
+            <div class="o-line" style="--laser-color: #f97316;"><div class="o-packet" style="animation-delay: 0.3s;"></div></div>
+            <div class="o-line" style="--laser-color: #eab308;"><div class="o-packet" style="animation-delay: 0.1s;"></div></div>
+            <div class="o-line" style="--laser-color: #22c55e;"><div class="o-packet" style="animation-delay: 0.4s;"></div></div>
+            <div class="o-line" style="--laser-color: #06b6d4;"><div class="o-packet" style="animation-delay: 0.2s;"></div></div>
+            <div class="o-line" style="--laser-color: #3b82f6;"><div class="o-packet" style="animation-delay: 0.5s;"></div></div>
+            <div class="o-line" style="--laser-color: #a855f7;"><div class="o-packet" style="animation-delay: 0.1s;"></div></div>
+            <div class="o-line" style="--laser-color: #ec4899;"><div class="o-packet" style="animation-delay: 0.3s;"></div></div>
+        </div>
+
+        <!-- 阶段三 -->
+        <div class="stage wdm-box" onclick="showInfo('wdm')">
+            <div class="stage-title">3. 混流区<br><span style="font-size:0.9rem;color:#94a3b8">微型 WDM / PLC AWG</span></div>
+            <div class="funnel"></div>
+            <div style="margin-top:20px; text-align:center; color:#cbd5e1; font-size:0.85rem;">
+                像漏斗一样，把 8 条单行道<br>汇集成 1 条无缝衔接的主干道
+            </div>
+            <div class="pulse-text">点击了解详情</div>
+        </div>
+
+        <!-- 连线 3 -->
+        <div class="mixed-line">
+            <div class="m-packet"></div>
+        </div>
+
+        <!-- 阶段四 -->
+        <div class="stage fa-box" onclick="showInfo('fa')">
+            <div class="stage-title" style="color:var(--neon-red)">4. 连卡区 (命脉)<br><span style="font-size:0.9rem;color:#fff">PM-FA 对轴与连接</span></div>
+            <div class="slot">
+                <div class="slot-inner">
+                    <div class="frisbee"></div>
+                </div>
+            </div>
+            <div style="margin-top:20px; text-align:center; color:#cbd5e1; font-size:0.85rem;">
+                <span style="color:#ef4444; font-weight:bold">极度危险：水平飞盘过狭缝</span><br>
+                不可有一微米对错或偏振扭曲<br>偏离 2 度 = 万劫不复
+            </div>
+            <div class="pulse-text" style="color:var(--neon-red)">点击看长飞降维防守法则</div>
+        </div>
+
+    </div>
+
+    <!-- 解读面板 -->
+    <div id="info-dsp" class="explainer-panel">
+        <h3>📍 1. 计算大脑区 (ASIC/DSP)</h3>
+        <p><strong>底层逻辑：</strong>这里是美国芯片大厂（如 Nvidia / Broadcom）的绝对霸权领域。它的工作是处理复杂的算法，并吐出 800G 的数字电信号。电信号在主板的铜线（PCB）上跑，但这东西跑不远，发热严重，所以必须交给光模块把电转成光。</p>
+        <p><strong>面试话术：</strong>“我们长飞绝不去碰最左边的大脑设计，不需要去卷 DSP。那些是巨头烧了几十亿美金建起来的算法城墙，我们甘当绿叶。”</p>
+    </div>
+
+    <div id="info-siph" class="explainer-panel">
+        <h3>📍 2. 发光区 (硅光芯片 SiPh)</h3>
+        <p><strong>底层逻辑：</strong>这是光模块的心脏，把刚才的电信号，“翻译”成光信号。因为造不出“一辆能拉 800G 货物的单台大卡车”，所以科学家放了 8 个通道的激光器，每一路各自发一种颜色的光，每路承担 100G 的运力。8 × 100G = 800G，这就是模块内部并行的原理。</p>
+        <p><strong>偏振原理（飞盘）：</strong>这里的调制器非常“挑食”。它发射或接收的光子，必须是完美的某个姿态（比如绝对水平的飞盘）。</p>
+    </div>
+
+    <div id="info-wdm" class="explainer-panel">
+        <h3>📍 3. 合流区 (WDM 或 PLC AWG，长飞的红颜知己战场)</h3>
+        <p><strong>底层逻辑：</strong>光缆很贵，我们不可能每次传 800G 都铺 8 根光纤。怎么省钱？用<strong>合波器（Mux）</strong>！图上的那个“漏斗”，就是微型的 Z-Block 薄膜滤波片，或者是更高端的 PLC AWG 芯片。它把 8 种颜色的光线，混合成了 1 束融合光（依然带着 800G 的海量信息）。</p>
+        <p><strong>长飞破局：</strong>不要去做那种室外的大个头分路器！去投资微纳级的组装平台。在指甲盖大小的空间里做 8路光学熔接。长飞用全自动点胶和注塑工艺（参考德国 Cube Optics 经验），把竞争对手的手工作坊工艺按在地上摩擦。</p>
+    </div>
+
+    <div id="info-fa" class="explainer-panel" style="border-color: var(--neon-red);">
+        <h3 style="color: var(--neon-red);">📍 4. 连卡与对轴区 (PM-FA / VSFF) —— 长飞的终极护城河！！</h3>
+        <p><strong>底层痛点：</strong>这束合成出来的 800G 强光，终于要离开小模块，冲进大玻璃光纤了。但连接处的缝隙，就像图里的那个圆圈中的<strong>“绝对水平投币口”</strong>。</p>
+        <p><strong>“消光比”危机：</strong>如果长飞在把光纤（管子）贴到缝隙时手抖了，让光纤里的“飞盘轨道”歪了 2 度。出来的高速光栅就会斜着打在接收缝隙外面进流失，**这叫“偏振消光比大幅恶化”**，整个 800G 的传输顷刻报废。</p>
+        <p><strong>面试 CTO 一锤定音：</strong>“这一块是整个北美芯片巨头最头疼的物理界限！他们只会搞架构，根本造不出零缺陷、亚微米对接的 PM保偏光纤阵列（PM-FA）。我们长飞有着航天级的光缆工艺，直接买下机器视觉的全自动主动对光产线。在这个连卡区域，长飞的光组件就是定海神针，美国人想要 CPO 跑得通，最后的毛细血管必须用我们的。这就是巨头的降维打击！”</p>
+    </div>
+
+    <script>
+        function showInfo(sectionId) {
+            // 隐藏所有面板
+            const panels = document.querySelectorAll('.explainer-panel');
+            panels.forEach(p => p.classList.remove('active'));
+            
+            // 取消所有卡片的高亮
+            const stages = document.querySelectorAll('.stage');
+            stages.forEach(s => s.style.transform = "translateY(0)");
+
+            // 显示目标面板
+            document.getElementById('info-' + sectionId).classList.add('active');
+            
+            // 大屏设备页面滚动到面板位置
+            if(window.innerWidth > 1200) {
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    </script>
+</body>
+</html>

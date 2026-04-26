@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scale-up vs Scale-out：英伟达 NVLink 的“铜墙”与光纤柔性背板</title>
+    <style>
+        :root { --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --scale-up: #ef4444; --scale-out: #3b82f6; }
+        body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; display: flex; flex-direction: column; align-items: center;}
+        header { text-align: center; max-width: 900px; margin-bottom: 20px;}
+        h1 { color: #facc15; }
+        
+        .layout-container { display: flex; gap: 40px; margin-top: 20px; width: 100%; max-width: 1100px;}
+        .server-rack { flex: 1; border: 4px solid #475569; border-radius: 8px; padding: 20px; display: flex; flex-direction: column; gap: 15px; position: relative; min-height: 400px;}
+        
+        .gpu-node { background: #334155; height: 80px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 2px solid #64748b; position: relative; z-index: 10;}
+        
+        /* Scale-up 连线 (内部) */
+        .scale-up-line { position: absolute; left: 50px; width: 15px; height: 100px; background: rgba(239, 68, 68, 0.6); z-index: 5;}
+        
+        /* Scale-out 连线 (外部) */
+        .scale-out-line { position: absolute; right: -80px; width: 80px; height: 10px; background: rgba(59, 130, 246, 0.8); z-index: 5;}
+        
+        .panel { flex: 1; background: var(--card); padding: 25px; border-radius: 12px; }
+        
+        .toggle-btn { background: #475569; color: #fff; border: none; padding: 10px 20px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; margin-bottom: 15px; width: 100%;}
+        
+        #toggle-mode.copper { background: linear-gradient(90deg, #b45309, #d97706); }
+        #toggle-mode.fiber { background: linear-gradient(90deg, #059669, #10b981); }
+        
+        .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-bottom: 10px;}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>大白话秒懂：什么是 Scale-up 与 Scale-out？</h1>
+        <p>把 AI 算力集群比作一个合唱团。<b>Scale-up（向上扩展）</b>：是歌手大脑内部神经突触的连接，决定了他的天赋上限，要求绝对无延迟。<b>Scale-out（向外扩展）</b>：是歌手用嘴巴把声音传递给另一列合唱团，也就是网络互连。</p>
+    </header>
+
+    <div class="layout-container">
+        
+        <!-- 机柜展示 -->
+        <div class="server-rack" id="rack-display">
+            <div style="text-align:center; color:#94a3b8; font-weight:bold;">单机柜 超级节点 (大合唱团)</div>
+            
+            <div class="gpu-node" style="margin-top: 30px;">
+                GPU 节点 1
+                <div class="scale-out-line" style="top: 35px; border-radius: 0 5px 5px 0;"> -> To 其他机柜</div>
+            </div>
+            
+            <div class="scale-up-line" id="internal-wiring" style="top: 130px; border-left: 5px solid #d97706; background:#b45309;">
+                <span style="position:absolute; left:25px; top:30px; font-size:0.8rem; width: 100px;" id="wiring-text">粗重短的<br>NVLink 铜缆<br>达到物理极限!</span>
+            </div>
+            
+            <div class="gpu-node" style="margin-top: 50px;">
+                GPU 节点 2
+                <div class="scale-out-line" style="top: 35px; border-radius: 0 5px 5px 0;"> -> To 其他机柜</div>
+            </div>
+        </div>
+
+        <!-- 解释面板 -->
+        <div class="panel">
+            <div class="badge" style="background:#1e3a8a; color:#93c5fd;">Scale-out (横向网络层)</div>
+            <p>这一直是**光通信**的天下（交换机互连），技术目前相对成熟。用普通的单模/多模光纤，插着普通光模块就可以应对。</p>
+            
+            <div class="badge" style="background:#7f1d1d; color:#fca5a5; margin-top:20px;">Scale-up (节点内底座层 - 您的战场)</div>
+            <p>这是英伟达的绝对禁区（如 NVLink 交换）。由于极度害怕延迟，英伟达在 GB200 之前，一直坚持在机柜背板上用厚重如小腿粗的<b>纯铜漆包线（电缆）</b>互相连接 GPU。</p>
+            <p><b>为什么康普吴总惊呼铜缆死了？</b> 因为当算力翻倍到 RUBIN 架构，如果还用铜缆，机柜重得会把地板压塌，且铜线无法塞下 720 个端口连接！</p>
+            
+            <button class="toggle-btn copper" id="toggle-mode" onclick="toggleWiring()">点击一键升级为光纤柔性背板 (长飞破局点)</button>
+            
+            <div id="strategy-text" style="display:none; margin-top: 15px; color:#10b981;">
+                <b>🚀长飞 CTO 绝杀：</b> 老旧的粗铜缆拔掉，换上像纸一样薄、布满密密麻麻光纤排线的<b>“光学柔性背板 (Optical Flexplane Shuffle)”</b>！我们将承接英伟达和华为背后最复杂的节点内“光进铜退”线束工程！
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleWiring() {
+            const wire = document.getElementById('internal-wiring');
+            const text = document.getElementById('wiring-text');
+            const btn = document.getElementById('toggle-mode');
+            const strat = document.getElementById('strategy-text');
+            
+            if (btn.className.includes('copper')) {
+                wire.style.background = 'rgba(16, 185, 129, 0.3)';
+                wire.style.borderLeft = '5px dotted #10b981';
+                text.innerHTML = '极致轻薄的<br>高密度光纤<br>柔性排线背板!';
+                text.style.color = '#10b981';
+                btn.className = 'toggle-btn fiber';
+                btn.innerText = '当前模式：AIDC 极限高密度光纤时代';
+                strat.style.display = 'block';
+            } else {
+                wire.style.background = '#b45309';
+                wire.style.borderLeft = '5px solid #d97706';
+                text.innerHTML = '粗重短的<br>NVLink 铜缆<br>达到物理极限!';
+                text.style.color = '#f8fafc';
+                btn.className = 'toggle-btn copper';
+                btn.innerText = '点击一键升级为光纤柔性背板 (长飞破局点)';
+                strat.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

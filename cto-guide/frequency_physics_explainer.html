@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物理揭秘：为什么频率越高、网速越快、死得越早？</title>
+    <style>
+        :root { --bg: #1e1e24; --panel: #2b2b36; --text: #f5f5f5; --4g-color: #3b82f6; --5g-color: #10b981; --6g-color: #f59e0b; }
+        body { font-family: -apple-system, sans-serif; background: var(--bg); color: var(--text); padding: 20px; display: flex; flex-direction: column; align-items: center; margin: 0; }
+        header { text-align: center; max-width: 900px; margin-bottom: 30px; }
+        h1 { color: #facc15; }
+        
+        .simulation-box { width: 100%; max-width: 1000px; background: #000; border: 2px solid #555; border-radius: 12px; position: relative; padding: 20px 0; overflow: hidden; display: flex; flex-direction: column; gap: 30px;}
+        
+        /* 障碍物（墙） */
+        .concrete-wall { position: absolute; left: 55%; top: 0; bottom: 0; width: 60px; background: repeating-linear-gradient(45deg, #78716c, #78716c 10px, #57534e 10px, #57534e 20px); box-shadow: -10px 0 20px rgba(0,0,0,0.8); z-index: 10; display: flex; align-items: center; justify-content: center; }
+        .concrete-wall span { writing-mode: vertical-rl; text-orientation: upright; font-weight: bold; color: #fff; text-shadow: 0 0 5px #000; font-size: 1.2rem; letter-spacing: 5px;}
+        
+        .environment { position: absolute; right: 10px; top: 10px; font-weight: bold; color: #94a3b8; z-index:5;}
+
+        /* 各频段跑道 */
+        .track { width: 100%; height: 80px; position: relative; display: flex; align-items: center; border-bottom: 1px dashed rgba(255,255,255,0.1); }
+        .track-info { width: 140px; padding-left: 20px; z-index: 20; text-shadow: 0 0 5px #000;}
+        .track-info h3 { margin: 0; font-size: 1.2rem; }
+        .track-info .freq { font-size: 0.8rem; color: #94a3b8; }
+        
+        /* 波形动画的通用容器 */
+        .wave-container { position: absolute; left: 160px; right: 0; height: 100%; top: 0; }
+        
+        /* 4G 低频波形（长波长，慢振幅） */
+        .wave-4g { position: absolute; top: 35px; width: 100%; height: 10px; border-bottom: 4px solid var(--4g-color); mask-image: repeating-linear-gradient(to right, transparent, black 150px, transparent 300px); -webkit-mask-image: repeating-linear-gradient(to right, transparent, black 150px, transparent 300px); animation: move-wave 2s linear infinite; }
+        
+        /* 4G 穿墙后的波形（衰减但依然存在） */
+        .wave-4g-after { position: absolute; top: 35px; left: 55%; width: 45%; height: 10px; border-bottom: 4px solid var(--4g-color); opacity: 0.5; mask-image: repeating-linear-gradient(to right, transparent, black 150px, transparent 300px); -webkit-mask-image: repeating-linear-gradient(to right, transparent, black 150px, transparent 300px); animation: move-wave 2s linear infinite; z-index: 5;}
+
+        /* 5G 中高频波形（较短波长，中等振幅） */
+        .wave-5g { position: absolute; top: 30px; width: 55%; height: 20px; border-bottom: 4px solid var(--5g-color); mask-image: repeating-linear-gradient(to right, transparent, black 50px, transparent 100px); -webkit-mask-image: repeating-linear-gradient(to right, transparent, black 50px, transparent 100px); animation: move-wave-fast 1s linear infinite; }
+        
+        /* 5G 穿墙后的波形（大幅衰减） */
+        .wave-5g-after { position: absolute; top: 30px; left: 55%; width: 45%; height: 20px; border-bottom: 4px solid var(--5g-color); opacity: 0.15; mask-image: repeating-linear-gradient(to right, transparent, black 50px, transparent 100px); -webkit-mask-image: repeating-linear-gradient(to right, transparent, black 50px, transparent 100px); animation: move-wave-fast 1s linear infinite; z-index: 5;}
+
+        /* 6G 太赫兹波形（极短波长，极高频率，撞墙即死） */
+        .wave-6g { position: absolute; top: 20px; width: 55%; height: 40px; border-bottom: 4px solid var(--6g-color); mask-image: repeating-linear-gradient(to right, transparent, black 10px, transparent 20px); -webkit-mask-image: repeating-linear-gradient(to right, transparent, black 10px, transparent 20px); animation: move-wave-superfast 0.2s linear infinite; box-shadow: 0 5px 15px var(--6g-color); }
+        
+        /* 6G 完全穿不过去，没有 after */
+
+        @keyframes move-wave { 0% { transform: translateX(0); } 100% { transform: translateX(300px); } }
+        @keyframes move-wave-fast { 0% { transform: translateX(0); } 100% { transform: translateX(100px); } }
+        @keyframes move-wave-superfast { 0% { transform: translateX(0); } 100% { transform: translateX(20px); } }
+        
+        /* 知识面板 */
+        .panel { background: var(--panel); border-left: 5px solid var(--6g-color); padding: 25px; border-radius: 8px; margin-top: 30px; max-width: 900px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
+        .panel h2 { margin-top: 0; color: #facc15; font-size: 1.5rem; }
+        .highlight { color: #38bdf8; font-weight: bold; }
+        .danger { color: #f87171; font-weight: bold; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>物理揭秘：电磁波的生死时速</h1>
+        <p>为什么频率越高，网速就越快，但却越害怕墙壁甚至雨滴？这是物理学底层的铁律：<b>速度（带宽）与穿透力，鱼和熊掌不可兼得。</b></p>
+    </header>
+
+    <div class="simulation-box">
+        <div class="environment">室内 / 墙后盲区</div>
+        <div class="concrete-wall"><span>钢筋混凝土墙</span></div>
+
+        <!-- 4G -->
+        <div class="track">
+            <div class="track-info">
+                <h3 style="color:var(--4g-color)">4G 时代</h3>
+                <div class="freq">极低频率 (< 2.6 GHz)<br>速度：慢 (百兆)</div>
+            </div>
+            <div class="wave-container">
+                <div class="wave-4g"></div>
+                <div class="wave-4g-after"></div>
+            </div>
+        </div>
+
+        <!-- 5G -->
+        <div class="track">
+            <div class="track-info">
+                <h3 style="color:var(--5g-color)">5G 时代</h3>
+                <div class="freq">中高频 (3.5 ~ 26 GHz)<br>速度：快 (千兆)</div>
+            </div>
+            <div class="wave-container">
+                <div class="wave-5g"></div>
+                <div class="wave-5g-after"></div>
+            </div>
+        </div>
+
+        <!-- 6G -->
+        <div class="track" style="border:none;">
+            <div class="track-info">
+                <h3 style="color:var(--6g-color)">6G 太赫兹</h3>
+                <div class="freq">超极高频 (100 ~ 1000 GHz)<br>速度：疯狂 (万兆/Tbps)</div>
+            </div>
+            <div class="wave-container">
+                <div class="wave-6g"></div>
+                <!-- 太赫兹被墙壁彻底吸收，完全没有越过墙壁的波形 -->
+                <div style="position: absolute; left: 55%; top: 30px; margin-left: 20px; font-weight: bold; color: #ef4444; font-size: 0.9rem; text-shadow: 0 0 5px #000;">❌ 致命弱点：<br>被墙壁/水分子 100% 吸收</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 奥秘解析 -->
+    <div class="panel">
+        <h2>🔬 直白解析：背后的物理学真相</h2>
+        
+        <p><b>问题一：为什么频率（Frequency）越高，网速（Bandwidth）就越快？</b></p>
+        <p>由于光速是恒定的。频率，也就是波浪一秒钟内“震动上下波动”的次数。我们在空中传数据，就是把“0”和“1”挂载在这些波浪的波峰和波谷上。<br>
+        ▶ 4G 的波浪一秒震动 10 亿次，能挂 10 亿个包裹。<br>
+        ▶ 6G (太赫兹) 的波浪一秒疯狂震动 <span class="highlight">1000 亿次甚至 1万亿次！</span> 它一秒钟能装载的数字包裹（数据量）是 4G 的成千上万倍，所以下载网速犹如光速狂飙。</p>
+
+        <p style="margin-top:20px;"><b>问题二：为什么速度搞那么快了，反而变成“小垃圾”，连张纸都穿不透？</b></p>
+        <p>在物理学公式里，频率（f）和波长（λ）成反比！频率越高，表示这个浪扭得越快，那么它的<b>“波长”（两个相邻浪尖的距离）就会变得极其、极其微小（只有几毫米，甚至亚毫米）。</b></p>
+        
+        <ul>
+            <li><span class="danger">死因 1：无法“绕开”障碍物（失去衍射能力）。</span><br>4G 的波长很大（几十厘米大浪），遇到一堵墙，大浪可以直接绕开墙壁（衍射）扩散到墙后。而 6G 太赫兹的波长比蚂蚁还小，遇到墙壁只会像子弹打在钢板上一样，直直地撞毁（走直线，无法绕射）！</li>
+            <li><span class="danger">死因 2：和空气中的“水分子”同归于尽。</span><br>太赫兹这门波长太短了，短到什么程度？它的大小刚好和空气里的氧气分子（O2）和水蒸气（H2O）差不多大。导致太赫兹波一发出去，就会引发空气中水分子的“共振”，<b>信号携带的能量全部拿去加热空气里的水蒸气了！</b> 还没飞出几百米，电波能量就被空气吸收殆尽！下一把雨，信号更是全军覆没！</li>
+        </ul>
+
+        <h3 style="border-top: 1px dashed #555; padding-top: 20px; margin-top: 20px; color: #10b981;">💡 回到长飞 CTO 的商业逻辑：</h3>
+        <p>因为 6G 信号进不了屋、下雨天传不远。人类就必须到处搭建密密麻麻的室内微型基站（小黑盒），在每个房间里近距离发射太赫兹波。<br><b>而把全国的网络输送到这千千万万个室内“小黑盒”的重任，再也不能依赖无线电，只能且必须依赖地下的、墙体内铺设的海量的“长飞隐形光纤”与透明组件！无线电有多衰弱，光纤的生意就有多炸裂！</b></p>
+    </div>
+
+</body>
+</html>
